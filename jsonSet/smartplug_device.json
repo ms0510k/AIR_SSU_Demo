@@ -1,0 +1,28 @@
+{
+	"SmartPlug": {
+      "plug1": {
+        "Device": "TV",
+        "DevState": "ON"
+      },
+      "plug2": {
+        "Device": "안방스탠드조명",
+        "DevState": "OFF"
+      },
+      "plug3": {
+        "Device": "인덕션",
+        "DevState": "ON"
+      },
+      "plug4": {
+        "Device": "선풍기",
+        "DevState": "ON"
+      },
+      "plug5": {
+        "Device": "고데기",
+        "DevState": "OFF"
+      },
+      "plug6": {
+        "Device": "전기밥솥",
+        "DevState": "ON"
+      }
+    }
+}

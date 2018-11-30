@@ -1,0 +1,93 @@
+{
+	"Device": {
+		"HueBulb": [{
+			"DevID": "안방조명",
+			"Date": "170821104132",
+			"DevState": "ON"
+		}, {
+			"DevID": "거실조명",
+			"Date": "170821104154",
+			"DevState": "OFF"
+		}],
+		"Smart_TV": [{
+			"DevID": "거실TV",
+			"Date": "170821104132",
+			"DevState": "ON",
+			"channel": "502",
+			"volume": "35"
+		}, {
+			"DevID": "안방TV",
+			"Date": "170821104137",
+			"DevState": "OFF",
+			"channel": "132",
+			"volume": "20"
+		}],
+		"NEST_Boiler_Thermostat": [{
+			"DevID": "보일러",
+			"Date": "170826104137",
+			"DevState": "OFF",
+			"curTemp": "None",
+			"targetTemp": "None"
+		}],
+		"Motion_Sensor": [{
+			"DevID": "모션센서1",
+			"Date": "170826104137",
+			"DevState": "ON",
+			"motion": "Detected"
+		}, {
+			"DevID": "모션센서2",
+			"Date": "170826104137",
+			"DevState": "ON",
+			"motion": "Undetected"
+		}],
+		"Door_Lock": [{
+			"DevID": "현관도어락",
+			"Date": "170826104137",
+			"DevState": "ON"
+		}],
+		"Dust_Sensor": [{
+			"DevID": "베란다먼지센서",
+			"Date": "170826104137",
+			"DevState": "ON",
+			"dust": "30"
+		}],
+		"Water_Flow_Sensor": [{
+			"DevID": "주방누수밸브",
+			"Date": "170826104137",
+			"DevState": "ON",
+			"flow": "20",
+			"flowControl": "Open"
+		}, {
+			"DevID": "화장실누수밸브",
+			"Date": "170826104137",
+			"DevState": "ON",
+			"flow": "0",
+			"flowControl": "Closed"
+		}],
+		"Gas_Valve": [{
+			"DevID": "주방가스밸브",
+			"Date": "170826104137",
+			"DevState": "ON"
+		}],
+		"Air_Filter": [{
+			"DevID": "공기청정기",
+			"Date": "170826104137",
+			"DevState": "ON"
+		}],
+		"Robot_Cleaner": [{
+			"DevID": "로봇청소기",
+			"Date": "170826104137",
+			"DevState": "OFF"
+		}],
+		"Induction": [{
+			"DevID": "인덕션",
+			"Date": "170826104137",
+			"DevState": "ON"
+		}],
+		"Security": [{
+			"DevID": "경비기능",
+			"Date": "170826104137",
+			"DevState": "OFF"
+		}]
+	}
+}

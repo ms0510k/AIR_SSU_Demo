@@ -1,0 +1,106 @@
+{
+	"Hue_Bulb": [{
+			"devID": "Hue0001",
+			"date1": "170821104132",
+			"devState": "ON"
+		},
+		{
+			"devID": "Hue0002",
+			"date1": "170821104154",
+			"devState": "OFF"
+		}
+	],
+	"Smart_TV": [{
+		"devID": "TV0001",
+		"date1": "170821104132",
+		"devState": "ON",
+		"channel": "502",
+		"volume": "35"
+	}, {
+		"devID": "TV0002",
+		"date1": "170821104137",
+		"devState": "OFF",
+		"channel": "132",
+		"volume": "20"
+	}],
+	"NEST_Boilder_Thermostat": [{
+			"devID": "Boiler0001",
+			"date1": "170821104137",
+			"devState": "ON",
+			"curTemp": "185",
+			"targetTemp": "253"
+		},
+		{
+			"devID": "Boiler0002",
+			"date1": "170826104137",
+			"devState": "OFF",
+			"curTemp": "None",
+			"targetTemp": "None"
+		}
+	],
+	"Motion_Sensor": [{
+		"devID": "Motion0001",
+		"date1": "170826104137",
+		"devState": "ON",
+		"motion": "Detected"
+	}, {
+		"devID": "Motion0002",
+		"date1": "170826104137",
+		"devState": "ON",
+		"motion": "Undetected"
+	}],
+	"Door_Lock": [{
+			"devID": "DoorLock0001",
+			"date1": "170826104137",
+			"devState": "ON",
+			"lock": "Locked"
+		},
+		{
+			"devID": "DoorLock0002",
+			"date1": "170826104137",
+			"devState": "ON",
+			"lock": "Unlocked"
+		}
+	],
+	"Temperature_Sensor": [{
+			"devID": "TempSensor0001",
+			"date1": "170826104137",
+			"devState": "ON",
+			"temperature": "275"
+		},
+		{
+			"devID": "TempSensor0002",
+			"date1": "170826104137",
+			"devState": "ON",
+			"temperature": "310"
+		}
+	],
+	"Dust_Sensor": [{
+			"devID": "DustSensor0001",
+			"date1": "170826104137",
+			"devState": "ON",
+			"dust": "30"
+		},
+		{
+			"devID": "DustSensor0001",
+			"date1": "170826104137",
+			"devState": "ON",
+			"dust": "90"
+		}
+	],
+	"Water_Flow Sensor": [{
+			"devID": "WFSensor0001",
+			"date1": "170826104137",
+			"devState": "ON",
+			"flow": "20",
+			"flowControl": "Open"
+		},
+		{
+			"devID": "WFSensor0002",
+			"date1": "170826104137",
+			"devState": "ON",
+			"flow": "0",
+			"flowControl": "Closed"
+		}
+	]
+}

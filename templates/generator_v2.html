@@ -1,0 +1,1228 @@
+<!DOCTYPE html> <!-- Document Type Definition-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- @jaeseung : for TAB -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"
+    rel="stylesheet">
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"
+    rel="stylesheet">
+    <link rel="shortcut icon" href="http://rb20.kimsq.co.kr/rb2/layouts/default/assets/ico/favicon.ico">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="https://d3js.org/d3-collection.v1.min.js"></script>
+    <script src="d3.legend.js"></script>
+
+    {% load staticfiles %}
+
+    <title>Smart Butler</title>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+
+    <!-- Bootstrap -->
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous">
+</script>
+
+<script src="https://d3js.org/d3.v3.min.js"></script>
+<script type="text/javascript"
+src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body style="background-image: url({% static 'images/back-home.jpg' %});background-size: cover;background-repeat: no-repeat;z-index: -1;"></body>
+
+<div class="container">
+
+    <div class="row" , style="margin-top: 15px; border: hidden; padding-left: 16px; padding-right:16px; max-height: 77px">
+        <!-- 제목부 Smart Butler Reasoner -->
+        <div class="jumbotron" style="padding-top: 7px; padding-bottom: 7px; background-color: #222B3A;">
+            <!-- HTML은 6단계의 제목을 갖고, <h1> ~ <h6> 단계로 표현됨 -->
+<!-- <h1> Main Title </h1>
+<h2> Top Level Heading </h2>
+<h3> Subheading </h3>
+<h4> Sub-subheading </h4>-->
+
+<h2 style="color: aliceblue" align="center">Smart Butler Proactive Service Data Generator</h2>
+<!-- <p> 요소는 문자의 문단을 포함하기 위한 것; 일반적인 문자 내용을 나타낼 때 많이 사용됨 -->
+
+</div>
+</div>
+
+<div class="row" , style="margin-top: 10px; border: hidden; min-height: 800px;">
+
+    <!-- @jaeseung : 0. Start from here! -->
+    <div class="col-md-6" , style="border: hidden; min-height: 800px;">
+        <div class="row" , style="border: hidden; min-height: 600px;">
+            <div class="col-md-12">
+                <div class="panel"  style="border: none;  opacity: 0.7">
+                    <div class="panel-heading" style="background-color: #3D495D; padding-bottom: 4px; border: none">
+                        <p style="color: aliceblue; font-size: 20px"><span class="glyphicon glyphicon-thumbs-up"></span> Device Usage Pattern Parameters
+                        </p>             
+
+                    </div>
+
+
+                    <div class="panel-body" style="min-height: 500px; padding: 0px; border:none;">
+                        <div class="w3-bar w3-black">
+                            <button class="w3-bar-item w3-button tablink w3-red" onclick="openTab(event,'user_info')">User Information</button>
+                            <button class="w3-bar-item w3-button tablink" onclick="openTab(event,'param_settings')">Parameter Settings</button>
+                        </div>
+
+                        <div id="user_info" class="panel-body tab" style="border: none; opacity: 1; overflow:auto;">
+
+                            <table class="table table-hover table-bordered table-condensed table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Firstname</th>
+                                        <th>Lastname</th>
+                                        <th>Email</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>John</td>
+                                        <td>Doe</td>
+                                        <td>john@example.com</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mary</td>
+                                        <td>Moe</td>
+                                        <td>mary@example.com</td>
+                                    </tr>
+                                    <tr>
+                                        <td>July</td>
+                                        <td>Dooley</td>
+                                        <td>july@example.com</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="param_settings" class="panel-body tab" style="display:none; opacity: 1; overflow:auto;">
+
+                            <style type="text/css">
+                            .nopadding {
+                                padding: 0 !important;
+                                margin: 0 !important;
+                            }
+                            .table th {
+                                text-align: center;
+                            }
+                            .table th.fit{
+                                white-space: nowrap;
+                                width: 1%;
+                            }
+                            .table td.fit{
+                                white-space: nowrap;
+                                width: 1%;
+                            }
+                            .table td.step{
+                                text-align: center; }
+                            </style>
+
+                            <div class="row">
+                                <div class="col-sm-3 nopadding " >
+                                    <select class="form-control " id="user_selecter" style="width:100%;">
+                                        <option value="selectuser">User</option>
+                                        <option value="park">Park</option>
+                                        <option value="kim">Kim</option>
+                                        <option value="choi">Choi</option>
+                                    </select>    
+
+                                    <script>
+                                        var user_selecter = document.getElementById("user_selecter");
+
+                                        user_selecter.oninput = function() {
+                                            var user_value = user_selecter.options[user_selecter.selectedIndex].value;
+                                            document.getElementById("demo_user").innerHTML = user_value;
+                                        }
+                                    </script>                                </div>
+                                    <div class="col-sm-3 nopadding"  >
+                                        <select class="form-control " id="season_selecter" style="width:100%;">
+                                            <option value="" selected disabled hidden>Season</option>
+                                            <option value="spring">Spring</option>
+                                            <option value="summer">Summer</option>
+                                            <option value="fall">Fall</option>
+                                            <option value="winter">Winter</option>
+                                        </select>
+
+                                        <script>
+                                            var season_selecter = document.getElementById("season_selecter");
+
+                                            season_selecter.oninput = function() {
+                                                var season_value = season_selecter.options[season_selecter.selectedIndex].value;
+                                                document.getElementById("demo_season").innerHTML = season_value;
+                                            }
+                                        </script>
+                                    </div>
+                                    <div class="col-sm-3 nopadding"  >
+                                        <select class="form-control" id="week_selecter" style="width:100%;">
+                                            <option value="weekdays">Weekdays</option>
+                                            <option value="weekend">Weekend</option>
+                                        </select>
+
+                                        <script>
+                                            var week_selecter = document.getElementById("week_selecter");
+
+                                            week_selecter.oninput = function() {
+                                                var week_value = week_selecter.options[week_selecter.selectedIndex].value;
+                                                document.getElementById("demo_weekday").innerHTML = week_value;
+                                            }
+                                        </script>                                </div>
+                                        <div class="col-sm-3 nopadding"  >
+                                         <select class="form-control" id="weather_selecter" style="width:100%;">
+                                            <option value="" selected disabled hidden>Weather</option>
+                                            <option value="sunny">Sunny</option>
+                                            <option value="cloud">Cloud</option>
+                                            <option value="rain">Rain</option>
+                                            <option value="snow">Snow</option>
+                                            <option value="dark">Dark</option>
+                                        </select>
+
+                                        <script>
+                                            var weather_selecter = document.getElementById("weather_selecter");
+
+                                            weather_selecter.oninput = function() {
+                                                var weather_value = weather_selecter.options[weather_selecter.selectedIndex].value;
+                                                document.getElementById("demo_weather").innerHTML = weather_value;
+                                            }
+                                        </script>                                </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <table class="table table-hover table-bordered table-condensed table-sm table-responsive">
+                                            <thead class="bg-primary">
+                                                <tr>
+                                                    <th class="fit">Device</th>
+                                                    <th class="fit">Distribution</th>
+                                                    <th colspan="6">Parameters</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>TV</td>
+                                                    <td>Gaussian</td>
+                                                    <td class="fit">Weight</td>
+                                                    <td></td>
+                                                    <td class="fit">Mean</td>
+                                                    <td></td>
+                                                    <td class="fit">Dev</td>
+                                                    <td></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td>Bulb</td>
+                                                    <td>Gaussian</td>
+                                                    <td class="fit">Weight</td>
+                                                    <td></td>
+                                                    <td class="fit">Mean</td>
+                                                    <td></td>
+                                                    <td class="fit">Dev</td>
+                                                    <td></td>
+                                                </tr>       
+
+
+                                                <tr>
+                                                    <td class="fit">Robot Cleaner</td>
+                                                    <td>Gaussian</td>
+                                                    <td class="fit">Weight</td>
+                                                    <td></td>
+                                                    <td class="fit">Mean</td>
+                                                    <td></td>
+                                                    <td class="fit">Dev</td>
+                                                    <td></td>
+                                                </tr>
+
+
+                                                <tr>
+                                                    <td>Airconditioner</td>
+                                                    <td class="fit">Step Function</td>
+                                                    <td class="step" colspan="2">Threshold</td>
+                                                    <td colspan="4"></td>
+                                                </tr>
+
+
+                                                <tr>
+                                                    <td>Aircleaner</td>
+                                                    <td class="fit">Step Function</td>
+                                                    <td class="step" colspan="2">Threshold</td>
+                                                    <td colspan="4"></td>
+                                                </tr>
+
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- @jaeseung : 2. Graph -->
+            <div class="col-md-6">
+                <div class="row" , style="border: hidden; min-height: 600px;">
+                    <div class="col-md-12">
+                        <div class="panel" style="border: none; opacity: 0.7; ">
+                            <div class="panel-heading" style="background-color: #3D495D; padding-bottom: 4px; border: none">
+                                <p style="color: aliceblue; font-size: 20px"> <span class="glyphicon glyphicon-sort"></span> 
+                                    Device Usage Pattern Graph
+                                </p>
+                            </div>
+                            <div class="panel-body" style="min-height: 500px; padding: 0px; border:none;">
+
+                                <div class="w3-bar w3-black">
+                                    <button class="w3-bar-item w3-button tablink2 w3-red" onclick="openTab2(event,'Device1')">AirConditioner</button>
+                                    <button class="w3-bar-item w3-button tablink2" onclick="openTab2(event,'Device2')">AirCleaner</button>
+                                    <button class="w3-bar-item w3-button tablink2" onclick="openTab2(event,'Device3')">Bulb</button>
+                                    <button class="w3-bar-item w3-button tablink2" onclick="openTab2(event,'Device4')">RobotCleaner</button>
+                                    <button class="w3-bar-item w3-button tablink2" onclick="openTab2(event,'Device5')">TV</button>
+                                </div>
+
+                                <div id="Device1" class="tab2" style="border: none; opacity: 1; overflow:auto;">
+                                </div>
+                                <div id="Device2" class="tab2" style="display:none; opacity: 1; overflow:auto;">
+                                </div>
+                                <div id="Device3" class="tab2" style="display:none">
+                                </div>
+                                <div id="Device4" class="tab2" style="display:none">
+                                </div>
+                                <div id="Device5" class="tab2" style="display:none">
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+
+<script>
+////// (start) for fix 403 forbiddon error //////////////////////////////////////////
+var csrftoken = $.cookie('csrftoken');
+
+function csrfSafeMethod(method) {
+// these HTTP methods do not require CSRF protection
+return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+
+$.ajaxSetup({
+    beforeSend: function (xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+});
+////// (end) for fix 403 forbiddon error //////////////////////////////////////////
+
+
+// @jaeseung : Tab activate function
+function openTab(evt, tabName) {
+    var i, x, tablinks;
+    x = document.getElementsByClassName("tab");
+    for (i = 0; i < x.length; i++) {
+        x[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablink");
+    for (i = 0; i < x.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" w3-red", "");
+    }
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " w3-red";
+}
+
+
+// @jaeseung : Tab activate function
+function openTab2(evt, tabName) {
+    var i, x, tablinks;
+    x = document.getElementsByClassName("tab2");
+    for (i = 0; i < x.length; i++) {
+        x[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablink2");
+    for (i = 0; i < x.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" w3-red", "");
+    }
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " w3-red";
+}
+</script>
+
+
+<style>
+
+path.line {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 5px;
+    opacity:0.6;
+}
+
+path.area {
+    fill: #e7e7e7;
+}
+
+.axis {
+    font: 16px sans-serif;
+    shape-rendering: crispEdges;
+}
+
+.x.axis line {
+    stroke: #000;
+}
+
+.x.axis .minor {
+    stroke-opacity: .5;
+}
+
+.y.axis line, .y.axis path, .x.axis path{
+    fill: none;
+    stroke: #000;
+}
+
+.guideline {
+    margin-right: 100px;
+    float: right;
+}
+
+.legend rect {
+    fill: white;
+    stroke: grey;
+    stroke-width: 0.7px;
+}
+
+.overlay {
+    fill: none;
+    pointer-events: all;
+}
+
+.hover-line {
+    stroke: #B74779;
+    stroke-width: 2px;
+    stroke-dasharray: 3,3;
+}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+
+<script>
+    var margin = {top: 30, right: 60, bottom: 30, left: 40},
+    width = (1160 - margin.left - margin.right)/2,
+    height = (520 - margin.top - margin.bottom)/2;
+
+    var parseDate = d3.time.format("%H:%M").parse;
+
+    var x = d3.time.scale()
+    .range([0, width]);
+
+    var posData=[
+    {x:18, y:10},
+    {x:25, y:230},
+    {x:28, y:519},
+    {x:29, y:30},
+    {x:31, y:120},
+    {x:40, y:2240}
+    ];
+    var xMax=d3.max( posData, function(d) {
+        return d.x;
+    });
+
+    var xScale=d3.scale.linear()
+    .domain([18, xMax])
+    .range([0, width]);
+
+//                                        var xScaleTemp = d3.scale().linear().domain([18,40]).range([0, width]);
+
+var y = d3.scale.linear()
+.range([height, 0]);
+
+var y2 = d3.scale.linear()
+.range([height, 0]);
+
+var xAxis = d3.svg.axis()
+.scale(x)
+.orient("bottom")
+.tickFormat(d3.time.format("%H:%M"));
+
+var xAxis2 = d3.svg.axis()
+.scale(xScale)
+//.scale(xScaleTemp)
+.ticks(10)
+.orient("bottom")
+.tickFormat(function(d) { return d + '°C'});
+
+var yAxis = d3.svg.axis()
+.scale(y)
+.tickFormat(function(d) { return d + '°C'})
+.tickSize(10)
+.orient("left");
+
+var yAxis2 = d3.svg.axis()
+.scale(y)
+.tickFormat("")
+.tickSize(0)
+.orient("left");
+
+// An area generator, for the light fill.
+var area = d3.svg.area()
+.interpolate("monotone")
+.x(function(d) { return x(d.date); })
+.y0(height)
+.y1(function(d) { return y(d.counts); });
+
+var line = d3.svg.line()
+.interpolate("basis")
+//.defined(function(d) { return d.counts != 0; })
+.x(function(d) { return x(d.date); })
+.y(function(d) { return y(d.counts); });
+
+var svg = d3.select("#Device1").append("svg")
+.attr("width", width + margin.left + margin.right)
+.attr("height", height + margin.top + margin.bottom)
+.append("g")
+.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+// @jaeseung : need to change value to approporiate position
+
+d3.tsv("{% static 'tsvSet/airconditioner_step.tsv' %}",
+    function(error, data) {
+        var color = d3.scale.category10();
+        color.domain(d3.keys(data[0]).filter(function(key) { return key !== "date"; }));
+
+        data.forEach(function(d) {
+            d.date = +d.date;
+        });
+
+        var intentions = color.domain().map(function(name) {
+            return {
+                name: name,
+                values: data.map(function(d) {
+                    return {date: d.date, counts: +d[name]};
+                })
+            };
+        });
+
+// Set x and y range
+x.domain(d3.extent(data, function(d) { return d.date; }));
+
+y.domain([
+    d3.min(intentions, function(c) {
+        return d3.min(c.values, function(v)
+            { return v.counts; }); }),
+    d3.max(intentions, function(c) {
+        return d3.max(c.values, function(v)
+            { return v.counts+100; }); })
+    ]);
+
+// Add the clip path.
+svg.append("clipPath")
+.attr("id", "clip")
+.append("rect")
+.attr("width", width)
+.attr("height", height);
+
+// x axis
+svg.append("g")
+.attr("class", "x axis")
+.attr("transform", "translate(0," + height + ")")
+.style("font-size", "10px")
+.call(xAxis2)
+.append("text")
+.attr("transform", "translate(" + width + ",0)")
+.attr("y", 10)
+.attr("dy", "1.5em")
+.attr("dx", "-1em")
+.style("font-size", "12px")
+.text("Temperature");
+
+// y axis
+svg.append("g")
+.attr("class", "y axis")
+.attr("transform", "translate(" + width + ",0)")
+.attr("transform", "rotate(0)")
+.style("font-size", "10px")
+.call(yAxis2)
+.append("text")
+.attr("transform", "rotate(-90)")
+.attr("y", -6)
+.attr("dy", "-0.75em")
+.style("text-anchor", "end")
+.text("ON/OFF");
+
+// Title
+/*
+svg.append("text")
+.attr("x", (width / 2))
+.attr("y", 0 - (margin.top/10))
+.attr("text-anchor", "middle")
+.style("font-size", "15px")
+.text("Daily Temperature");
+*/
+
+var intention = svg.selectAll(".intention")
+.data(intentions)
+.enter().append("g")
+.attr("class", "intention");
+
+intention.append("path")
+.attr("class", "line")
+.style("stroke", function(d) { return color(d.name); })
+.attr('clip-path', 'url(#clip)')
+.attr("d", function(d) { return line(d.values); })
+.attr("data-legend",function(d) { return d.name})
+
+/*
+intention.append("text")
+.datum(function(d) { return {name: d.name, value: d.values[d.values.length - 1]}; })
+.attr("transform", function(d) { return "translate(" + x(d.value.date) + "," + y(d.value.counts) + ")"; })
+.attr("x", 3)
+.attr("dy", ".35em")
+.style("font-size", "10px")
+.text(function(d) { return d.name; });
+*/
+});
+
+
+</script>
+
+<script>
+    var margin = {top: 30, right: 60, bottom: 30, left: 40},
+    width = (1160 - margin.left - margin.right)/2,
+    height = (520 - margin.top - margin.bottom)/2;
+
+    var parseDate = d3.time.format("%H:%M").parse;
+
+    var x = d3.time.scale()
+    .range([0, width]);
+
+    var posData2=[
+    {x:0, y:10},
+    {x:100, y:2240}
+    ];
+    var xMax2=d3.max( posData2, function(d) {
+        return d.x;
+    });
+
+    var xScale2 =d3.scale.linear()
+    .domain([0, xMax2])
+    .range([0, width]);
+//                                        var xScaleTemp = d3.scale().linear().domain([18,40]).range([0, width]);
+
+var y = d3.scale.linear()
+.range([height, 0]);
+
+var y2 = d3.scale.linear()
+.range([height, 0]);
+
+var xAxis = d3.svg.axis()
+.scale(x)
+.orient("bottom")
+.tickFormat(d3.time.format("%H:%M"));
+
+var xAxis3 = d3.svg.axis()
+.scale(xScale2)
+//.scale(xScaleTemp)
+.ticks(10)
+.orient("bottom")
+.tickFormat(function(d) { return d });
+
+var yAxis = d3.svg.axis()
+.scale(y)
+.tickFormat(function(d) { return d + '°C'})
+.tickSize(10)
+.orient("left");
+
+var yAxis2 = d3.svg.axis()
+.scale(y)
+.tickFormat("")
+.tickSize(0)
+.orient("left");
+
+// An area generator, for the light fill.
+var area = d3.svg.area()
+.interpolate("monotone")
+.x(function(d) { return x(d.date); })
+.y0(height)
+.y1(function(d) { return y(d.counts); });
+
+var line = d3.svg.line()
+.interpolate("basis")
+//.defined(function(d) { return d.counts != 0; })
+.x(function(d) { return x(d.date); })
+.y(function(d) { return y(d.counts); });
+
+var svg2 = d3.select("#Device2").append("svg")
+.attr("width", width + margin.left + margin.right)
+.attr("height", height + margin.top + margin.bottom)
+.append("g")
+.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+// @jaeseung : need to change value to approporiate position
+
+d3.tsv("{% static 'tsvSet/aircleaner_step.tsv' %}",
+    function(error, data) {
+        var color = d3.scale.category10();
+        color.domain(d3.keys(data[0]).filter(function(key) { return key !== "date"; }));
+
+        data.forEach(function(d) {
+            d.date = +d.date;
+        });
+
+        var intentions = color.domain().map(function(name) {
+            return {
+                name: name,
+                values: data.map(function(d) {
+                    return {date: d.date, counts: +d[name]};
+                })
+            };
+        });
+
+// Set x and y range
+x.domain(d3.extent(data, function(d) { return d.date; }));
+
+y.domain([
+    d3.min(intentions, function(c) {
+        return d3.min(c.values, function(v)
+            { return v.counts; }); }),
+    d3.max(intentions, function(c) {
+        return d3.max(c.values, function(v)
+            { return v.counts+100; }); })
+    ]);
+
+// Add the clip path.
+svg2.append("clipPath")
+.attr("id", "clip")
+.append("rect")
+.attr("width", width)
+.attr("height", height);
+
+// x axis
+svg2.append("g")
+.attr("class", "x axis")
+.attr("transform", "translate(0," + height + ")")
+.style("font-size", "10px")
+.call(xAxis3)
+.append("text")
+.attr("transform", "translate(" + width + ",0)")
+.attr("y", 10)
+.attr("dy", "1.5em")
+.attr("dx", "-10em")
+.style("font-size", "12px")
+.text("Micro Dust Concentration(㎍/m³)");
+
+// y axis
+svg2.append("g")
+.attr("class", "y axis")
+.attr("transform", "translate(" + width + ",0)")
+.attr("transform", "rotate(0)")
+.style("font-size", "10px")
+.call(yAxis2)
+.append("text")
+.attr("transform", "rotate(-90)")
+.attr("y", -6)
+.attr("dy", "-0.75em")
+.style("text-anchor", "end")
+.text("ON/OFF");
+
+// Title
+/*
+svg.append("text")
+.attr("x", (width / 2))
+.attr("y", 0 - (margin.top/10))
+.attr("text-anchor", "middle")
+.style("font-size", "15px")
+.text("Daily Temperature");
+*/
+
+var intention = svg2.selectAll(".intention")
+.data(intentions)
+.enter().append("g")
+.attr("class", "intention");
+
+intention.append("path")
+.attr("class", "line")
+.style("stroke", function(d) { return color(d.name); })
+.attr('clip-path', 'url(#clip)')
+.attr("d", function(d) { return line(d.values); })
+.attr("data-legend",function(d) { return d.name})
+
+/*
+intention.append("text")
+.datum(function(d) { return {name: d.name, value: d.values[d.values.length - 1]}; })
+.attr("transform", function(d) { return "translate(" + x(d.value.date) + "," + y(d.value.counts) + ")"; })
+.attr("x", 3)
+.attr("dy", ".35em")
+.style("font-size", "10px")
+.text(function(d) { return d.name; });
+*/
+});
+</script>
+
+
+<script>
+    var margin = {top: 30, right: 60, bottom: 30, left: 40},
+    width = (1160 - margin.left - margin.right)/2,
+    height = (520 - margin.top - margin.bottom)/2;
+
+    var parseDate = d3.time.format("%H:%M").parse;
+
+    var x = d3.time.scale()
+.range([0, width]); // @jaeseung : need to change
+
+var y = d3.scale.linear()
+.range([height, 0]);
+
+var xAxis = d3.svg.axis()
+.scale(x)
+.orient("bottom")
+.tickFormat(d3.time.format("%H:%M"));
+
+var yAxis = d3.svg.axis()
+.scale(y)
+.tickFormat(function(d) { return d + '°C'})
+.tickSize(10)
+.orient("left");
+
+var yAxis2 = d3.svg.axis()
+.scale(y2)
+.tickFormat("")
+.tickSize(0)
+.orient("left");
+
+// An area generator, for the light fill.
+var area = d3.svg.area()
+.interpolate("monotone")
+.x(function(d) { return x(d.date); })
+.y0(height)
+.y1(function(d) { return y(d.counts); });
+
+var line = d3.svg.line()
+.interpolate("basis")
+//.defined(function(d) { return d.counts != 0; })
+.x(function(d) { return x(d.date); })
+.y(function(d) { return y(d.counts); });
+
+var svg4 = d3.select("#Device3").append("svg")
+.attr("width", width + margin.left + margin.right)
+.attr("height", height + margin.top + margin.bottom)
+.append("g")
+.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+// @jaeseung : need to change value to approporiate position
+
+d3.tsv("{% static 'tsvSet/bulb_after2.tsv' %}", function(error, data) {
+    var color = d3.scale.category10();
+    color.domain(d3.keys(data[0]).filter(function(key) { return key !== "date"; }));
+
+    data.forEach(function(d) {
+        d.date = parseDate(d.date);
+    });
+
+    var intentions = color.domain().map(function(name) {
+        return {
+            name: name,
+            values: data.map(function(d) {
+                return {date: d.date, counts: +d[name]};
+            })
+        };
+    });
+
+// Set x and y range
+x.domain(d3.extent(data, function(d) { return d.date; }));
+
+y.domain([
+    d3.min(intentions, function(c) {
+        return d3.min(c.values, function(v)
+            { return v.counts; }); }),
+    d3.max(intentions, function(c) {
+        return d3.max(c.values, function(v)
+            { return v.counts; }); })
+    ]);
+
+// Add the clip path.
+svg4.append("clipPath")
+.attr("id", "clip")
+.append("rect")
+.attr("width", width)
+.attr("height", height);
+
+// x axis
+svg4.append("g")
+.attr("class", "x axis")
+.attr("transform", "translate(0," + height + ")")
+.style("font-size", "10px")
+.call(xAxis)
+.append("text")
+.attr("transform", "translate(" + width + ",0)")
+.attr("y", 10)
+.attr("dy", "0.75em")
+.attr("dx", "-1em")
+.style("font-size", "12px")
+.text("Time");
+
+// y axis
+svg4.append("g")
+.attr("class", "y axis")
+.attr("transform", "translate(" + width + ",0)")
+.attr("transform", "rotate(0)")
+.style("font-size", "10px")
+.call(yAxis2)
+.append("text")
+.attr("transform", "rotate(-90)")
+.attr("y", -6)
+.attr("dy", "-0.75em")
+.style("text-anchor", "end")
+.text("ON/OFF");
+// Title
+/*
+svg4.append("text")
+.attr("x", (width / 2))
+.attr("y", 0 - (margin.top/10))
+.attr("text-anchor", "middle")
+.style("font-size", "15px")
+.text("Daily Temperature");
+*/
+
+var intention = svg4.selectAll(".intention")
+.data(intentions)
+.enter().append("g")
+.attr("class", "intention");
+
+intention.append("path")
+.attr("class", "line")
+.style("stroke", function(d) { return color(d.name); })
+.attr('clip-path', 'url(#clip)')
+.attr("d", function(d) { return line(d.values); })
+.attr("data-legend",function(d) { return d.name});
+
+intention.append("text")
+.datum(function(d) { return {name: d.name, value: d.values[d.values.length - 1]}; })
+.attr("transform", function(d) { return "translate(" + x(d.value.date) + "," + y(d.value.counts) + ")"; })
+.attr("x", 3)
+.attr("dy", ".35em")
+.style("font-size", "10px")
+.text(function(d) { return d.name; });
+});
+
+</script>
+
+<script>
+    var margin = {top: 30, right: 60, bottom: 30, left: 40},
+    width = (1160 - margin.left - margin.right)/2,
+    height = (520 - margin.top - margin.bottom)/2;
+
+    var parseDate = d3.time.format("%H:%M").parse;
+
+    var x = d3.time.scale()
+.range([0, width]); // @jaeseung : need to change
+
+var y = d3.scale.linear()
+.range([height, 0]);
+
+var xAxis = d3.svg.axis()
+.scale(x)
+.orient("bottom")
+.tickFormat(d3.time.format("%H:%M"));
+
+var yAxis = d3.svg.axis()
+.scale(y)
+.tickFormat(function(d) { return d + '°C'})
+.tickSize(10)
+.orient("left");
+
+var yAxis2 = d3.svg.axis()
+.scale(y2)
+.tickFormat("")
+.tickSize(0)
+.orient("left");
+
+// An area generator, for the light fill.
+var area = d3.svg.area()
+.interpolate("monotone")
+.x(function(d) { return x(d.date); })
+.y0(height)
+.y1(function(d) { return y(d.counts); });
+
+var line = d3.svg.line()
+.interpolate("basis")
+//.defined(function(d) { return d.counts != 0; })
+.x(function(d) { return x(d.date); })
+.y(function(d) { return y(d.counts); });
+
+var svg5 = d3.select("#Device4").append("svg")
+.attr("width", width + margin.left + margin.right)
+.attr("height", height + margin.top + margin.bottom)
+.append("g")
+.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+// @jaeseung : need to change value to approporiate position
+
+d3.tsv("{% static 'tsvSet/robotcleaner_after2.tsv' %}", function(error, data) {
+    var color = d3.scale.category10();
+    color.domain(d3.keys(data[0]).filter(function(key) { return key !== "date"; }));
+
+    data.forEach(function(d) {
+        d.date = parseDate(d.date);
+    });
+
+    var intentions = color.domain().map(function(name) {
+        return {
+            name: name,
+            values: data.map(function(d) {
+                return {date: d.date, counts: +d[name]};
+            })
+        };
+    });
+
+// Set x and y range
+x.domain(d3.extent(data, function(d) { return d.date; }));
+
+y.domain([
+    d3.min(intentions, function(c) {
+        return d3.min(c.values, function(v)
+            { return v.counts; }); }),
+    d3.max(intentions, function(c) {
+        return d3.max(c.values, function(v)
+            { return v.counts; }); })
+    ]);
+
+// Add the clip path.
+svg5.append("clipPath")
+.attr("id", "clip")
+.append("rect")
+.attr("width", width)
+.attr("height", height);
+
+// x axis
+svg5.append("g")
+.attr("class", "x axis")
+.attr("transform", "translate(0," + height + ")")
+.style("font-size", "10px")
+.call(xAxis)
+.append("text")
+.attr("transform", "translate(" + width + ",0)")
+.attr("y", 10)
+.attr("dy", "0.75em")
+.attr("dx", "-1em")
+.style("font-size", "12px")
+.text("Time");
+
+// y axis
+svg5.append("g")
+.attr("class", "y axis")
+.attr("transform", "translate(" + width + ",0)")
+.attr("transform", "rotate(0)")
+.style("font-size", "10px")
+.call(yAxis2)
+.append("text")
+.attr("transform", "rotate(-90)")
+.attr("y", -6)
+.attr("dy", "-0.75em")
+.style("text-anchor", "end")
+.text("ON/OFF");
+// Title
+/*
+svg5.append("text")
+.attr("x", (width / 2))
+.attr("y", 0 - (margin.top/10))
+.attr("text-anchor", "middle")
+.style("font-size", "15px")
+.text("Daily Temperature");
+*/
+
+var intention = svg5.selectAll(".intention")
+.data(intentions)
+.enter().append("g")
+.attr("class", "intention");
+
+intention.append("path")
+.attr("class", "line")
+.style("stroke", function(d) { return color(d.name); })
+.attr('clip-path', 'url(#clip)')
+.attr("d", function(d) { return line(d.values); })
+.attr("data-legend",function(d) { return d.name});
+
+intention.append("text")
+.datum(function(d) { return {name: d.name, value: d.values[d.values.length - 1]}; })
+.attr("transform", function(d) { return "translate(" + x(d.value.date) + "," + y(d.value.counts) + ")"; })
+.attr("x", 3)
+.attr("dy", ".35em")
+.style("font-size", "10px")
+.text(function(d) { return d.name; });
+});
+
+</script>
+
+<script>
+    var margin = {top: 30, right: 60, bottom: 30, left: 40},
+    width = (1160 - margin.left - margin.right)/2,
+    height = (520 - margin.top - margin.bottom)/2;
+
+    var parseDate = d3.time.format("%H:%M").parse;
+
+    var x = d3.time.scale()
+.range([0, width]); // @jaeseung : need to change
+
+var y = d3.scale.linear()
+.range([height, 0]);
+
+var xAxis = d3.svg.axis()
+.scale(x)
+.orient("bottom")
+.tickFormat(d3.time.format("%H:%M"));
+
+var yAxis = d3.svg.axis()
+.scale(y)
+.tickFormat(function(d) { return d + '°C'})
+.tickSize(10)
+.orient("left");
+
+var yAxis2 = d3.svg.axis()
+.scale(y2)
+.tickFormat("")
+.tickSize(0)
+.orient("left");
+
+// An area generator, for the light fill.
+var area = d3.svg.area()
+.interpolate("monotone")
+.x(function(d) { return x(d.date); })
+.y0(height)
+.y1(function(d) { return y(d.counts); });
+
+var line = d3.svg.line()
+.interpolate("basis")
+//.defined(function(d) { return d.counts != 0; })
+.x(function(d) { return x(d.date); })
+.y(function(d) { return y(d.counts); });
+
+var svg6 = d3.select("#Device5").append("svg")
+.attr("width", width + margin.left + margin.right)
+.attr("height", height + margin.top + margin.bottom)
+.append("g")
+.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+// @jaeseung : need to change value to approporiate position
+
+d3.tsv("{% static 'tsvSet/tv_new_after2.tsv' %}", function(error, data) {
+    var color = d3.scale.category10();
+    color.domain(d3.keys(data[0]).filter(function(key) { return key !== "date"; }));
+
+    data.forEach(function(d) {
+        d.date = parseDate(d.date);
+    });
+
+    var intentions = color.domain().map(function(name) {
+        return {
+            name: name,
+            values: data.map(function(d) {
+                return {date: d.date, counts: +d[name]};
+            })
+        };
+    });
+
+// Set x and y range
+x.domain(d3.extent(data, function(d) { return d.date; }));
+
+y.domain([
+    d3.min(intentions, function(c) {
+        return d3.min(c.values, function(v)
+            { return v.counts; }); }),
+    d3.max(intentions, function(c) {
+        return d3.max(c.values, function(v)
+            { return v.counts; }); })
+    ]);
+
+// Add the clip path.
+svg6.append("clipPath")
+.attr("id", "clip")
+.append("rect")
+.attr("width", width)
+.attr("height", height);
+
+// x axis
+svg6.append("g")
+.attr("class", "x axis")
+.attr("transform", "translate(0," + height + ")")
+.style("font-size", "10px")
+.call(xAxis)
+.append("text")
+.attr("transform", "translate(" + width + ",0)")
+.attr("y", 10)
+.attr("dy", "0.75em")
+.attr("dx", "-1em")
+.style("font-size", "12px")
+.text("Time");
+
+// y axis
+svg6.append("g")
+.attr("class", "y axis")
+.attr("transform", "translate(" + width + ",0)")
+.attr("transform", "rotate(0)")
+.style("font-size", "10px")
+.call(yAxis2)
+.append("text")
+.attr("transform", "rotate(-90)")
+.attr("y", -6)
+.attr("dy", "-0.75em")
+.style("text-anchor", "end")
+.text("ON/OFF");
+// Title
+/*
+svg6.append("text")
+.attr("x", (width / 2))
+.attr("y", 0 - (margin.top/10))
+.attr("text-anchor", "middle")
+.style("font-size", "15px")
+.text("Daily Temperature");
+*/
+
+var intention = svg6.selectAll(".intention")
+.data(intentions)
+.enter().append("g")
+.attr("class", "intention");
+
+intention.append("path")
+.attr("class", "line")
+.style("stroke", function(d) { return color(d.name); })
+.attr('clip-path', 'url(#clip)')
+.attr("d", function(d) { return line(d.values); })
+.attr("data-legend",function(d) { return d.name});
+
+intention.append("text")
+.datum(function(d) { return {name: d.name, value: d.values[d.values.length - 1]}; })
+.attr("transform", function(d) { return "translate(" + x(d.value.date) + "," + y(d.value.counts) + ")"; })
+.attr("x", 3)
+.attr("dy", ".35em")
+.style("font-size", "10px")
+.text(function(d) { return d.name; });
+});
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,9 @@
+{
+	"Device": {
+		"HueBulb": [{
+			"DevID": "Hue0001",
+			"Date": "170912090140",
+			"DevState": "ON"
+		}]
+	}
+}

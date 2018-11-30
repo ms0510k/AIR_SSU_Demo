@@ -1,0 +1,434 @@
+<!DOCTYPE html> <!-- Document Type Definition-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- @jaeseung : for TAB -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"
+          rel="stylesheet">
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"
+          rel="stylesheet">
+    <link rel="shortcut icon" href="http://rb20.kimsq.co.kr/rb2/layouts/default/assets/ico/favicon.ico">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="https://d3js.org/d3-collection.v1.min.js"></script>
+
+    {% load staticfiles %}
+
+    <title>Smart Butler</title>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+
+    <!-- Bootstrap -->
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous">
+    </script>
+
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+</head>
+
+<body style="background-image: url({% static 'images/back-home.jpg' %});background-size: cover;background-repeat: no-repeat;z-index: -1;"></body>
+
+<div class="container">
+
+    <div class="row" ,
+         style="margin-top: 15px; border: hidden; padding-left: 16px; padding-right:16px; max-height: 77px">
+        <!-- 제목부 Smart Butler Reasoner -->
+        <div class="jumbotron" style="padding-top: 7px; padding-bottom: 7px; background-color: #022c3a;">
+            <!-- HTML은 6단계의 제목을 갖고, <h1> ~ <h6> 단계로 표현됨 -->
+            <!-- <h1> Main Title </h1>
+            <h2> Top Level Heading </h2>
+            <h3> Subheading </h3>
+            <h4> Sub-subheading </h4>-->
+            <h2 style="color: aliceblue; font-size: 35px; font-weight: bold;" align="center">고령자 의도 학습 및 복합 상황 추론</h2>
+            <!-- <p> 요소는 문자의 문단을 포함하기 위한 것; 일반적인 문자 내용을 나타낼 때 많이 사용됨 -->
+
+        </div>
+    </div>
+
+
+    <div class="row" , style="margin-top: 10px; border: hidden; min-height: 600px;">
+
+
+        <!-- @jaeseung : 0. Start from here! -->
+        <div class="col-md-6" , style="border: hidden; min-height: 370px;">
+            <!-- @jaeseung : 1. selectbox -->
+            <div class="row" , style="border: hidden; min-height: 50px">
+                <div class="col-md-12">
+                    <div class="panel panel-success" style="border: none;  opacity: 1;">
+                        <div class="panel-heading"
+                             style="background-color: #145a5d; padding-bottom: 4px; border: none;">
+                            <p style="color: aliceblue; font-size: 20px">
+                                <span class="glyphicon glyphicon-ok"></span>
+                                Load
+                                <select name="userid" id="select"
+                                        style="background-color: #145a5d; width: 50%; float: right;"
+                                        onchange="select(this)">
+                                    <option value="select" selected disabled hidden style="text-align: center;">- Select
+                                        Type -
+                                    </option>
+                                    <option value="김xx_2018_04_30">김xx_2018_04_30 영상</option>
+                                    <option value="도xx_2018_04_26">도xx_2018_04_26 영상</option>
+                                    <option value="이xx_2018_03_23">이xx_2018_03_23 영상</option>
+                                </select>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- @jaeseung : 2. play -->
+            <div class="row" , style="border: hidden; min-height: 50px">
+                <div class="col-md-12">
+                    <div class="panel panel-success" style="border: none;  opacity: 1;">
+                        <div class="panel-heading"
+                             style="background-color: #145a5d; padding-bottom: 4px; border: none">
+                            <p style="color: aliceblue; font-size: 20px" id="playp">
+                                <span class="glyphicon glyphicon-facetime-video"></span>
+                                Play
+                            </p>
+                        </div>
+                        <div class="panel-body"
+                             style="background-color: #FEFEFF; max-height: 300px; min-height: 373px;  position:relative;height:0;padding-bottom:56.25%;"
+                             id="playd">
+                            <video id="video-active" src="" width="100%" height="340px" controls></video>
+                            <div id="current">0:00</div>
+                            <div id="duration">0:00</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6" , style="border: hidden; min-height: 300px;">
+            {% csrf_token %}
+            <div class="row" , style="margin-top: 0px; border: hidden; min-height: 450px;">
+                <div class="col-md-12">
+
+
+                    <!-- @jaeseung : 3. result -->
+                    <div class="row" , style="border: hidden;">
+                        <div class="col-md-12">
+                            <div class="panel panel-success" style="border: none;  opacity: 1;">
+                                <div class="panel-heading"
+                                     style="background-color: #145a5d; padding-bottom: 4px; border: none">
+                                    <p style="color: aliceblue; font-size: 20px">
+                                        <span class="glyphicon glyphicon-save-file"></span>
+                                        고령자 생활 패턴
+                                    </p>
+                                </div>
+                                <div class="panel-body"
+                                     style="background-color: #FEFEFF; max-height: 300px; height: 175px; overflow:auto;"
+                                     id="bargraph">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- @jaeseung : 4. percept -->
+                    <div class="row" , style="border: hidden;">
+                        <div class="col-md-12">
+                            <div class="panel panel-success" style="border: none;  opacity: 1;">
+                                <div class="panel-heading"
+                                     style="background-color: #145a5d; padding-bottom: 4px; border: none">
+                                    <p style="color: aliceblue; font-size: 20px" id="perceptp">
+                                        <span class="glyphicon glyphicon-list"></span>
+                                        Percept
+                                    </p>
+                                </div>
+                                <div class="panel-body"
+                                     style="background-color: #FEFEFF; overflow:auto; height: 198px;"
+                                     id="perceptd">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- @jaeseung : 5. graph -->
+        <div class="col-md-12">
+            <div class="row" , style="border: hidden; min-height: 50px">
+                <div class="col-md-12">
+                    <div class="panel panel-success" style="border: none;  opacity: 1;">
+                        <div class="panel-heading"
+                             style="background-color: #145a5d; padding-bottom: 4px; border: none">
+                            <p style="color: aliceblue; font-size: 20px">
+                                <span class="glyphicon glyphicon-stats"></span>
+                                고령자 의도 추론 그래프
+                            </p>
+                        </div>
+                        <div class="panel-body"
+                             style="background-color: #FEFEFF; max-height: 300px; min-height: 260px; overflow:auto;"
+                             id="chart_div">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    google.charts.load('current', {packages: ['corechart', 'bar']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+            ['성향', '수치', {role: 'style'}],
+            ['사교적\n성향', 9, 'color: green; opacity: 0.5;'],
+            ['TV 애청자', 3, 'color: red; opacity: 0.5;'],
+            ['소통적\n성향', 5, 'color: blue; opacity: 0.5']
+        ]);
+
+        var options = {
+            width: "100%",
+            height: "100%",
+            bar: {groupWidth: "100%"},
+            legend: {position: "none"},
+        };
+
+        var chart = new google.visualization.BarChart(document.getElementById('bargraph'));
+        chart.draw(data, options);
+    }
+</script>
+
+<script type="text/javascript">
+    google.charts.load("current", {packages: ['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+            ['action', '수치', {role: 'style'}],
+            ['식사하기', 0, 'color: orange; opacity: 0.5;'],
+            ['TV시청', 0, 'color: orange; opacity: 0.5;'],
+            ['대화하기', 0, 'color: orange; opacity: 0.5;'],
+            ['전화통화\n하기', 0, 'color: orange; opacity: 0.5;'],
+            ['청소하기', 0, 'color: orange; opacity: 0.5;'],
+            ['독서하기', 0, 'color: orange; opacity: 0.5;'],
+            ['음료마시기', 0, 'color: orange; opacity: 0.5;'],
+            ['대화&음료', 0, 'color: orange; opacity: 0.5;'],
+            ['TV시청&\n식사', 0, 'color: orange; opacity: 0.5;'],
+            ['전화통화&\n청소', 0, 'color: orange; opacity: 0.5;']
+
+        ]);
+
+        var view = new google.visualization.DataView(data);
+
+        var options = {
+                            width: "100%",
+                            height: "100%",
+                            bar: {groupWidth: "95%"},
+                            legend: {position: "none"},
+                            vAxis: {
+                                viewWindowMode:'explicit',
+                                viewWindow: {
+                                    min: 0,
+                                    max: 10
+                                },
+                                gridlines:{count:5}
+                            }
+                        };
+
+        var chart = new google.visualization.ColumnChart(document.getElementById("chart_div"));
+        chart.draw(view, options);
+    }
+</script>
+<script>
+    /**
+     * django의 view 파일과 통신하기 위해 필요한 함수.
+     * ajax로 통신하기 때문에, POST 형태의 통신 방식을 취하고 있으며
+     * 스마트미러로부터 받은 입력과 그에 따른 사용자의 답변 Case,
+     * 시스템으로부터 얻은 시간 정보들을 모두 담고 있다.
+     *
+     * input:
+     *      - url: django의 view 파일과 ajax로 통신하기 위한 주소를 담고 있는 변수
+     *      - answerCase: 사용자의 답변이 어떤 질문 Case에 대한 정보인지를 담고 있는 변수
+     *      - code: 사용자가 프로그램을 처음 구동하여 각종 모드들을 입력할 경우, 그에 대응하는
+     *              Code의 정보를 담고 있는 변수
+     *      - command: 사용자의 답변 정보를 담고 있는 변수
+     *      - hour: 시스템으로부터 얻은 '시' 정보를 담고 있는 변수
+     *      - minute: 시스템으로부터 얻은 '분' 정보를 담고 있는 변수
+     *      - month: 시스템으로부터 얻은 '월' 정보를 담고 있는 변수
+     *      - day: 시스템으로부터 얻은 '일' 정보를 담고 있는 변수
+     *
+     * Return:
+     *      통신에 성공할 경우, Success와 함께 JESS Engine 구동 결과들을 담고 있는
+     *      Dictionary 형태의 변수와 함께 Return
+     * */
+    ////////// @jaeseung : add weather
+    function communicateAjaxWithCase(url) {
+        console.log("Ajax Communication Check Working: " + url);
+        {#alert(url);#}
+
+        return $.ajax({
+            url: url,
+            type: "POST",
+            data: {},
+            async: false
+        });
+    }
+
+    $(window).load(function () {
+// CPU TIME 읽어서 현재 시간 정보와 관련된 정보들을 JESS에 Fact들로 집어넣음
+        var dt = new Date($.now());
+
+        var hour = dt.getHours();
+        var minute = dt.getMinutes();
+        var month = dt.getMonth() + 1;
+
+        console.log(month + "/" + hour + "/" + minute);
+
+// 시작하자마자 Door Sensor의 값을 받아와서 검사해야 함
+// 3초마다 한번씩 검사함
+        // @jaeseung : run_engine
+        setTimeout(function getEngineOutputEachtime() {
+            {#console.log("run engine timeout");#}
+//            communicateAjaxWithCase(url = "/smartButler/fire_rule/")
+            $.ajax({
+                url: "/smartButler/fire_rule/",
+                dataType: 'json',
+                type: 'POST',
+                success: function (result) {
+                    console.log("result : [" + result + "]")
+                    console.log(typeof result)
+                    var tmp = "" + result;
+
+                    $("#chart_div").empty();
+                    google.charts.load("current", {packages: ['corechart']});
+                    google.charts.setOnLoadCallback(drawChart);
+
+                    function drawChart() {
+                        var data = google.visualization.arrayToDataTable([
+                            ['action', '수치', {role: 'style'}],
+                            ['식사하기', Number(tmp[0]), 'color: orange; opacity: 0.5;'],
+                            ['TV시청', Number(tmp[2]), 'color: orange; opacity: 0.5;'],
+                            ['대화하기', Number(tmp[4]), 'color: orange; opacity: 0.5;'],
+                            ['전화통화\n하기', Number(tmp[6]), 'color: orange; opacity: 0.5;'],
+                            ['청소하기', Number(tmp[8]), 'color: orange; opacity: 0.5;'],
+                            ['독서하기', Number(tmp[10]), 'color: orange; opacity: 0.5;'],
+                            ['음료마시기', Number(tmp[12]), 'color: orange; opacity: 0.5;'],
+                            ['대화&음료', Number(tmp[14]), 'color: orange; opacity: 0.5;'],
+                            ['TV시청&\n식사', Number(tmp[16]), 'color: orange; opacity: 0.5;'],
+                            ['전화통화&\n청소', Number(tmp[18]), 'color: orange; opacity: 0.5;']
+                        ]);
+
+                        var view = new google.visualization.DataView(data);
+
+                        var options = {
+                            width: "100%",
+                            height: "100%",
+                            bar: {groupWidth: "95%"},
+                            legend: {position: "none"},
+                            vAxis: {
+                                viewWindowMode:'explicit',
+                                viewWindow: {
+                                    min: 0,
+                                    max: 10
+                                },
+                                gridlines:{count:5}
+                            }
+                        };
+
+                        var chart = new google.visualization.ColumnChart(document.getElementById("chart_div"));
+                        chart.draw(view, options);
+                    }
+
+                }
+            });
+            setTimeout(getEngineOutputEachtime, 500);
+        }, 500);
+    });
+
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+
+    $(document).ready(function () {
+        var csrftoken = getCookie('csrftoken');
+        $.ajaxSetup({
+            beforeSend: function (xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+    });
+
+    function select(obj) {  ////////////////////// perceptajax
+        $('p#playp').addClass("glyphicon glyphicon-facetime-video").text(" " + obj.value + " 영상");
+        $('p#perceptp').addClass("glyphicon glyphicon-list").text(" " + obj.value + " Percept");
+        $("#percept").empty();
+        if (obj.value == "김xx_2018_04_30") {
+            $("#video-active").attr("src", "{% static 'play/play.mp4' %}")
+            //$("#playd").append("<video id=\"video-active\" src=\"{% static 'play/play.mp4' %}\" width=\"100%\" height=\"340px\" controls></video>");
+        } else if (obj.value == "도xx_2018_04_26") {
+            $("#video-active").attr("src", "")
+        } else if (obj.value == "이xx_2018_03_23") {
+            $("#video-active").attr("src", "")
+        }
+
+        var ajax_communication = communicateAjaxWithCase(url = "/smartButler/fire_rule/");
+
+        $.ajax({
+            url: "/demo/percept/",
+            dataType: 'html',
+            type: 'POST',
+            data: {file_name: obj.value},
+            success: function (result) {
+                $('#perceptd').html(result).attr();
+            }
+        });
+    }
+
+    // using jQuery
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+</script>
+<script>
+    function onTrackedVideoFrame(currentTime, duration) {
+        $("#current").text(currentTime); //Change #current to currentTime
+        $("#duration").text(duration)
+    }
+
+    $(document).ready(function () {
+        $("#video-active").on(
+            "timeupdate",
+            function (event) {
+                onTrackedVideoFrame(this.currentTime, this.duration);
+            });
+    });
+</script>
+</body>
+</html>
