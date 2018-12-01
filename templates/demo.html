@@ -81,7 +81,7 @@
                                 Load
                                 <select name="userid" id="select"
                                         style="background-color: #145a5d; width: 50%; float: right;"
-                                        onchange="select(this)">
+                                        oninput="select(this)">
                                     <option value="select" selected disabled hidden style="text-align: center;">- Select
                                         Type -
                                     </option>
@@ -233,19 +233,19 @@
         var view = new google.visualization.DataView(data);
 
         var options = {
-                            width: "100%",
-                            height: "100%",
-                            bar: {groupWidth: "95%"},
-                            legend: {position: "none"},
-                            vAxis: {
-                                viewWindowMode:'explicit',
-                                viewWindow: {
-                                    min: 0,
-                                    max: 10
-                                },
-                                gridlines:{count:5}
-                            }
-                        };
+            width: "100%",
+            height: "100%",
+            bar: {groupWidth: "95%"},
+            legend: {position: "none"},
+            vAxis: {
+                viewWindowMode: 'explicit',
+                viewWindow: {
+                    min: 0,
+                    max: 10
+                },
+                gridlines: {count: 5}
+            }
+        };
 
         var chart = new google.visualization.ColumnChart(document.getElementById("chart_div"));
         chart.draw(view, options);
@@ -286,6 +286,8 @@
         });
     }
 
+    var check_file = null;
+
     $(window).load(function () {
 // CPU TIME 읽어서 현재 시간 정보와 관련된 정보들을 JESS에 Fact들로 집어넣음
         var dt = new Date($.now());
@@ -296,66 +298,8 @@
 
         console.log(month + "/" + hour + "/" + minute);
 
-// 시작하자마자 Door Sensor의 값을 받아와서 검사해야 함
-// 3초마다 한번씩 검사함
         // @jaeseung : run_engine
-        setTimeout(function getEngineOutputEachtime() {
-            {#console.log("run engine timeout");#}
-//            communicateAjaxWithCase(url = "/smartButler/fire_rule/")
-            $.ajax({
-                url: "/smartButler/fire_rule/",
-                dataType: 'json',
-                type: 'POST',
-                success: function (result) {
-                    console.log("result : [" + result + "]")
-                    console.log(typeof result)
-                    var tmp = "" + result;
-
-                    $("#chart_div").empty();
-                    google.charts.load("current", {packages: ['corechart']});
-                    google.charts.setOnLoadCallback(drawChart);
-
-                    function drawChart() {
-                        var data = google.visualization.arrayToDataTable([
-                            ['action', '수치', {role: 'style'}],
-                            ['식사하기', Number(tmp[0]), 'color: orange; opacity: 0.5;'],
-                            ['TV시청', Number(tmp[2]), 'color: orange; opacity: 0.5;'],
-                            ['대화하기', Number(tmp[4]), 'color: orange; opacity: 0.5;'],
-                            ['전화통화\n하기', Number(tmp[6]), 'color: orange; opacity: 0.5;'],
-                            ['청소하기', Number(tmp[8]), 'color: orange; opacity: 0.5;'],
-                            ['독서하기', Number(tmp[10]), 'color: orange; opacity: 0.5;'],
-                            ['음료마시기', Number(tmp[12]), 'color: orange; opacity: 0.5;'],
-                            ['대화&음료', Number(tmp[14]), 'color: orange; opacity: 0.5;'],
-                            ['TV시청&\n식사', Number(tmp[16]), 'color: orange; opacity: 0.5;'],
-                            ['전화통화&\n청소', Number(tmp[18]), 'color: orange; opacity: 0.5;']
-                        ]);
-
-                        var view = new google.visualization.DataView(data);
-
-                        var options = {
-                            width: "100%",
-                            height: "100%",
-                            bar: {groupWidth: "95%"},
-                            legend: {position: "none"},
-                            vAxis: {
-                                viewWindowMode:'explicit',
-                                viewWindow: {
-                                    min: 0,
-                                    max: 10
-                                },
-                                gridlines:{count:5}
-                            }
-                        };
-
-                        var chart = new google.visualization.ColumnChart(document.getElementById("chart_div"));
-                        chart.draw(view, options);
-                    }
-
-                }
-            });
-            // Git Test : Timeout
-            setTimeout(getEngineOutputEachtime, 500);
-        }, 500);
+        setTimeout(check_run, 1000);
     });
 
     function csrfSafeMethod(method) {
@@ -374,6 +318,14 @@
         });
     });
 
+    function check_run() {
+        console.log("inloop : " + check_file);
+        if (check_file) {
+            getEngineOutputEachtime();
+        }
+        setTimeout(check_run, 1000);
+    }
+
     function select(obj) {  ////////////////////// perceptajax
         $('p#playp').addClass("glyphicon glyphicon-facetime-video").text(" " + obj.value + " 영상");
         $('p#perceptp').addClass("glyphicon glyphicon-list").text(" " + obj.value + " Percept");
@@ -386,18 +338,9 @@
         } else if (obj.value == "이xx_2018_03_23") {
             $("#video-active").attr("src", "")
         }
-
-        var ajax_communication = communicateAjaxWithCase(url = "/smartButler/fire_rule/");
-
-        $.ajax({
-            url: "/demo/percept/",
-            dataType: 'html',
-            type: 'POST',
-            data: {file_name: obj.value},
-            success: function (result) {
-                $('#perceptd').html(result).attr();
-            }
-        });
+        check_file = obj.value;
+        console.log(check_file);
+        //var ajax_communication = communicateAjaxWithCase(url = "/smartButler/fire_rule/");
     }
 
     // using jQuery
@@ -416,6 +359,80 @@
         }
         return cookieValue;
     }
+
+    function getEngineOutputEachtime() {
+        percept();
+        {#console.log("run engine timeout");#}
+//            communicateAjaxWithCase(url = "/smartButler/fire_rule/")
+        $.ajax({
+            url: "/smartButler/fire_rule/",
+            dataType: 'json',
+            type: 'POST',
+            success: function (result) {
+                console.log("result : [" + result + "]")
+                {#console.log(typeof result)#}
+                var tmp = "" + result;
+
+                $("#chart_div").empty();
+                google.charts.load("current", {packages: ['corechart']});
+                google.charts.setOnLoadCallback(drawChart);
+
+                function drawChart() {
+                    var data = google.visualization.arrayToDataTable([
+                        ['action', '수치', {role: 'style'}],
+                        ['식사하기', Number(tmp[0]), 'color: orange; opacity: 0.5;'],
+                        ['TV시청', Number(tmp[2]), 'color: orange; opacity: 0.5;'],
+                        ['대화하기', Number(tmp[4]), 'color: orange; opacity: 0.5;'],
+                        ['전화통화\n하기', Number(tmp[6]), 'color: orange; opacity: 0.5;'],
+                        ['청소하기', Number(tmp[8]), 'color: orange; opacity: 0.5;'],
+                        ['독서하기', Number(tmp[10]), 'color: orange; opacity: 0.5;'],
+                        ['음료마시기', Number(tmp[12]), 'color: orange; opacity: 0.5;'],
+                        ['대화&음료', Number(tmp[14]), 'color: orange; opacity: 0.5;'],
+                        ['TV시청&\n식사', Number(tmp[16]), 'color: orange; opacity: 0.5;'],
+                        ['전화통화&\n청소', Number(tmp[18]), 'color: orange; opacity: 0.5;']
+                    ]);
+
+                    var view = new google.visualization.DataView(data);
+
+                    var options = {
+                        width: "100%",
+                        height: "100%",
+                        bar: {groupWidth: "95%"},
+                        legend: {position: "none"},
+                        vAxis: {
+                            viewWindowMode: 'explicit',
+                            viewWindow: {
+                                min: 0,
+                                max: 10
+                            },
+                            gridlines: {count: 5}
+                        }
+                    };
+
+                    var chart = new google.visualization.ColumnChart(document.getElementById("chart_div"));
+                    chart.draw(view, options);
+                }
+
+            }
+        });
+        // Git Test : Timeout
+        {#setTimeout(getEngineOutputEachtime, 1000);#}
+    }
+
+    function percept() {
+        console.log("Percept : [" + check_file + "]")
+        $.ajax({
+            url: "/demo/percept/",
+            dataType: 'html',
+            type: 'POST',
+            data: {file_name: check_file},
+            success: function (result) {
+                console.log(result);
+                $('#perceptd').append(result).attr();
+            }
+        });
+    }
+
 </script>
 <script>
     function onTrackedVideoFrame(currentTime, duration) {
