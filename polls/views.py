@@ -97,30 +97,26 @@ num_stamp = 0
 def fire_rule(request):
     print("test")
     if request.method == 'POST':
+        file_name = request.POST.get('file_name')
         print("good")
         # JESS Engine에 연결한 후, 웹 상에서 넘어온 정보들을 Parsing
         engine = connect_jess_engine(21000)
-        results = engine.run_engine()
+        # @jaeseung : give engine
+        results = engine.run_engine(file_name)
         # print(results)
-        response_df = parse_results(results)
-        # results_line = results.split("\n")
-        # for i in results_line:
-        #     if "DEBUG" in i:
-        #         print(i)
+
+        time_list, response_df = parse_results(results)
+
         global num_stamp
-        # print("aaaaaa",response_df.iloc[[num_stamp]][0])
-        # print("aaaaaa", response_df.iloc[[num_stamp]][1])
-        # print("aaaaaa", response_df.iloc[[num_stamp]][2])
         if num_stamp < response_df.shape[0]:
             num_stamp += 1
 
+        print(time_list[num_stamp])
         print(response_df.iloc[[num_stamp]])
 
-        ############################# minsung : need to call
         result = response_df.iloc[num_stamp].to_json(orient="records")
         print(response_df.iloc[num_stamp].to_json(orient="records"))
-        return HttpResponse(result,
-                            content_type="application/json")
+        return HttpResponse(result, content_type="application/json")
 
 def parse_results(results):
     results_line = results.split("\n")
@@ -131,9 +127,6 @@ def parse_results(results):
         time_list.append(i[:16])
         data_list.append(i[24:])
 
-    # for i, j in zip(time_list, data_list):
-    #     print("time : ", i)
-    #     print("data : ", j)
     for d in data_list[:-1]:
         tmp_list =[]
         for i,c in enumerate(d):
@@ -146,8 +139,8 @@ def parse_results(results):
     df.pop('PrepareMeal')
     df.pop('Refreshment')
     df.pop('Smoking')
-    print(df.head())
-    return df
+    # print(df.head())
+    return time_list, df
 
 '''
 Function Definition: 
@@ -193,11 +186,10 @@ def convert_time(time):
     return cut_microsec.strftime("%Y-%m-%d %H:%M:%S")
 
 def percept(request):   ##################### perceptajax
-    print("def percept success")
     if request.method == 'POST':
-        print("def percept POST success")
+        # print("def percept POST success")
         file_name = request.POST.get('file_name')
-        print("percept : [", file_name, "]")
+        # print("percept : [", file_name, "]")
         header_name = ["Start Time", "End Time", "Pose", "Action"]
         root_dir = os.path.join(BASE_DIR, "polls/static/percept/")
         file_loc = root_dir + file_name
