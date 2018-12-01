@@ -1,4 +1,3 @@
-
 from django.http import HttpResponse
 from django.shortcuts import render
 from DjangoTest.settings import BASE_DIR
@@ -25,21 +24,24 @@ port = 10002
 address = "192.168.1.20"
 
 """ @181021 페이지를 연결하기위한 함수"""
+
+
 def demo(request):
     return render(request, "../templates/demo.html")
+
 
 ''' @jaeseung 
 Function Definition: 
    주어진 디렉터리를 recursive 하게 탐색하며
    csv 파일들을 확인하고 같이 주어진 리스트에 
    찾아낸 csv파일의 주소를 추가해주는 함수
-
 Input:
     dirname: 탐색할 디렉터리 주소를 담고 있는 변수
     file_list : 탐색한 디렉터리에서 찾아낸 csv 파일의 경로를 담고 있는 변수
 Return:
-
 '''
+
+
 def search_dir(dirname, file_list):
     for (path, dir, files) in os.walk(dirname):
         for filename in files:
@@ -50,15 +52,16 @@ def search_dir(dirname, file_list):
                 # print(tmp)
                 file_list.append(tmp)
 
+
 ''' @jaeseung
 Function Definition: 
     생성할 데이터를 저장하기 전에 미리 데이터가 저장될
     디렉터리들을 생성해주는 함수
 Input:
-
 Return:
-
 '''
+
+
 def make_dir():
     root_dir = os.path.join(BASE_DIR, "polls/static/new_data/")
     user_list = ['park', 'kim', 'choi']
@@ -80,12 +83,12 @@ def make_dir():
         if not os.path.exists(i):
             os.makedirs(i)
 
+
 '''
 Function Definition: 
     웹 상에서 받은 정보들을 JESS Engine의 입력에 맞도록
     Parsing 한 후, JESS Engine과 통신하여 결과를 얻어내 
     다시 웹 상에 정보를 보내주는 함수
-
 Input:
     request: 웹 상에서 넘겨주는 정보들을 담고 있는 변수
 Return:
@@ -95,13 +98,13 @@ Return:
 num_stamp = 0
 
 def fire_rule(request):
-    print("test")
+    # print("test")
     if request.method == 'POST':
         file_name = request.POST.get('file_name')
-        print("good")
+        # print("good")
         # JESS Engine에 연결한 후, 웹 상에서 넘어온 정보들을 Parsing
         engine = connect_jess_engine(21000)
-        # @jaeseung : give engine
+        # @jaeseung : give engine file_name
         results = engine.run_engine(file_name)
         # print(results)
 
@@ -118,23 +121,25 @@ def fire_rule(request):
         print(response_df.iloc[num_stamp].to_json(orient="records"))
         return HttpResponse(result, content_type="application/json")
 
+
 def parse_results(results):
     results_line = results.split("\n")
     time_list = []
     data_list = []
-    value_list =[]
+    value_list = []
     for i in results_line:
         time_list.append(i[:16])
         data_list.append(i[24:])
 
     for d in data_list[:-1]:
-        tmp_list =[]
-        for i,c in enumerate(d):
-            if "="==c:
-                tmp_list.append(d[i+1])
+        tmp_list = []
+        for i, c in enumerate(d):
+            if "=" == c:
+                tmp_list.append(d[i + 1])
         value_list.append(tmp_list)
 
-    header = ["PrepareMeal", "Meal", "Refreshment", "WatchingTV", "CommunicationWithPerson", "Communication", "Reading", "Cleaning", "ArrangeThing", "Smoking", "HealthCare", "Drink", "Clothing"]
+    header = ["PrepareMeal", "Meal", "Refreshment", "WatchingTV", "CommunicationWithPerson", "Communication", "Reading",
+              "Cleaning", "ArrangeThing", "Smoking", "HealthCare", "Drink", "Clothing"]
     df = pd.DataFrame(value_list, columns=header)
     df.pop('PrepareMeal')
     df.pop('Refreshment')
@@ -142,16 +147,17 @@ def parse_results(results):
     # print(df.head())
     return time_list, df
 
+
 '''
 Function Definition: 
     해당 포트로 열린 JESS Engine과 연결하여 그 Engine의 주소를 Return하는 함수
-
 Input:
     port: JESS Engine에 연결하기 위한 포트
-
 Return:
     연결된 JESS Engine
 '''
+
+
 def connect_jess_engine(port):
     from py4j.java_gateway import JavaGateway, GatewayParameters
     gateway = JavaGateway(gateway_parameters=GatewayParameters(port=port))
@@ -159,16 +165,17 @@ def connect_jess_engine(port):
 
     return engine
 
+
 '''
 Function Definition: 
     json 파일의 이름을 받아서 JSON File의 내용들을 Load하여 Return 하는 함수
-
 Input:
     json_file: json file의 이름
-
 Return:
     해당 json 파일의 내용
 '''
+
+
 def read_json(json_file):
     dir_json = os.path.join(BASE_DIR, "jsonSet/" + json_file)
 
@@ -179,13 +186,13 @@ def read_json(json_file):
     return json_result
 
 
-
 def convert_time(time):
     time_object = datetime.strptime(time, "%Y_%m_%d_%H_%M_%S_%f")
     cut_microsec = time_object.replace(microsecond=0)
     return cut_microsec.strftime("%Y-%m-%d %H:%M:%S")
 
-def percept(request):   ##################### perceptajax
+
+def percept(request):  ##################### perceptajax
     if request.method == 'POST':
         # print("def percept POST success")
         file_name = request.POST.get('file_name')
@@ -202,6 +209,7 @@ def percept(request):   ##################### perceptajax
 
         global num_stamp
         percept_row = pd.DataFrame(df_time_converted.iloc[num_stamp])
-        response = HttpResponse(percept_row.T.to_html(classes='table table-bordered table-fixed'), content_type='text/html')
+        response = HttpResponse(percept_row.T.to_html(classes='table table-bordered table-fixed'),
+                                content_type='text/html')
         print(response)
         return response

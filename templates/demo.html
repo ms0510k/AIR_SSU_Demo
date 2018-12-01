@@ -311,6 +311,7 @@
             setTimeout(check_run, 1000);
         }
     }
+
     function select(obj) {  ////////////////////// perceptajax
         $('p#playp').addClass("glyphicon glyphicon-facetime-video").text(" " + obj.value + " 영상");
         $('p#perceptp').addClass("glyphicon glyphicon-list").text(" " + obj.value + " Percept");
@@ -327,6 +328,7 @@
         console.log(check_file);
         //var ajax_communication = communicateAjaxWithCase(url = "/smartButler/fire_rule/");
     }
+
     // using jQuery
     function getCookie(name) {
         var cookieValue = null;
@@ -343,6 +345,21 @@
         }
         return cookieValue;
     }
+
+    function percept() {
+        console.log("Percept : [" + check_file + "]")
+        $.ajax({
+            url: "/demo/percept/",
+            dataType: 'html',
+            type: 'POST',
+            data: {file_name: check_file},
+            success: function (result) {
+                console.log(result);
+                $('#perceptd').append(result).scrollTop($("#perceptd")[0].scrollHeight);
+            }
+        });
+    }
+
     function getEngineOutputEachtime() {
         percept();
         {#console.log("run engine timeout");#}
@@ -351,6 +368,7 @@
             url: "/smartButler/fire_rule/",
             dataType: 'json',
             type: 'POST',
+            data: {file_name: check_file},
             success: function (result) {
                 console.log("result : [" + result + "]")
                 {#console.log(typeof result)#}
@@ -395,20 +413,6 @@
         // Git Test : Timeout
         {#setTimeout(getEngineOutputEachtime, 1000);#}
     }
-    function percept() {
-        console.log("Percept : [" + check_file + "]")
-        $.ajax({
-            url: "/demo/percept/",
-            dataType: 'html',
-            type: 'POST',
-            data: {file_name: check_file},
-            success: function (result) {
-                console.log(result);
-                $('#perceptd').append(result).scrollTop($("#perceptd")[0].scrollHeight);
-            }
-        });
-    }
-
     function onTrackedVideoFrame(currentTime, duration) {
         $("#current").text(currentTime); //Change #current to currentTime
         $("#duration").text(duration)
