@@ -213,3 +213,65 @@ def percept(request):  ##################### perceptajax
                                 content_type='text/html')
         print(response)
         return response
+
+def time(request):  #################### time 배속 구해주기
+    print("time def")
+    if request.method == 'POST':
+        dur = round(float(request.POST.get('dur')))
+        print(dur)
+        return HttpResponse(json.dumps(), content_type="application/json")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    

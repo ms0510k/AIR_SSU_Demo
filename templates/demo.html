@@ -302,13 +302,23 @@
         });
     });
     var flag = true;
+    var dur = 0;
     function check_run() {
+        alert(dur)
         if(flag){
             console.log("inloop : " + check_file);
             if (check_file) {
                 getEngineOutputEachtime();
             }
-            setTimeout(check_run, 1000);
+            $.ajax({    //  time 배속 구해주기
+                url: "/time/",
+                dataType: 'json',
+                type: 'POST',
+                data: {dur: dur},
+                success: function (result) {
+                    setTimeout(check_run, result);
+                }
+            });
         }
     }
 
@@ -424,6 +434,7 @@
                 onTrackedVideoFrame(this.currentTime, this.duration);
             });
         $('#video-active').on('play', function() {
+            dur = this.duration;
             flag=true;
             check_run()
         });

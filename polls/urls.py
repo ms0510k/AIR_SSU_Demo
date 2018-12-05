@@ -25,5 +25,6 @@ urlpatterns = [
 
     url(r'^smartButler/fire_rule/$', views.fire_rule, name='fire_rule'),
     url(r'^demo/percept/$', views.percept, name='percept'),
+    url(r'^time/$', views.time, name='time'),
 
 ]
