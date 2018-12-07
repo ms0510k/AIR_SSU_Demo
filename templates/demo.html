@@ -301,24 +301,27 @@
             }
         });
     });
+
     var flag = true;
     var dur = 0;
+    var current_time = 0;
+
     function check_run() {
-        alert(dur)
         if(flag){
             console.log("inloop : " + check_file);
             if (check_file) {
                 getEngineOutputEachtime();
             }
-            $.ajax({    //  time 배속 구해주기
+            setTimeout(check_run, 1000);
+            {% comment %}$.ajax({    //  time 배속 구해주기
                 url: "/time/",
                 dataType: 'json',
                 type: 'POST',
-                data: {dur: dur},
+                data: {dur: dur, file_name: check_file },
                 success: function (result) {
                     setTimeout(check_run, result);
                 }
-            });
+            });{% endcomment %}
         }
     }
 
@@ -327,7 +330,7 @@
         $('p#perceptp').addClass("glyphicon glyphicon-list").text(" " + obj.value + " Percept");
         $("#percept").empty();
         if (obj.value == "김xx_2018_04_30") {
-            $("#video-active").attr("src", "{% static 'play/play.mp4' %}")
+            $("#video-active").attr("src", "{% static 'play/Produce.mp4' %}")
             //$("#playd").append("<video id=\"video-active\" src=\"{% static 'play/play.mp4' %}\" width=\"100%\" height=\"340px\" controls></video>");
         } else if (obj.value == "도xx_2018_04_26") {
             $("#video-active").attr("src", "")
@@ -362,7 +365,7 @@
             url: "/demo/percept/",
             dataType: 'html',
             type: 'POST',
-            data: {file_name: check_file},
+            data: {cur: current_time, dur: dur, file_name: check_file},
             success: function (result) {
                 console.log(result);
                 $('#perceptd').append(result).scrollTop($("#perceptd")[0].scrollHeight);
@@ -378,7 +381,7 @@
             url: "/smartButler/fire_rule/",
             dataType: 'json',
             type: 'POST',
-            data: {file_name: check_file},
+            data: { file_name: check_file},
             success: function (result) {
                 console.log("result : [" + result + "]")
                 {#console.log(typeof result)#}
@@ -425,7 +428,8 @@
     }
     function onTrackedVideoFrame(currentTime, duration) {
         $("#current").text(currentTime); //Change #current to currentTime
-        $("#duration").text(duration)
+        $("#duration").text(duration);
+        current_time = currentTime;
     }
     $(document).ready(function () {
         $("#video-active").on(

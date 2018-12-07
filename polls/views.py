@@ -96,6 +96,8 @@ Return:
 '''
 # @jaeseung
 num_stamp = 0
+start = 0
+end = 0
 
 def fire_rule(request):
     # print("test")
@@ -110,15 +112,18 @@ def fire_rule(request):
 
         time_list, response_df = parse_results(results)
 
-        global num_stamp
-        if num_stamp < response_df.shape[0]:
-            num_stamp += 1
-
-        print(time_list[num_stamp])
-        print(response_df.iloc[[num_stamp]])
+        # global num_stamp
+        # if num_stamp < response_df.shape[0]:
+        #     num_stamp += 1
+        #
+        # print(time_list[num_stamp])
+        # print(response_df.iloc[[num_stamp]])
 
         result = response_df.iloc[num_stamp].to_json(orient="records")
-        print(response_df.iloc[num_stamp].to_json(orient="records"))
+        # print(response_df.iloc[num_stamp].to_json(orient="records"))
+
+        global end
+        result = response_df.iloc[end].to_json(orient="records")
         return HttpResponse(result, content_type="application/json")
 
 
@@ -191,25 +196,42 @@ def convert_time(time):
     cut_microsec = time_object.replace(microsecond=0)
     return cut_microsec.strftime("%Y-%m-%d %H:%M:%S")
 
-
 def percept(request):  ##################### perceptajax
     if request.method == 'POST':
         # print("def percept POST success")
         file_name = request.POST.get('file_name')
+        cur = request.POST.get('cur')
+        cur = round(float(cur))
+
+        dur = request.POST.get('dur')
+        dur = round(float(dur))
+
         # print("percept : [", file_name, "]")
-        header_name = ["Start Time", "End Time", "Pose", "Action"]
+        # header_name = ["Start Time", "End Time", "Pose", "Action"]
+        header_name = ["Time", "Pose", "Action"]
         root_dir = os.path.join(BASE_DIR, "polls/static/percept/")
         file_loc = root_dir + file_name
+        print("file_loc"+file_loc)
 
         df_from_file = pd.read_csv(file_loc, delimiter='\t', header=None, names=header_name, index_col=None,
                                    encoding='UTF8', engine="python")
         df_time_converted = df_from_file
-        df_time_converted["Start Time"] = df_from_file["Start Time"].apply(convert_time)
-        df_time_converted["End Time"] = df_from_file["End Time"].apply(convert_time)
+        df_time_converted["Time"] = df_from_file["Time"].apply(convert_time)
+        # df_time_converted["Start Time"] = df_from_file["Start Time"].apply(convert_time)
+        # df_time_converted["End Time"] = df_from_file["End Time"].apply(convert_time)
 
         global num_stamp
-        percept_row = pd.DataFrame(df_time_converted.iloc[num_stamp])
-        response = HttpResponse(percept_row.T.to_html(classes='table table-bordered table-fixed'),
+        global start
+        global end
+
+        start = cur*round(float(df_time_converted.shape[0]/dur))
+        end = start + round(float(df_time_converted.shape[0]/dur))
+        print(df_time_converted.shape)
+        print("########################################################################")
+        print(start, '\t', end)
+
+        percept_row = pd.DataFrame(df_time_converted.iloc[start:end])
+        response = HttpResponse(percept_row.to_html(index=False, classes='table table-bordered table-fixed'),
                                 content_type='text/html')
         print(response)
         return response
@@ -217,9 +239,22 @@ def percept(request):  ##################### perceptajax
 def time(request):  #################### time 배속 구해주기
     print("time def")
     if request.method == 'POST':
-        dur = round(float(request.POST.get('dur')))
-        print(dur)
-        return HttpResponse(json.dumps(), content_type="application/json")
+        print("in post")
+        file_name = request.POST.get('file_name')
+        dur = request.POST.get('dur')
+        root_dir = os.path.join(BASE_DIR, "polls/static/percept/")
+        print("root_dir"+root_dir)
+        file_loc = root_dir + file_name
+        print("file_loc"+file_loc)
+        file = pd.read_csv(file_loc, delimiter='\t', header=None, index_col=None,
+                           encoding='UTF8', engine="python")
+        print(file)
+        print(len(file))
+        dur = round(float(dur), 3)
+        print(type(dur))
+        result = round(dur/len(file), 5)*1000
+        print(result)
+        return HttpResponse(json.dumps(result), content_type="application/json")
 
 
 
