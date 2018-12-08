@@ -143,12 +143,12 @@ def parse_results(results):
                 tmp_list.append(d[i + 1])
         value_list.append(tmp_list)
 
-    header = ["PrepareMeal", "Meal", "Refreshment", "WatchingTV", "CommunicationWithPerson", "Communication", "Reading",
-              "Cleaning", "ArrangeThing", "Smoking", "HealthCare", "Drink", "Clothing"]
+    header = ["Refreshment", "Reading", "ArrangeThing", "Drink",  "Meal", "Clothing", "Cleaning",
+               "CommunicationWithPerson",  "HealthCare", "PrepareMeal", "Smoking",  "Communication", "WatchingTV"]
     df = pd.DataFrame(value_list, columns=header)
-    df.pop('PrepareMeal')
-    df.pop('Refreshment')
-    df.pop('Smoking')
+    df.pop('Reading')
+    df.pop('Clothing')
+    df.pop('HealthCare')
     # print(df.head())
     return time_list, df
 
