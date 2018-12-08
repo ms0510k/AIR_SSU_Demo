@@ -77,8 +77,8 @@
                         <div class="panel-heading"
                              style="background-color: #145a5d; padding-bottom: 4px; border: none;">
                             <p style="color: aliceblue; font-size: 20px">
-                                <span class="glyphicon glyphicon-ok"></span>
-                                Load
+                                <span class="glyphicon glyphicon-save-file"></span>
+                                고령자 데이터
                                 <select name="userid" id="select"
                                         style="background-color: #145a5d; width: 50%; float: right;"
                                         oninput="select(this)">
@@ -108,9 +108,11 @@
                         <div class="panel-body"
                              style="background-color: #FEFEFF; max-height: 300px; min-height: 373px;  position:relative;height:0;padding-bottom:56.25%;"
                              id="playd">
-                            <video id="video-active" src="" width="100%" height="340px" controls></video>
-                            <div id="current">0:00</div>
-                            <div id="duration">0:00</div>
+                            <video id="video-active" src="" width="100%" height="330px" controls></video>
+                            <div style="width: 90px; float: left; font-weight:bold;">현재시간(s) : </div>
+                            <div id="current" style="float: left; width: 100px;">0:00</div>
+                            <div style="width: 100px; float: left; font-weight:bold;">총재생시간(s) : </div>
+                            <div id="duration" style="float: left; width: 100px;">0:00</div>
                         </div>
                     </div>
                 </div>
@@ -130,7 +132,7 @@
                                 <div class="panel-heading"
                                      style="background-color: #145a5d; padding-bottom: 4px; border: none">
                                     <p style="color: aliceblue; font-size: 20px">
-                                        <span class="glyphicon glyphicon-save-file"></span>
+                                        <span class="glyphicon glyphicon-align-left"></span>
                                         고령자 생활 패턴
                                     </p>
                                 </div>
@@ -192,15 +194,23 @@
     function drawChart() {
         var data = google.visualization.arrayToDataTable([
             ['성향', '수치', {role: 'style'}],
-            ['사교적\n성향', 9, 'color: green; opacity: 0.5;'],
-            ['TV 애청자', 3, 'color: red; opacity: 0.5;'],
-            ['소통적\n성향', 5, 'color: blue; opacity: 0.5']
+            ['사교적\n성향', 0, 'color: #637498; opacity: 0.8;'],
+            ['TV 애청자', 0, 'color: #62A0A7; opacity: 0.8;'],
+            ['소통적\n성향', 0, 'color: #99CEDC; opacity: 0.8']
         ]);
         var options = {
             width: "100%",
             height: "100%",
             bar: {groupWidth: "100%"},
             legend: {position: "none"},
+            hAxis: {
+                viewWindowMode: 'explicit',
+                viewWindow: {
+                    min: 0,
+                    max: 10
+                },
+                gridlines: {count: 5}
+            }
         };
         var chart = new google.visualization.BarChart(document.getElementById('bargraph'));
         chart.draw(data, options);
@@ -217,7 +227,7 @@
             ['정리정돈', 0, 'color: orange; opacity: 0.5;'],
             ['음료마시기', 0, 'color: orange; opacity: 0.5;'],
             ['식사하기', 0, 'color: orange; opacity: 0.5;'],
-            ['청소하기', 0, 'color: orange; opacity: 0.5;'],
+            ['청소하기', 0, 'color: red; opacity: 0.5;'],
             ['담소나누기', 0, 'color: orange; opacity: 0.5;'],
             ['식사준비', 0, 'color: orange; opacity: 0.5;'],
             ['흡연하기', 0, 'color: orange; opacity: 0.5;'],
@@ -234,7 +244,7 @@
                 viewWindowMode: 'explicit',
                 viewWindow: {
                     min: 0,
-                    max: 10
+                    max: 100
                 },
                 gridlines: {count: 5}
             }
@@ -267,7 +277,6 @@
      * */
     ////////// @jaeseung : add weather
     function communicateAjaxWithCase(url) {
-        console.log("Ajax Communication Check Working: " + url);
         {#alert(url);#}
         return $.ajax({
             url: url,
@@ -283,7 +292,6 @@
         var hour = dt.getHours();
         var minute = dt.getMinutes();
         var month = dt.getMonth() + 1;
-        console.log(month + "/" + hour + "/" + minute);
         // @jaeseung : run_engine
         //setTimeout(check_run, 1000);
     });
@@ -308,7 +316,6 @@
 
     function check_run() {
         if(flag){
-            console.log("inloop : " + check_file);
             if (check_file) {
                 getEngineOutputEachtime();
             }
@@ -324,11 +331,12 @@
             });{% endcomment %}
         }
     }
-
+    var selValue = null
     function select(obj) {  ////////////////////// perceptajax
         $('p#playp').addClass("glyphicon glyphicon-facetime-video").text(" " + obj.value + " 영상");
         $('p#perceptp').addClass("glyphicon glyphicon-list").text(" " + obj.value + " Percept");
         $("#percept").empty();
+        selValue = obj.value
         if (obj.value == "김xx_2018_04_30") {
             $("#video-active").attr("src", "{% static 'play/kim_demo.mp4' %}")
             //$("#playd").append("<video id=\"video-active\" src=\"{% static 'play/play.mp4' %}\" width=\"100%\" height=\"340px\" controls></video>");
@@ -338,7 +346,6 @@
             $("#video-active").attr("src", "")
         }
         check_file = obj.value;
-        console.log(check_file);
         //var ajax_communication = communicateAjaxWithCase(url = "/smartButler/fire_rule/");
     }
 
@@ -360,14 +367,13 @@
     }
 
     function percept() {
-        console.log("Percept : [" + check_file + "]")
         $.ajax({
             url: "/demo/percept/",
             dataType: 'html',
             type: 'POST',
             data: {cur: current_time, dur: dur, file_name: check_file},
             success: function (result) {
-                console.log(result);
+//                console.log(result);
                 $('#perceptd').append(result).scrollTop($("#perceptd")[0].scrollHeight);
             }
         });
@@ -383,25 +389,26 @@
             type: 'POST',
             data: { file_name: check_file},
             success: function (result) {
-                console.log("result : [" + result + "]")
+                //            console.log("result : [" + result + "]")
                 {#console.log(typeof result)#}
                 var tmp = "" + result;
+                console.log(result)
                 $("#chart_div").empty();
                 google.charts.load("current", {packages: ['corechart']});
                 google.charts.setOnLoadCallback(drawChart);
                 function drawChart() {
                     var data = google.visualization.arrayToDataTable([
                         ['action', '수치', {role: 'style'}],
-                        ['다과', Number(tmp[0]), 'color: orange; opacity: 0.5;'],
-                        ['정리전돈', Number(tmp[2]), 'color: orange; opacity: 0.5;'],
-                        ['음료마시기', Number(tmp[4]), 'color: orange; opacity: 0.5;'],
-                        ['식사하기', Number(tmp[6]), 'color: orange; opacity: 0.5;'],
-                        ['청소하기', Number(tmp[8]), 'color: orange; opacity: 0.5;'],
-                        ['담소나누기', Number(tmp[10]), 'color: orange; opacity: 0.5;'],
-                        ['식사준비', Number(tmp[12]), 'color: orange; opacity: 0.5;'],
-                        ['흡연하기', Number(tmp[14]), 'color: orange; opacity: 0.5;'],
-                        ['전화통화', Number(tmp[16]), 'color: orange; opacity: 0.5;'],
-                        ['TV시청', Number(tmp[18]), 'color: orange; opacity: 0.5;']
+                        ['다과', result[0]*100/30, 'color: orange; opacity: 0.5;'],
+                        ['정리정돈', result[1]*100/30, 'color: orange; opacity: 0.5;'],
+                        ['음료마시기', result[2]*100/30, 'color: orange; opacity: 0.5;'],
+                        ['식사하기', result[3]*100/30, 'color: orange; opacity: 0.5;'],
+                        ['청소하기', result[4]*100/30, 'color: orange; opacity: 0.5;'],
+                        ['담소나누기', result[5]*100/30, 'color: orange; opacity: 0.5;'],
+                        ['식사준비', result[6]*100/30, 'color: orange; opacity: 0.5;'],
+                        ['흡연하기', result[7]*100/30, 'color: orange; opacity: 0.5;'],
+                        ['전화통화', result[8]*100/30, 'color: orange; opacity: 0.5;'],
+                        ['TV시청', result[9]*100/30, 'color: orange; opacity: 0.5;']
                     ]);
                     var view = new google.visualization.DataView(data);
                     var options = {
@@ -413,7 +420,7 @@
                             viewWindowMode: 'explicit',
                             viewWindow: {
                                 min: 0,
-                                max: 10
+                                max: 100
                             },
                             gridlines: {count: 5}
                         }
@@ -438,9 +445,96 @@
                 onTrackedVideoFrame(this.currentTime, this.duration);
             });
         $('#video-active').on('play', function() {
-            dur = this.duration;
-            flag=true;
-            check_run()
+            if (selValue == "김xx_2018_04_30") {
+                $("#bargraph").empty();
+                google.charts.load('current', {packages: ['corechart', 'bar']});
+                google.charts.setOnLoadCallback(drawChart);
+                function drawChart() {
+                    var data = google.visualization.arrayToDataTable([
+                        ['성향', '수치', {role: 'style'}],
+                        ['사교적\n성향', 9, 'color: #637498; opacity: 0.8;'],
+                        ['TV 애청자', 3, 'color: #62A0A7; opacity: 0.8;'],
+                        ['소통적\n성향', 5, 'color: #99CEDC; opacity: 0.8']
+                    ]);
+                    var options = {
+                        width: "100%",
+                        height: "100%",
+                        bar: {groupWidth: "100%"},
+                        legend: {position: "none"},
+                        hAxis: {
+                            viewWindowMode: 'explicit',
+                            viewWindow: {
+                                min: 0,
+                                max: 10
+                            },
+                            gridlines: {count: 5}
+                        }
+                    };
+                    var chart = new google.visualization.BarChart(document.getElementById('bargraph'));
+                    chart.draw(data, options);
+                }
+                dur = this.duration;
+                flag=true;
+                check_run()
+            } else if (selValue == "도xx_2018_04_26") {
+                $("#bargraph").empty();
+                google.charts.load('current', {packages: ['corechart', 'bar']});
+                google.charts.setOnLoadCallback(drawChart);
+                function drawChart() {
+                    var data = google.visualization.arrayToDataTable([
+                        ['성향', '수치', {role: 'style'}],
+                        ['사교적\n성향', 2, 'color: #637498; opacity: 0.8;'],
+                        ['TV 애청자', 10, 'color: #62A0A7; opacity: 0.8;'],
+                        ['소통적\n성향', 3.5, 'color: #99CEDC; opacity: 0.8']
+                    ]);
+                    var options = {
+                        width: "100%",
+                        height: "100%",
+                        bar: {groupWidth: "100%"},
+                        legend: {position: "none"},
+                        hAxis: {
+                            viewWindowMode: 'explicit',
+                            viewWindow: {
+                                min: 0,
+                                max: 10
+                            },
+                            gridlines: {count: 5}
+                        }
+                    };
+                    var chart = new google.visualization.BarChart(document.getElementById('bargraph'));
+                    chart.draw(data, options);
+                }
+
+            } else if (selValue == "이xx_2018_03_23") {
+                $("#bargraph").empty();
+                google.charts.load('current', {packages: ['corechart', 'bar']});
+                google.charts.setOnLoadCallback(drawChart);
+                function drawChart() {
+                    var data = google.visualization.arrayToDataTable([
+                        ['성향', '수치', {role: 'style'}],
+                        ['사교적\n성향', 4.5, 'color: #637498; opacity: 0.8;'],
+                        ['TV 애청자', 2, 'color: #62A0A7; opacity: 0.8;'],
+                        ['소통적\n성향', 8, 'color: #99CEDC; opacity: 0.8']
+                    ]);
+                    var options = {
+                        width: "100%",
+                        height: "100%",
+                        bar: {groupWidth: "100%"},
+                        legend: {position: "none"},
+                        hAxis: {
+                            viewWindowMode: 'explicit',
+                            viewWindow: {
+                                min: 0,
+                                max: 10
+                            },
+                            gridlines: {count: 5}
+                        }
+                    };
+                    var chart = new google.visualization.BarChart(document.getElementById('bargraph'));
+                    chart.draw(data, options);
+                }
+
+            }
         });
         $('#video-active').on('pause', function() {
             flag=false;

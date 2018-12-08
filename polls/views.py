@@ -98,6 +98,8 @@ Return:
 num_stamp = 0
 start = 0
 end = 0
+currentTime = 0
+totalTime = 0
 
 def fire_rule(request):
     # print("test")
@@ -119,11 +121,17 @@ def fire_rule(request):
         # print(time_list[num_stamp])
         # print(response_df.iloc[[num_stamp]])
 
-        result = response_df.iloc[num_stamp].to_json(orient="records")
+        # result = response_df.iloc[num_stamp].to_json(orient="records")
         # print(response_df.iloc[num_stamp].to_json(orient="records"))
 
-        global end
-        result = response_df.iloc[end].to_json(orient="records")
+        global currentTime
+        global totalTime
+        graphTime1 = currentTime * round(float(response_df.shape[0]/totalTime))
+        graphTime2 = graphTime1 + round(float(response_df.shape[0]/totalTime))
+        resultTime = int((graphTime1 + graphTime2) / 2)
+        print(resultTime)
+        print(response_df[graphTime1:graphTime2])
+        result = response_df.iloc[resultTime].to_json(orient="records")
         return HttpResponse(result, content_type="application/json")
 
 
@@ -137,12 +145,20 @@ def parse_results(results):
         data_list.append(i[24:])
 
     for d in data_list[:-1]:
+        # print(d)
         tmp_list = []
         for i, c in enumerate(d):
             if "=" == c:
-                tmp_list.append(d[i + 1])
+                # print('[', d[i+2],']')
+                if d[i + 2] == "," or d[i + 2] == "}":
+                    tmp_list.append(int(d[i + 1]))
+                # elif d[i+3] == "," or d[i + 3] == "}":
+                else:
+                    tmp_list.append(int(d[i + 1:i + 3]))
+
         value_list.append(tmp_list)
 
+    # print(value_list)
     header = ["Refreshment", "Reading", "ArrangeThing", "Drink",  "Meal", "Clothing", "Cleaning",
                "CommunicationWithPerson",  "HealthCare", "PrepareMeal", "Smoking",  "Communication", "WatchingTV"]
     df = pd.DataFrame(value_list, columns=header)
@@ -150,6 +166,7 @@ def parse_results(results):
     df.pop('Clothing')
     df.pop('HealthCare')
     # print(df.head())
+    print("output : ", df.shape)
     return time_list, df
 
 
@@ -214,7 +231,7 @@ def percept(request):  ##################### perceptajax
         print("file_loc"+file_loc)
 
         df_from_file = pd.read_csv(file_loc, delimiter='\t', header=None, names=header_name, index_col=None,
-                                   encoding='UTF8', engine="python")
+                                   encoding='UTF-8', engine="python")
         df_time_converted = df_from_file
         df_time_converted["Time"] = df_from_file["Time"].apply(convert_time)
         # df_time_converted["Start Time"] = df_from_file["Start Time"].apply(convert_time)
@@ -223,10 +240,14 @@ def percept(request):  ##################### perceptajax
         global num_stamp
         global start
         global end
+        global currentTime
+        global totalTime
 
-        start = cur*round(float(df_time_converted.shape[0]/dur))
+        currentTime = cur
+        totalTime = dur
+        start = cur * round(float(df_time_converted.shape[0]/dur))
         end = start + round(float(df_time_converted.shape[0]/dur))
-        print(df_time_converted.shape)
+        print("percept : ", df_time_converted.shape)
         print("########################################################################")
         print(start, '\t', end)
 
