@@ -213,16 +213,16 @@
     function drawChart() {
         var data = google.visualization.arrayToDataTable([
             ['action', '수치', {role: 'style'}],
-            ['Refreshment', 0, 'color: orange; opacity: 0.5;'],
-            ['ArrangeThing', 0, 'color: orange; opacity: 0.5;'],
-            ['Drink', 0, 'color: orange; opacity: 0.5;'],
-            ['Meal', 0, 'color: orange; opacity: 0.5;'],
-            ['Cleaning', 0, 'color: orange; opacity: 0.5;'],
-            ['CommunicationWithPerson', 0, 'color: orange; opacity: 0.5;'],
-            ['PrepareMeal', 0, 'color: orange; opacity: 0.5;'],
-            ['Smoking', 0, 'color: orange; opacity: 0.5;'],
-            ['Communication', 0, 'color: orange; opacity: 0.5;'],
-            ['WatchingTV', 0, 'color: orange; opacity: 0.5;']
+            ['다과', 0, 'color: orange; opacity: 0.5;'],
+            ['정리정돈', 0, 'color: orange; opacity: 0.5;'],
+            ['음료마시기', 0, 'color: orange; opacity: 0.5;'],
+            ['식사하기', 0, 'color: orange; opacity: 0.5;'],
+            ['청소하기', 0, 'color: orange; opacity: 0.5;'],
+            ['담소나누기', 0, 'color: orange; opacity: 0.5;'],
+            ['식사준비', 0, 'color: orange; opacity: 0.5;'],
+            ['흡연하기', 0, 'color: orange; opacity: 0.5;'],
+            ['전화통화', 0, 'color: orange; opacity: 0.5;'],
+            ['TV시청', 0, 'color: orange; opacity: 0.5;']
         ]);
         var view = new google.visualization.DataView(data);
         var options = {
@@ -392,16 +392,16 @@
                 function drawChart() {
                     var data = google.visualization.arrayToDataTable([
                         ['action', '수치', {role: 'style'}],
-                        ['Refreshment', Number(tmp[0]), 'color: orange; opacity: 0.5;'],
-                        ['ArrangeThing', Number(tmp[2]), 'color: orange; opacity: 0.5;'],
-                        ['Drink', Number(tmp[4]), 'color: orange; opacity: 0.5;'],
-                        ['Meal', Number(tmp[6]), 'color: orange; opacity: 0.5;'],
-                        ['Cleaning', Number(tmp[8]), 'color: orange; opacity: 0.5;'],
-                        ['CommunicationWithPerson', Number(tmp[10]), 'color: orange; opacity: 0.5;'],
-                        ['PrepareMeal', Number(tmp[12]), 'color: orange; opacity: 0.5;'],
-                        ['Smoking', Number(tmp[14]), 'color: orange; opacity: 0.5;'],
-                        ['Communication', Number(tmp[16]), 'color: orange; opacity: 0.5;'],
-                        ['WatchingTV', Number(tmp[18]), 'color: orange; opacity: 0.5;']
+                        ['다과', Number(tmp[0]), 'color: orange; opacity: 0.5;'],
+                        ['정리전돈', Number(tmp[2]), 'color: orange; opacity: 0.5;'],
+                        ['음료마시기', Number(tmp[4]), 'color: orange; opacity: 0.5;'],
+                        ['식사하기', Number(tmp[6]), 'color: orange; opacity: 0.5;'],
+                        ['청소하기', Number(tmp[8]), 'color: orange; opacity: 0.5;'],
+                        ['담소나누기', Number(tmp[10]), 'color: orange; opacity: 0.5;'],
+                        ['식사준비', Number(tmp[12]), 'color: orange; opacity: 0.5;'],
+                        ['흡연하기', Number(tmp[14]), 'color: orange; opacity: 0.5;'],
+                        ['전화통화', Number(tmp[16]), 'color: orange; opacity: 0.5;'],
+                        ['TV시청', Number(tmp[18]), 'color: orange; opacity: 0.5;']
                     ]);
                     var view = new google.visualization.DataView(data);
                     var options = {
