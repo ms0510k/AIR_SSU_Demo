@@ -95,44 +95,6 @@ Return:
     웹 상에 다시 출력해줄 정보들을 담고 있는 변수
 '''
 # @jaeseung
-num_stamp = 0
-start = 0
-end = 0
-currentTime = 0
-totalTime = 0
-
-def fire_rule(request):
-    # print("test")
-    if request.method == 'POST':
-        file_name = request.POST.get('file_name')
-        # print("good")
-        # JESS Engine에 연결한 후, 웹 상에서 넘어온 정보들을 Parsing
-        engine = connect_jess_engine(21000)
-        # @jaeseung : give engine file_name
-        results = engine.run_engine(file_name)
-        # print(results)
-
-        time_list, response_df = parse_results(results)
-
-        # global num_stamp
-        # if num_stamp < response_df.shape[0]:
-        #     num_stamp += 1
-        #
-        # print(time_list[num_stamp])
-        # print(response_df.iloc[[num_stamp]])
-
-        # result = response_df.iloc[num_stamp].to_json(orient="records")
-        # print(response_df.iloc[num_stamp].to_json(orient="records"))
-
-        global currentTime
-        global totalTime
-        graphTime1 = currentTime * round(float(response_df.shape[0]/totalTime))
-        graphTime2 = graphTime1 + round(float(response_df.shape[0]/totalTime))
-        resultTime = int((graphTime1 + graphTime2) / 2)
-        print(resultTime)
-        print(response_df[graphTime1:graphTime2])
-        result = response_df.iloc[resultTime].to_json(orient="records")
-        return HttpResponse(result, content_type="application/json")
 
 
 def parse_results(results):
@@ -144,6 +106,7 @@ def parse_results(results):
         time_list.append(i[:16])
         data_list.append(i[24:])
 
+    # print('###@@@##@@##@',data_list[0])
     for d in data_list[:-1]:
         # print(d)
         tmp_list = []
@@ -162,7 +125,7 @@ def parse_results(results):
     header = ["Refreshment", "Reading", "ArrangeThing", "Drink",  "Meal", "Clothing", "Cleaning",
                "CommunicationWithPerson",  "HealthCare", "PrepareMeal", "Smoking",  "Communication", "WatchingTV"]
     df = pd.DataFrame(value_list, columns=header)
-    df.pop('Reading')
+    df.pop('Smoking')
     df.pop('Clothing')
     df.pop('HealthCare')
     # print(df.head())
@@ -186,6 +149,13 @@ def connect_jess_engine(port):
     engine = gateway.entry_point.getreteEngine()
 
     return engine
+
+
+num_stamp = 0
+start = 0
+end = 0
+currentTime = 0
+totalTime = 0
 
 
 '''
@@ -245,17 +215,53 @@ def percept(request):  ##################### perceptajax
 
         currentTime = cur
         totalTime = dur
-        start = cur * round(float(df_time_converted.shape[0]/dur))
-        end = start + round(float(df_time_converted.shape[0]/dur))
+        start = cur * round(float(df_time_converted.shape[0]/(dur*2)))
+        end = start + round(float(df_time_converted.shape[0]/(dur*2)))
         print("percept : ", df_time_converted.shape)
         print("########################################################################")
         print(start, '\t', end)
 
         percept_row = pd.DataFrame(df_time_converted.iloc[start:end])
-        response = HttpResponse(percept_row.to_html(index=False, classes='table table-bordered table-fixed'),
+        if len(percept_row) == 0:
+            percept_row = None
+        response = HttpResponse(percept_row.to_html(index=False, classes='table table-striped'),
                                 content_type='text/html')
         print(response)
         return response
+
+def fire_rule(request):
+    # print("test")
+    if request.method == 'POST':
+        file_name = request.POST.get('file_name')
+        # print("good")
+        # JESS Engine에 연결한 후, 웹 상에서 넘어온 정보들을 Parsing
+        engine = connect_jess_engine(21000)
+        # @jaeseung : give engine file_name
+        results = engine.run_engine(file_name)
+        # print(results)
+
+        time_list, response_df = parse_results(results)
+
+        # global num_stamp
+        # if num_stamp < response_df.shape[0]:
+        #     num_stamp += 1
+        #
+        # print(time_list[num_stamp])
+        # print(response_df.iloc[[num_stamp]])
+
+        # result = response_df.iloc[num_stamp].to_json(orient="records")
+        # print(response_df.iloc[num_stamp].to_json(orient="records"))
+
+        global currentTime
+        global totalTime
+        graphTime1 = currentTime * round(float(response_df.shape[0]/(totalTime*2)))
+        graphTime2 = graphTime1 + round(float(response_df.shape[0]/(totalTime*2)))
+        resultTime = int((graphTime1 + graphTime2) / 2)
+        resultTime = graphTime2 -5
+        # print(resultTime)
+        # print(response_df[graphTime1:graphTime2])
+        result = response_df.iloc[resultTime].to_json(orient="records")
+        return HttpResponse(result, content_type="application/json")
 
 def time(request):  #################### time 배속 구해주기
     print("time def")
