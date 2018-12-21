@@ -1,0 +1,1228 @@
+<!DOCTYPE html> <!-- Document Type Definition-->
+<html lang="en">
+<head>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            height: 100%;
+        }
+
+        th, td {
+            text-align: center;
+            padding: 8px;
+            font-size: 18px;
+            border: 1px solid black;
+        }
+
+        th {
+            background-color: rgba(145, 155, 164, 0.39)
+        }
+
+        td {
+            background-color: white
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- @jaeseung : for TAB -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"
+          rel="stylesheet">
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"
+          rel="stylesheet">
+    <link rel="shortcut icon" href="http://rb20.kimsq.co.kr/rb2/layouts/default/assets/ico/favicon.ico">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="https://d3js.org/d3-collection.v1.min.js"></script>
+
+    {% load staticfiles %}
+
+    <title>고령자 의도 학습 데모</title>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+
+    <!-- Bootstrap -->
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous">
+    </script>
+
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+</head>
+
+<body style="background-image: url({% static 'images/back-home.jpg' %});background-size: cover;background-repeat: no-repeat;z-index: -1;"></body>
+
+<div class="container">{% comment %}{% endcomment %}
+
+    <div class="row" ,
+         style="margin-top: 15px; border: hidden; padding-left: 16px; padding-right:16px; max-height: 77px">
+        <!-- 제목부 Smart Butler Reasoner -->
+        <div class="jumbotron" style="padding-top: 7px; padding-bottom: 7px; background-color: #02547D;">
+            <!-- HTML은 6단계의 제목을 갖고, <h1> ~ <h6> 단계로 표현됨 -->
+            <!-- <h1> Main Title </h1>
+            <h2> Top Level Heading </h2>
+            <h3> Subheading </h3>
+            <h4> Sub-subheading </h4>-->
+            <h2 style="color: aliceblue; font-size: 35px; font-weight: bold;" align="center">고령자 의도 학습 및 복합 상황 추론</h2>
+            <!-- <p> 요소는 문자의 문단을 포함하기 위한 것; 일반적인 문자 내용을 나타낼 때 많이 사용됨 -->
+        </div>
+    </div>
+    <div>
+        <div class="row" , style="margin-top: 10px; border: hidden; min-height: 600px;">
+            <div class="row" , style="border: hidden; min-height: 50px">
+                <div class="container">
+                    <div class="panel panel-success" style="border: none;  opacity: 1;">
+                        <div class="panel-body"
+                             style="max-height: 2000px; height: 855px; padding: 5px;">
+                            <div class="w3-bar w3-black">
+                                <button class="w3-bar-item w3-button"
+                                        style="width: 50%; background-color: #c6dbef"
+                                        onclick="window.location.href='/'">고령자 의도 추론
+                                </button>
+                                <button class="w3-bar-item w3-button w3-blue"
+                                        style="width: 50%;">고령자 생활 패턴 학습
+                                </button>
+                            </div>
+
+                            <div class="col-md-6" , style="border: hidden;">
+
+                                {% comment %} 고령자 데이터 선택{% endcomment %}
+                                <div class="row" , style="border: hidden; min-height: 50px; padding-top: 10px;">
+                                    <div class="col-md-12" style="height: 60px;">
+                                        <div class="panel panel-success" style="border: none;  opacity: 1;">
+                                            <div class="panel-heading"
+                                                 style="background-color: #5590BE; padding-bottom: 4px; border: none;">
+                                                <p style="color: aliceblue; font-size: 20px; font-weight: bold;">
+                                                    <span class="glyphicon glyphicon-save-file"></span>
+                                                    고령자 데이터
+                                                    <select class="form-control" name="userid" id="select"
+                                                            style="background-color: #0284A8; width: 40%; float: right; font-size: 15px; color: #fffcfc"
+                                                            oninput="select(this)">
+                                                        <option value="select" selected disabled hidden
+                                                                style="text-align: center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;고령자
+                                                            선택
+                                                        </option>
+                                                        <option value="김차순 고령자 데이터">김차순 고령자 데이터</option>
+                                                        <option value="도경자 고령자 데이터">도경자 고령자 데이터</option>
+                                                        <option value="이숙재 고령자 데이터">이숙재 고령자 데이터</option>
+                                                    </select>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {% comment %}고령자 생활 데이터 정보 {% endcomment %}
+                                <div class="row" , style="border: hidden;">
+                                    <div class="col-md-12">
+                                        <div class="panel panel-success" style="border: none;  opacity: 1;">
+                                            <div class="panel-heading"
+                                                 style="background-color: #5590BE; padding-bottom: 4px; border: none; font-weight: bold;">
+                                                <p style="color: aliceblue; font-size: 20px">
+                                                    <span class="glyphicon glyphicon-info-sign"></span>
+                                                    고령자 생활 데이터 정보
+                                                </p>
+                                            </div>
+                                            <div class="panel-body"
+                                                 style="background-color: #d9e8f5; position:relative; height: 100px; padding: 7px;"
+                                                 id="dataInfo">
+                                                <table>
+                                                    <tr>
+                                                        <th style="text-align: center;">고령자</th>
+                                                        <th style="text-align: center;">수집기간</th>
+                                                        <th style="text-align: center;"> 수집시간</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td id="info_1">-</td>
+                                                        <td id="info_2">-</td>
+                                                        <td id="info_3">-</td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {% comment %} 고령자 생활 패턴 {% endcomment %}
+                                <div class="row" , style="border: hidden;">
+                                    <div class="col-md-12">
+                                        <div class="panel panel-success" style="border: none;  opacity: 1;">
+                                            <div class="panel-heading"
+                                                 style="background-color: #5590BE; padding-bottom: 4px; border: none; font-weight: bold;">
+                                                <p style="color: aliceblue; font-size: 20px">
+                                                    <span class="glyphicon glyphicon-align-left"></span>
+                                                    고령자 생활 패턴
+                                                </p>
+                                            </div>
+                                            <div class="panel-body"
+                                                 style="background-color: #d9e8f5; height: 170px; padding: 5px;"
+                                                 id="b_pattern">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6" , style="border: hidden; min-height: 300px;">
+                                {% csrf_token %}
+                                <div class="row" , style="margin-top: 0px; border: hidden; min-height: 450px;">
+                                    <div class="col-md-12">
+
+                                        {% comment %} 시간별 고령자 의도 그래프 {% endcomment %}
+                                        <div class="row" , style="border: hidden; padding-top: 10px;">
+                                            <div class="col-md-12">
+                                                <div class="panel panel-success" style="border: none;  opacity: 1;">
+                                                    <div class="panel-heading"
+                                                         style="background-color: #5590BE; padding-bottom: 4px; border: none; font-weight: bold;">
+                                                        <p style="color: aliceblue; font-size: 20px">
+                                                            <span class="glyphicon glyphicon-align-left"></span>
+                                                            시간별 고령자 의도 그래프
+                                                        </p>
+                                                    </div>
+                                                    <div class="panel-body"
+                                                         style="background-color: #d9e8f5; height: 402px; padding: 0px;"
+                                                         id="b_timeIntent">
+                                                        <div class="w3-bar w3-black">
+                                                            <button class="w3-bar-item w3-button tablink2 w3-blue"
+                                                                    onclick="openTab2(event,'timeIntent_a')"
+                                                                    style="width: 25%; padding: 0px; background-color: #c6dbef;"
+                                                                    id="timeIntent_1">
+                                                                의도1
+                                                            </button>
+                                                            <button class="w3-bar-item w3-button tablink2"
+                                                                    onclick="openTab2(event,'timeIntent_b')"
+                                                                    style="width: 25%; padding: 0px; background-color: #c6dbef;"
+                                                                    id="timeIntent_2">
+                                                                의도2
+                                                            </button>
+                                                            <button class="w3-bar-item w3-button tablink2"
+                                                                    onclick="openTab2(event,'timeIntent_c')"
+                                                                    style="width: 25%; padding: 0px; background-color: #c6dbef;"
+                                                                    id="timeIntent_3">
+                                                                의도3
+                                                            </button>
+                                                            <button class="w3-bar-item w3-button tablink2"
+                                                                    onclick="openTab2(event,'timeIntent_d')"
+                                                                    style="width: 25%; padding: 0px; background-color: #c6dbef;"
+                                                                    id="timeIntent_4">
+                                                                의도4
+                                                            </button>
+                                                        </div>
+                                                        <div id="timeIntent_a" class="tab2"
+                                                             style="border: none; width: 95%; height: 82%; position: absolute; padding: 5px;"></div>
+                                                        <div id="timeIntent_b" class="tab2"
+                                                             style="visibility:hidden; border: none; width: 95%; height: 82%; position: absolute; padding: 5px;"></div>
+                                                        <div id="timeIntent_c" class="tab2"
+                                                             style="visibility:hidden; border: none; width: 95%; height: 82%; position: absolute; padding: 5px;"></div>
+                                                        <div id="timeIntent_d" class="tab2"
+                                                             style="visibility:hidden; border: none; width: 95%; height: 82%; position: absolute; padding: 5px;"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% comment %} 빈도 기반 고령자 의도 그래프{% endcomment %}
+                            <div class="col-md-12">
+                                <div class="row" , style="border: hidden; min-height: 50px">
+                                    <div class="col-md-12">
+                                        <div class="panel panel-success" style="border: none;  opacity: 1;">
+                                            <div class="panel-heading"
+                                                 style="background-color: #5590BE; padding-bottom: 4px; border: none; font-weight: bold;">
+                                                <p style="color: aliceblue; font-size: 20px">
+                                                    <span class="glyphicon glyphicon-stats"></span>
+                                                    빈도 기반 고령자 의도 그래프
+                                                </p>
+                                            </div>
+                                            <div class="panel-body"
+                                                 style="background-color: #d9e8f5; max-height: 300px; min-height: 260px; overflow:auto; padding: 10px;"
+                                                 id="intentGraph">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<link rel="stylesheet" type="text/css" href={% static "css/tests.css" %}>
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src={% static "js/epoch.js" %}></script>
+<link rel="stylesheet" type="text/css" href={% static "css/epoch.css" %}>
+<script>
+    function openTab2(evt, tabName) {
+        var i, x, tablinks;
+        x = document.getElementsByClassName("tab2");
+        for (i = 0; i < x.length; i++) {
+            x[i].style.visibility = "hidden";
+        }
+        tablinks = document.getElementsByClassName("tablink2");
+        for (i = 0; i < x.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" w3-blue", "");
+        }
+        document.getElementById(tabName).style.visibility = "visible";
+        evt.currentTarget.className += " w3-blue";
+    }
+</script>
+<script>
+
+    function getOneIntentFromCSV(csv, selName) {
+        var dataPoints = csvLines = points = [];
+        csvLines = csv.split(/[\r?\n|\r|\n]+/);
+        console.log("[" + selName + "]")
+        if (selName == "김차순 고령자 데이터") {
+            dataPoints.push([
+                "Time", "미디어시청", "식사하기", "사교활동", "독서하기"
+            ])
+        } else if (selName == "도경자 고령자 데이터") {
+            dataPoints.push([
+                "Time", "미디어시청", "식사하기", "소통활동", "음료마시기"
+            ])
+        } else if (selName == "이숙재 고령자 데이터") {
+            dataPoints.push([
+                "Time", "소통활동", "식사하기", "미디어시청", "건강관리"
+            ])
+        }
+        for (var i = 0; i < csvLines.length; i++)
+            if (csvLines[i].length > 0) {
+                points = csvLines[i].split("\t");
+                // console.log("0 : " + points[0], "1 : " + points[1]);
+                dataPoints.push([
+                        // new Date(0, 0, 0, parseInt(points[0].slice(0, 2)), parseInt(points[0].slice(2, 4)), 0),
+                        points[0],
+                        parseFloat(points[1]),
+                        parseFloat(points[2]),
+                        parseFloat(points[3]),
+                        parseFloat(points[4])
+                    ]
+                )
+            }
+        return dataPoints;
+    }
+
+    function getTimeIntentFromCSV(csv) {
+        var dataPoints = csvLines = points = [];
+        csvLines = csv.split(/[\r?\n|\r|\n]+/);
+        dataPoints.push([
+            "Date", "Start", "End"
+        ])
+        for (var i = 0; i < csvLines.length; i++)
+            if (csvLines[i].length > 0) {
+                points = csvLines[i].split("\t");
+                // console.log("0 : " + points[0], "1 : " + points[1]);
+                dataPoints.push([
+                        points[0].slice(0, 10),
+
+                        new Date(0, 0, 0,
+                            parseInt(points[0].slice(11, 13)), parseInt(points[0].slice(14, 16)), 0),
+
+                        new Date(0, 0, 0,
+                            parseInt(points[1].slice(11, 13)), parseInt(points[1].slice(14, 16)), 0)
+                    ]
+                )
+            }
+        return dataPoints;
+    }
+
+
+    function select(obj) {
+        if (obj.value == "김차순 고령자 데이터") {   /////////////////////////////////////////////////////////////////// 김차순선택
+            var i, x, tablinks;
+            x = document.getElementsByClassName("tab2");
+            var targetIntent = document.getElementById("timeIntent_3")
+            for (i = 0; i < x.length; i++) {
+                x[i].style.visibility = "hidden";
+            }
+            tablinks = document.getElementsByClassName("tablink2");
+            for (i = 0; i < x.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" w3-blue", "");
+            }
+            document.getElementById("timeIntent_c").style.visibility = "visible";
+            targetIntent.classList.add("w3-blue");
+
+            $("#oneIntent_1").text("미디어시청");
+            $("#oneIntent_2").text("식사하기");
+            $("#oneIntent_3").text("사교활동");
+            $("#oneIntent_4").text("독서하기");
+            $("#timeIntent_1").text("미디어시청");
+            $("#timeIntent_2").text("식사하기");
+            $("#timeIntent_3").text("사교활동");
+            $("#timeIntent_4").text("독서하기");
+            $("#multiIntent_1").text("사교활동 & 음료마시기");
+            $("#multiIntent_2").text("사교활동 & 식사하기");
+            $("#multiIntent_3").text("사교활동 & 미디어시청");
+            $("#info_1").text("김차순");
+            $("#info_2").text("28일(2.20 ~ 5.10)");
+            $("#info_3").text("07:00 ~ 21:00");
+            google.charts.load('current', {packages: ['corechart', 'bar', 'timeline']});
+            google.charts.setOnLoadCallback(drawChart_pattern);
+            google.charts.setOnLoadCallback(drawChart_timeIntent_a);
+            google.charts.setOnLoadCallback(drawChart_timeIntent_b);
+            google.charts.setOnLoadCallback(drawChart_timeIntent_c);
+            google.charts.setOnLoadCallback(drawChart_timeIntent_d);
+            google.charts.setOnLoadCallback(drawChart_intentGraph);
+
+            function drawChart_pattern() {
+                var data = google.visualization.arrayToDataTable([
+                    ['성향', '수치', {role: 'style'}],
+                    ['사교적성향', 8.5, 'color: #0072BD; opacity: 0.8;'],
+                    ['TV 애청자', 5.5, 'color: #D95319; opacity: 0.8;'],
+                    ['소통적성향', 2, 'color: #EDB120; opacity: 0.8']
+                ]);
+                var options = {
+                    width: "100%",
+                    height: "100%",
+                    bar: {groupWidth: "50%"},
+                    legend: {position: "none"},
+                    hAxis: {
+                        viewWindowMode: 'explicit',
+                        viewWindow: {
+                            min: 0,
+                            max: 10
+                        },
+                        gridlines: {count: 5},
+                        textStyle: {
+                            fontSize: 12
+                        }
+                    },
+                    vAxis: {
+                        textStyle: {
+                            bold: true,
+                            fontSize: 12
+                        }
+                    }
+                };
+                var chart = new google.visualization.BarChart(document.getElementById('b_pattern'));
+                chart.draw(data, options);
+            }
+
+            function drawChart_timeIntent_a() {
+                $.get("{% static "percept/kim/WatchingTV/total.txt" %}", function (data) {
+                    var dataPoints = getTimeIntentFromCSV(data)
+
+                    var container = document.getElementById('timeIntent_a');
+                    var chart = new google.visualization.Timeline(container);
+                    var dataTable = google.visualization.arrayToDataTable(dataPoints);
+                    // console.log(dataPoints);
+
+                    var options = {
+                        timeline: {rowLabelStyle: {fontSize: 10}, barLabelStyle: {fontSize: 6}},
+                        hAxis: {format: 'aa h'}
+                    };
+
+                    chart.draw(dataTable, options);
+                });
+            }
+
+            function drawChart_timeIntent_b() {
+                $.get("{% static "percept/kim/Meal/total.txt"%}", function (data) {
+                    var dataPoints = getTimeIntentFromCSV(data)
+
+                    var container = document.getElementById('timeIntent_b');
+                    var chart = new google.visualization.Timeline(container);
+                    var dataTable = google.visualization.arrayToDataTable(dataPoints);
+                    // console.log(dataPoints);
+
+                    var options = {
+                        timeline: {rowLabelStyle: {fontSize: 10}, barLabelStyle: {fontSize: 6}},
+                        hAxis: {format: 'aa h'}
+                    };
+
+                    chart.draw(dataTable, options);
+                });
+            }
+
+            function drawChart_timeIntent_c() {
+                $.get("{% static "percept/kim/Communication/total.txt"%}", function (data) {
+                    var dataPoints = getTimeIntentFromCSV(data)
+
+                    var container = document.getElementById('timeIntent_c');
+                    var chart = new google.visualization.Timeline(container);
+                    var dataTable = google.visualization.arrayToDataTable(dataPoints);
+                    // console.log(dataPoints);
+
+                    var options = {
+                        timeline: {rowLabelStyle: {fontSize: 10}, barLabelStyle: {fontSize: 6}},
+                        hAxis: {format: 'aa h'}
+                    };
+
+                    chart.draw(dataTable, options);
+                });
+            }
+
+            function drawChart_timeIntent_d() {
+                $.get("{% static "percept/kim/Reading/total.txt"%}", function (data) {
+                    var dataPoints = getTimeIntentFromCSV(data)
+
+                    var container = document.getElementById('timeIntent_d');
+                    var chart = new google.visualization.Timeline(container);
+                    var dataTable = google.visualization.arrayToDataTable(dataPoints);
+                    // console.log(dataPoints);
+
+                    var options = {
+                        timeline: {rowLabelStyle: {fontSize: 10}, barLabelStyle: {fontSize: 6}},
+                        hAxis: {format: 'aa h'}
+                    };
+
+                    chart.draw(dataTable, options);
+                });
+            }
+
+            function drawChart_intentGraph() {
+                $.get("{% static "percept/kim_single_intention.csv"%}", function (data) {
+                    var dataPoints = getOneIntentFromCSV(data, obj.value)
+                    {#console.log(dataPoints)#}
+                    var data = google.visualization.arrayToDataTable(dataPoints);
+                    console.log(data)
+
+                    // Instantiate and draw our chart, passing in some options.
+                    var chart = new google.visualization.ChartWrapper({
+                        chartType: 'AreaChart',
+                        containerId: 'intentGraph',
+                        dataTable: data,
+                        options: {
+                            width: "100%",
+                            height: "100%",
+                            curveType: 'function',
+                            legend: {position: "top"}
+                        }
+                    });
+                    // create columns array
+                    var columns = [0];
+                    /* the series map is an array of data series
+                     * "column" is the index of the data column to use for the series
+                     * "roleColumns" is an array of column indices corresponding to columns with roles that are associated with this data series
+                     * "display" is a boolean, set to true to make the series visible on the initial draw
+                     */
+                    var seriesMap = [{
+                        column: 1,
+                        {#roleColumns: [2],#}
+                        display: false
+                    }, {
+                        column: 2,
+                        {#roleColumns: [4],#}
+                        display: false
+                    }, {
+                        column: 3,
+                        {#roleColumns: [6],#}
+                        display: true
+                    }, {
+                        column: 4,
+                        {#roleColumns: [8],#}
+                        display: false
+                    }];
+                    var columnsMap = {};
+                    var series = [];
+                    for (var i = 0; i < seriesMap.length; i++) {
+                        var col = seriesMap[i].column;
+                        columnsMap[col] = i;
+                        // set the default series option
+                        series[i] = {};
+                        if (seriesMap[i].display) {
+                            // if the column is the domain column or in the default list, display the series
+                            columns.push(col);
+                        }
+                        else {
+                            // otherwise, hide it
+                            columns.push({
+                                label: data.getColumnLabel(col),
+                                type: data.getColumnType(col),
+                                sourceColumn: col,
+                                calc: function () {
+                                    return null;
+                                }
+                            });
+                            // backup the default color (if set)
+                            if (typeof(series[i].color) !== 'undefined') {
+                                series[i].backupColor = series[i].color;
+                            }
+                            series[i].color = '#CCCCCC';
+                        }
+                    }
+
+                    chart.setOption('series', series);
+
+                    function showHideSeries() {
+                        var sel = chart.getChart().getSelection();
+                        // if selection length is 0, we deselected an element
+                        if (sel.length > 0) {
+                            // if row is undefined, we clicked on the legend
+                            if (sel[0].row == null) {
+                                var col = sel[0].column;
+                                if (typeof(columns[col]) == 'number') {
+                                    var src = columns[col];
+
+                                    // hide the data series
+                                    columns[col] = {
+                                        label: data.getColumnLabel(src),
+                                        type: data.getColumnType(src),
+                                        sourceColumn: src,
+                                        calc: function () {
+                                            return null;
+                                        }
+                                    };
+
+                                    // grey out the legend entry
+                                    series[columnsMap[src]].color = '#CCCCCC';
+                                }
+                                else {
+                                    var src = columns[col].sourceColumn;
+
+                                    // show the data series
+                                    columns[col] = src;
+                                    series[columnsMap[src]].color = null;
+                                }
+                                var view = chart.getView() || {};
+                                view.columns = columns;
+                                chart.setView(view);
+                                chart.draw();
+                            }
+                        }
+                    }
+
+                    google.visualization.events.addListener(chart, 'select', showHideSeries);
+
+                    // create a view with the default columns
+                    var view = {
+                        columns: columns
+                    };
+                    chart.draw();
+
+                });
+            }
+        }
+        else if (obj.value == "도경자 고령자 데이터") {   /////////////////////////////////////////////////////////////////// 도경자선택
+            var i, x, tablinks;
+            x = document.getElementsByClassName("tab2");
+            var targetIntent = document.getElementById("timeIntent_1")
+            for (i = 0; i < x.length; i++) {
+                x[i].style.visibility = "hidden";
+            }
+            tablinks = document.getElementsByClassName("tablink2");
+            for (i = 0; i < x.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" w3-blue", "");
+            }
+            document.getElementById("timeIntent_a").style.visibility = "visible";
+            targetIntent.classList.add("w3-blue");
+            $("#oneIntent_1").text("미디어시청");
+            $("#oneIntent_2").text("식사하기");
+            $("#oneIntent_3").text("소통활동");
+            $("#oneIntent_4").text("음료마시기");
+            $("#timeIntent_1").text("미디어시청");
+            $("#timeIntent_2").text("식사하기");
+            $("#timeIntent_3").text("소통활동");
+            $("#timeIntent_4").text("음료마시기");
+            $("#multiIntent_1").text("미디어시청 & 식사하기");
+            $("#multiIntent_2").text("미디어시청 & 소통활동");
+            $("#multiIntent_3").text("미디어시청 & 사교활동");
+            $("#info_1").text("도경자");
+            $("#info_2").text("11일(4.18 ~ 5.02)");
+            $("#info_3").text("07:00 ~ 21:00");
+            google.charts.load('current', {packages: ['corechart', 'bar', 'timeline']});
+            google.charts.setOnLoadCallback(drawChart_pattern);
+            google.charts.setOnLoadCallback(drawChart_timeIntent_a);
+            google.charts.setOnLoadCallback(drawChart_timeIntent_b);
+            google.charts.setOnLoadCallback(drawChart_timeIntent_c);
+            google.charts.setOnLoadCallback(drawChart_timeIntent_d);
+            google.charts.setOnLoadCallback(drawChart_intentGraph);
+
+            function drawChart_pattern() {
+                var data = google.visualization.arrayToDataTable([
+                    ['성향', '수치', {role: 'style'}],
+                    ['사교적성향', 1.5, 'color: #0072BD; opacity: 0.8;'],
+                    ['TV 애청자', 10, 'color: #D95319; opacity: 0.8;'],
+                    ['소통적성향', 3, 'color: #EDB120; opacity: 0.8']
+                ]);
+                var options = {
+                    width: "100%",
+                    height: "100%",
+                    bar: {groupWidth: "50%"},
+                    legend: {position: "none"},
+                    hAxis: {
+                        viewWindowMode: 'explicit',
+                        viewWindow: {
+                            min: 0,
+                            max: 10
+                        },
+                        gridlines: {count: 5},
+                        textStyle: {
+                            fontSize: 12
+                        }
+                    },
+                    vAxis: {
+                        textStyle: {
+                            bold: true,
+                            fontSize: 12
+                        }
+                    }
+                };
+                var chart = new google.visualization.BarChart(document.getElementById('b_pattern'));
+                chart.draw(data, options);
+            }
+
+            function drawChart_timeIntent_a() {
+                $.get("{% static "percept/do/WatchingTV/total.txt"%}", function (data) {
+                    var dataPoints = getTimeIntentFromCSV(data)
+
+                    var container = document.getElementById('timeIntent_a');
+                    var chart = new google.visualization.Timeline(container);
+                    var dataTable = google.visualization.arrayToDataTable(dataPoints);
+                    // console.log(dataPoints);
+
+                    var options = {
+                        timeline: {rowLabelStyle: {fontSize: 10}, barLabelStyle: {fontSize: 6}},
+                        hAxis: {format: 'aa h'}
+                    };
+
+                    chart.draw(dataTable, options);
+                });
+            }
+
+            function drawChart_timeIntent_b() {
+                $.get("{% static "percept/do/Meal/total.txt"%}", function (data) {
+                    var dataPoints = getTimeIntentFromCSV(data)
+
+                    var container = document.getElementById('timeIntent_b');
+                    var chart = new google.visualization.Timeline(container);
+                    var dataTable = google.visualization.arrayToDataTable(dataPoints);
+                    // console.log(dataPoints);
+
+                    var options = {
+                        timeline: {rowLabelStyle: {fontSize: 10}, barLabelStyle: {fontSize: 6}},
+                        hAxis: {format: 'aa h'}
+                    };
+
+                    chart.draw(dataTable, options);
+                });
+            }
+
+            function drawChart_timeIntent_c() {
+                $.get("{% static "percept/do/Communication/total.txt"%}", function (data) {
+                    var dataPoints = getTimeIntentFromCSV(data)
+
+                    var container = document.getElementById('timeIntent_c');
+                    var chart = new google.visualization.Timeline(container);
+                    var dataTable = google.visualization.arrayToDataTable(dataPoints);
+                    // console.log(dataPoints);
+
+                    var options = {
+                        timeline: {rowLabelStyle: {fontSize: 10}, barLabelStyle: {fontSize: 6}},
+                        hAxis: {format: 'aa h'}
+                    };
+
+                    chart.draw(dataTable, options);
+                });
+            }
+
+            function drawChart_timeIntent_d() {
+                $.get("{% static "percept/do/Drink/total.txt"%}", function (data) {
+                    var dataPoints = getTimeIntentFromCSV(data)
+
+                    var container = document.getElementById('timeIntent_d');
+                    var chart = new google.visualization.Timeline(container);
+                    var dataTable = google.visualization.arrayToDataTable(dataPoints);
+                    // console.log(dataPoints);
+
+                    var options = {
+                        timeline: {rowLabelStyle: {fontSize: 10}, barLabelStyle: {fontSize: 6}},
+                        hAxis: {format: 'aa h'}
+                    };
+
+                    chart.draw(dataTable, options);
+                });
+            }
+
+            function drawChart_intentGraph() {
+                $.get("{% static "percept/Do_Single_Intention.csv"%}", function (data) {
+                    var dataPoints = getOneIntentFromCSV(data, obj.value)
+                    {#console.log(dataPoints)#}
+                    var data = google.visualization.arrayToDataTable(dataPoints);
+                    console.log(data)
+
+                    // Instantiate and draw our chart, passing in some options.
+                    var chart = new google.visualization.ChartWrapper({
+                        chartType: 'AreaChart',
+                        containerId: 'intentGraph',
+                        dataTable: data,
+                        options: {
+                            width: "100%",
+                            height: "100%",
+                            curveType: 'function',
+                            legend: {position: "top"}
+                        }
+                    });
+                    // create columns array
+                    var columns = [0];
+                    /* the series map is an array of data series
+                     * "column" is the index of the data column to use for the series
+                     * "roleColumns" is an array of column indices corresponding to columns with roles that are associated with this data series
+                     * "display" is a boolean, set to true to make the series visible on the initial draw
+                     */
+                    var seriesMap = [{
+                        column: 1,
+                        {#roleColumns: [2],#}
+                        display: true
+                    }, {
+                        column: 2,
+                        {#roleColumns: [4],#}
+                        display: false
+                    }, {
+                        column: 3,
+                        {#roleColumns: [6],#}
+                        display: false
+                    }, {
+                        column: 4,
+                        {#roleColumns: [8],#}
+                        display: false
+                    }];
+                    var columnsMap = {};
+                    var series = [];
+                    for (var i = 0; i < seriesMap.length; i++) {
+                        var col = seriesMap[i].column;
+                        columnsMap[col] = i;
+                        // set the default series option
+                        series[i] = {};
+                        if (seriesMap[i].display) {
+                            // if the column is the domain column or in the default list, display the series
+                            columns.push(col);
+                        }
+                        else {
+                            // otherwise, hide it
+                            columns.push({
+                                label: data.getColumnLabel(col),
+                                type: data.getColumnType(col),
+                                sourceColumn: col,
+                                calc: function () {
+                                    return null;
+                                }
+                            });
+                            // backup the default color (if set)
+                            if (typeof(series[i].color) !== 'undefined') {
+                                series[i].backupColor = series[i].color;
+                            }
+                            series[i].color = '#CCCCCC';
+                        }
+                    }
+
+                    chart.setOption('series', series);
+
+                    function showHideSeries() {
+                        var sel = chart.getChart().getSelection();
+                        // if selection length is 0, we deselected an element
+                        if (sel.length > 0) {
+                            // if row is undefined, we clicked on the legend
+                            if (sel[0].row == null) {
+                                var col = sel[0].column;
+                                if (typeof(columns[col]) == 'number') {
+                                    var src = columns[col];
+
+                                    // hide the data series
+                                    columns[col] = {
+                                        label: data.getColumnLabel(src),
+                                        type: data.getColumnType(src),
+                                        sourceColumn: src,
+                                        calc: function () {
+                                            return null;
+                                        }
+                                    };
+
+                                    // grey out the legend entry
+                                    series[columnsMap[src]].color = '#CCCCCC';
+                                }
+                                else {
+                                    var src = columns[col].sourceColumn;
+
+                                    // show the data series
+                                    columns[col] = src;
+                                    series[columnsMap[src]].color = null;
+                                }
+                                var view = chart.getView() || {};
+                                view.columns = columns;
+                                chart.setView(view);
+                                chart.draw();
+                            }
+                        }
+                    }
+
+                    google.visualization.events.addListener(chart, 'select', showHideSeries);
+
+                    // create a view with the default columns
+                    var view = {
+                        columns: columns
+                    };
+                    chart.draw();
+
+                });
+            }
+        }
+        else if (obj.value == "이숙재 고령자 데이터") {   /////////////////////////////////////////////////////////////////// 이숙재선택
+            var i, x, tablinks;
+            x = document.getElementsByClassName("tab2");
+            var targetIntent = document.getElementById("timeIntent_1")
+            for (i = 0; i < x.length; i++) {
+                x[i].style.visibility = "hidden";
+            }
+            tablinks = document.getElementsByClassName("tablink2");
+            for (i = 0; i < x.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" w3-blue", "");
+            }
+            document.getElementById("timeIntent_a").style.visibility = "visible";
+            targetIntent.classList.add("w3-blue");
+            $("#oneIntent_1").text("소통활동");
+            $("#oneIntent_2").text("식사하기");
+            $("#oneIntent_3").text("미디어시청");
+            $("#oneIntent_4").text("건강관리");
+            $("#timeIntent_1").text("소통활동");
+            $("#timeIntent_2").text("식사하기");
+            $("#timeIntent_3").text("미디어시청");
+            $("#timeIntent_4").text("건강관리");
+            $("#multiIntent_1").text("미디어시청 & 청소하기");
+            $("#multiIntent_2").text("미디어시청 & 건강관리");
+            $("#multiIntent_3").text("미디어시청 & TV시청");
+            $("#info_1").text("이숙재");
+            $("#info_2").text("16일(3.05 ~ 3.27)");
+            $("#info_3").text("07:00 ~ 21:00");
+            google.charts.load('current', {packages: ['corechart', 'bar', 'timeline']});
+            google.charts.setOnLoadCallback(drawChart_pattern);
+            google.charts.setOnLoadCallback(drawChart_timeIntent_a);
+            google.charts.setOnLoadCallback(drawChart_timeIntent_b);
+            google.charts.setOnLoadCallback(drawChart_timeIntent_c);
+            google.charts.setOnLoadCallback(drawChart_timeIntent_d);
+            google.charts.setOnLoadCallback(drawChart_intentGraph);
+
+            function drawChart_pattern() {
+                var data = google.visualization.arrayToDataTable([
+                    ['성향', '수치', {role: 'style'}],
+                    ['사교적성향', 2, 'color: #0072BD; opacity: 0.8;'],
+                    ['TV 애청자', 4.5, 'color: #D95319; opacity: 0.8;'],
+                    ['소통적성향', 8, 'color: #EDB120; opacity: 0.8']
+                ]);
+                var options = {
+                    width: "100%",
+                    height: "100%",
+                    bar: {groupWidth: "50%"},
+                    legend: {position: "none"},
+                    hAxis: {
+                        viewWindowMode: 'explicit',
+                        viewWindow: {
+                            min: 0,
+                            max: 10
+                        },
+                        gridlines: {count: 5},
+                        textStyle: {
+                            fontSize: 12
+                        }
+                    },
+                    vAxis: {
+                        textStyle: {
+                            bold: true,
+                            fontSize: 12
+                        }
+                    }
+                };
+                var chart = new google.visualization.BarChart(document.getElementById('b_pattern'));
+                chart.draw(data, options);
+            }
+
+
+            function drawChart_timeIntent_a() {
+                $.get("{% static "percept/lee/WatchingTV/total.txt"%}", function (data) {
+                    var dataPoints = getTimeIntentFromCSV(data)
+
+                    var container = document.getElementById('timeIntent_a');
+                    var chart = new google.visualization.Timeline(container);
+                    var dataTable = google.visualization.arrayToDataTable(dataPoints);
+                    // console.log(dataPoints);
+
+                    var options = {
+                        timeline: {rowLabelStyle: {fontSize: 10}, barLabelStyle: {fontSize: 6}},
+                        hAxis: {format: 'aa h'}
+                    };
+
+                    chart.draw(dataTable, options);
+                });
+            }
+
+            function drawChart_timeIntent_b() {
+                $.get("{% static "percept/lee/Meal/total.txt"%}", function (data) {
+                    var dataPoints = getTimeIntentFromCSV(data)
+
+                    var container = document.getElementById('timeIntent_b');
+                    var chart = new google.visualization.Timeline(container);
+                    var dataTable = google.visualization.arrayToDataTable(dataPoints);
+                    // console.log(dataPoints);
+
+                    var options = {
+                        timeline: {rowLabelStyle: {fontSize: 10}, barLabelStyle: {fontSize: 6}},
+                        hAxis: {format: 'aa h'}
+                    };
+
+                    chart.draw(dataTable, options);
+                });
+            }
+
+            function drawChart_timeIntent_c() {
+                $.get("{% static "percept/lee/Communication/total.txt"%}", function (data) {
+                    var dataPoints = getTimeIntentFromCSV(data)
+
+                    var container = document.getElementById('timeIntent_c');
+                    var chart = new google.visualization.Timeline(container);
+                    var dataTable = google.visualization.arrayToDataTable(dataPoints);
+                    // console.log(dataPoints);
+
+                    var options = {
+                        timeline: {rowLabelStyle: {fontSize: 10}, barLabelStyle: {fontSize: 6}},
+                        hAxis: {format: 'aa h'}
+                    };
+
+                    chart.draw(dataTable, options);
+                });
+            }
+
+            function drawChart_timeIntent_d() {
+                $.get("{% static "percept/lee/HealthCare/total.txt"%}", function (data) {
+                    var dataPoints = getTimeIntentFromCSV(data)
+
+                    var container = document.getElementById('timeIntent_d');
+                    var chart = new google.visualization.Timeline(container);
+                    var dataTable = google.visualization.arrayToDataTable(dataPoints);
+                    // console.log(dataPoints);
+
+                    var options = {
+                        timeline: {rowLabelStyle: {fontSize: 10}, barLabelStyle: {fontSize: 6}},
+                        hAxis: {format: 'aa h'}
+                    };
+
+                    chart.draw(dataTable, options);
+                });
+            }
+
+            function drawChart_intentGraph() {
+                $.get("{% static "percept/Lee_Single_Intention.csv"%}", function (data) {
+                    var dataPoints = getOneIntentFromCSV(data, obj.value)
+                    {#console.log(dataPoints)#}
+                    var data = google.visualization.arrayToDataTable(dataPoints);
+                    console.log(data)
+
+                    // Instantiate and draw our chart, passing in some options.
+                    var chart = new google.visualization.ChartWrapper({
+                        chartType: 'AreaChart',
+                        containerId: 'intentGraph',
+                        dataTable: data,
+                        options: {
+                            width: "100%",
+                            height: "100%",
+                            curveType: 'function',
+                            legend: {position: "top"}
+                        }
+                    });
+                    // create columns array
+                    var columns = [0];
+                    /* the series map is an array of data series
+                     * "column" is the index of the data column to use for the series
+                     * "roleColumns" is an array of column indices corresponding to columns with roles that are associated with this data series
+                     * "display" is a boolean, set to true to make the series visible on the initial draw
+                     */
+                    var seriesMap = [{
+                        column: 1,
+                        {#roleColumns: [2],#}
+                        display: true
+                    }, {
+                        column: 2,
+                        {#roleColumns: [4],#}
+                        display: false
+                    }, {
+                        column: 3,
+                        {#roleColumns: [6],#}
+                        display: false
+                    }, {
+                        column: 4,
+                        {#roleColumns: [8],#}
+                        display: false
+                    }];
+                    var columnsMap = {};
+                    var series = [];
+                    for (var i = 0; i < seriesMap.length; i++) {
+                        var col = seriesMap[i].column;
+                        columnsMap[col] = i;
+                        // set the default series option
+                        series[i] = {};
+                        if (seriesMap[i].display) {
+                            // if the column is the domain column or in the default list, display the series
+                            columns.push(col);
+                        }
+                        else {
+                            // otherwise, hide it
+                            columns.push({
+                                label: data.getColumnLabel(col),
+                                type: data.getColumnType(col),
+                                sourceColumn: col,
+                                calc: function () {
+                                    return null;
+                                }
+                            });
+                            // backup the default color (if set)
+                            if (typeof(series[i].color) !== 'undefined') {
+                                series[i].backupColor = series[i].color;
+                            }
+                            series[i].color = '#CCCCCC';
+                        }
+                    }
+
+                    chart.setOption('series', series);
+
+                    function showHideSeries() {
+                        var sel = chart.getChart().getSelection();
+                        // if selection length is 0, we deselected an element
+                        if (sel.length > 0) {
+                            // if row is undefined, we clicked on the legend
+                            if (sel[0].row == null) {
+                                var col = sel[0].column;
+                                if (typeof(columns[col]) == 'number') {
+                                    var src = columns[col];
+
+                                    // hide the data series
+                                    columns[col] = {
+                                        label: data.getColumnLabel(src),
+                                        type: data.getColumnType(src),
+                                        sourceColumn: src,
+                                        calc: function () {
+                                            return null;
+                                        }
+                                    };
+
+                                    // grey out the legend entry
+                                    series[columnsMap[src]].color = '#CCCCCC';
+                                }
+                                else {
+                                    var src = columns[col].sourceColumn;
+
+                                    // show the data series
+                                    columns[col] = src;
+                                    series[columnsMap[src]].color = null;
+                                }
+                                var view = chart.getView() || {};
+                                view.columns = columns;
+                                chart.setView(view);
+                                chart.draw();
+                            }
+                        }
+                    }
+
+                    google.visualization.events.addListener(chart, 'select', showHideSeries);
+
+                    // create a view with the default columns
+                    var view = {
+                        columns: columns
+                    };
+                    chart.draw();
+
+                });
+            }
+
+        }
+    }
+</script>
+
+<script>
+    /**
+     * django의 view 파일과 통신하기 위해 필요한 함수.
+     * ajax로 통신하기 때문에, POST 형태의 통신 방식을 취하고 있으며
+     * 스마트미러로부터 받은 입력과 그에 따른 사용자의 답변 Case,
+     * 시스템으로부터 얻은 시간 정보들을 모두 담고 있다.
+     *
+     * input:
+     *      - url: django의 view 파일과 ajax로 통신하기 위한 주소를 담고 있는 변수
+     *      - answerCase: 사용자의 답변이 어떤 질문 Case에 대한 정보인지를 담고 있는 변수
+     *      - code: 사용자가 프로그램을 처음 구동하여 각종 모드들을 입력할 경우, 그에 대응하는
+     *              Code의 정보를 담고 있는 변수
+     *      - command: 사용자의 답변 정보를 담고 있는 변수
+     *      - hour: 시스템으로부터 얻은 '시' 정보를 담고 있는 변수
+     *      - minute: 시스템으로부터 얻은 '분' 정보를 담고 있는 변수
+     *      - month: 시스템으로부터 얻은 '월' 정보를 담고 있는 변수
+     *      - day: 시스템으로부터 얻은 '일' 정보를 담고 있는 변수
+     *
+     * Return:
+     *      통신에 성공할 경우, Success와 함께 JESS Engine 구동 결과들을 담고 있는
+     *      Dictionary 형태의 변수와 함께 Return
+     * */
+    ////////// @jaeseung : add weather
+    function communicateAjaxWithCase(url) {
+        return $.ajax({
+            url: url,
+            type: "POST",
+            data: {},
+            async: false
+        });
+    }
+
+    var check_file = null;
+    $(window).load(function () {
+// CPU TIME 읽어서 현재 시간 정보와 관련된 정보들을 JESS에 Fact들로 집어넣음
+        var dt = new Date($.now());
+        var hour = dt.getHours();
+        var minute = dt.getMinutes();
+        var month = dt.getMonth() + 1;
+        // @jaeseung : run_engine
+        //setTimeout(check_run, 1000);
+    });
+
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+
+    $(document).ready(function () {
+        var csrftoken = getCookie('csrftoken');
+        $.ajaxSetup({
+            beforeSend: function (xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+    });
+
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+</script>
+</body>
+</html>

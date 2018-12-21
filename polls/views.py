@@ -30,6 +30,10 @@ def demo(request):
     return render(request, "../templates/demo.html")
 
 
+def demo_2(request):
+    return render(request, "../templates/demo_2.html")
+
+
 ''' @jaeseung 
 Function Definition: 
    주어진 디렉터리를 recursive 하게 탐색하며
@@ -94,6 +98,8 @@ Input:
 Return:
     웹 상에 다시 출력해줄 정보들을 담고 있는 변수
 '''
+
+
 # @jaeseung
 
 
@@ -122,12 +128,15 @@ def parse_results(results):
         value_list.append(tmp_list)
 
     # print(value_list)
-    header = ["Refreshment", "Reading", "ArrangeThing", "Drink",  "Meal", "Clothing", "Cleaning",
-               "CommunicationWithPerson",  "HealthCare", "PrepareMeal", "Smoking",  "Communication", "WatchingTV"]
+    header = ["Refreshment", "Reading", "ArrangeThing", "Drink", "Meal", "Clothing", "Cleaning",
+              "CommunicationWithPerson", "HealthCare", "PrepareMeal", "Smoking", "Communication", "WatchingTV"]
     df = pd.DataFrame(value_list, columns=header)
     df.pop('Smoking')
     df.pop('Clothing')
     df.pop('HealthCare')
+    df.pop('ArrangeThing')
+    df.pop('Cleaning')
+    df.pop('Drink')
     # print(df.head())
     print("output : ", df.shape)
     return time_list, df
@@ -157,7 +166,6 @@ end = 0
 currentTime = 0
 totalTime = 0
 
-
 '''
 Function Definition: 
     json 파일의 이름을 받아서 JSON File의 내용들을 Load하여 Return 하는 함수
@@ -183,6 +191,7 @@ def convert_time(time):
     cut_microsec = time_object.replace(microsecond=0)
     return cut_microsec.strftime("%Y-%m-%d %H:%M:%S")
 
+
 def percept(request):  ##################### perceptajax
     if request.method == 'POST':
         # print("def percept POST success")
@@ -198,7 +207,7 @@ def percept(request):  ##################### perceptajax
         header_name = ["Time", "Pose", "Action"]
         root_dir = os.path.join(BASE_DIR, "polls/static/percept/")
         file_loc = root_dir + file_name
-        print("file_loc"+file_loc)
+        print("file_loc" + file_loc)
 
         df_from_file = pd.read_csv(file_loc, delimiter='\t', header=None, names=header_name, index_col=None,
                                    encoding='UTF-8', engine="python")
@@ -215,8 +224,8 @@ def percept(request):  ##################### perceptajax
 
         currentTime = cur
         totalTime = dur
-        start = cur * round(float(df_time_converted.shape[0]/(dur*2)))
-        end = start + round(float(df_time_converted.shape[0]/(dur*2)))
+        start = cur * round(float(df_time_converted.shape[0] / (dur)))
+        end = start + round(float(df_time_converted.shape[0] / (dur)))
         print("percept : ", df_time_converted.shape)
         print("########################################################################")
         print(start, '\t', end)
@@ -229,6 +238,7 @@ def percept(request):  ##################### perceptajax
         print(response)
         return response
 
+
 def fire_rule(request):
     # print("test")
     if request.method == 'POST':
@@ -239,7 +249,7 @@ def fire_rule(request):
         # @jaeseung : give engine file_name
         results = engine.run_engine(file_name)
         # print(results)
-
+        print(file_name)
         time_list, response_df = parse_results(results)
 
         # global num_stamp
@@ -254,14 +264,16 @@ def fire_rule(request):
 
         global currentTime
         global totalTime
-        graphTime1 = currentTime * round(float(response_df.shape[0]/(totalTime*2)))
-        graphTime2 = graphTime1 + round(float(response_df.shape[0]/(totalTime*2)))
+        graphTime1 = currentTime * round(float(response_df.shape[0] / (totalTime)))
+        graphTime2 = graphTime1 + round(float(response_df.shape[0] / (totalTime)))
         resultTime = int((graphTime1 + graphTime2) / 2)
-        resultTime = graphTime2 -5
+        resultTime = graphTime2 - 1
         # print(resultTime)
         # print(response_df[graphTime1:graphTime2])
         result = response_df.iloc[resultTime].to_json(orient="records")
+        # print(result)
         return HttpResponse(result, content_type="application/json")
+
 
 def time(request):  #################### time 배속 구해주기
     print("time def")
@@ -270,20 +282,93 @@ def time(request):  #################### time 배속 구해주기
         file_name = request.POST.get('file_name')
         dur = request.POST.get('dur')
         root_dir = os.path.join(BASE_DIR, "polls/static/percept/")
-        print("root_dir"+root_dir)
+        print("root_dir" + root_dir)
         file_loc = root_dir + file_name
-        print("file_loc"+file_loc)
+        print("file_loc" + file_loc)
         file = pd.read_csv(file_loc, delimiter='\t', header=None, index_col=None,
                            encoding='UTF8', engine="python")
         print(file)
         print(len(file))
         dur = round(float(dur), 3)
         print(type(dur))
-        result = round(dur/len(file), 5)*1000
+        result = round(dur / len(file), 5) * 1000
         print(result)
         return HttpResponse(json.dumps(result), content_type="application/json")
 
 
+def epoch(request):  ##### rjs #####
+    print("epoch def")
+    if request.method == 'POST':
+        # print("def percept POST success")
+        file_name = request.POST.get('file_name')
+        # cur = request.POST.get('cur')
+        # # print(cur)
+        # cur = round(float(cur))
+        #
+        # dur = request.POST.get('dur')
+        # # print(dur)
+        # dur = round(float(dur))
+
+        # print("percept : [", file_name, "]")
+        # header_name = ["Start Time", "End Time", "Pose", "Action"]
+        header_name = ["Time", "Pose", "Action"]
+        root_dir = os.path.join(BASE_DIR, "polls/static/percept/")
+        file_loc = root_dir + file_name
+        print("file_loc: " + file_loc)
+
+        df_from_file = pd.read_csv(file_loc, delimiter='\t', header=None, names=header_name, index_col=None,
+                                   encoding='UTF-8', engine="python")
+        df_time_converted = df_from_file
+        df_time_converted["Time"] = df_from_file["Time"].apply(convert_time)
+
+        pose_list = list(set(df_time_converted["Pose"]))
+        action_list = list(set(df_time_converted["Action"]))
+        print((pose_list))
+        print((action_list))
+        # print(cur, dur)
+
+        start_list = []
+        end_list = []
+        for cur in range(int(65.332)):
+            delta = round(float(df_time_converted.shape[0] / (65.332)))
+            s = cur * delta
+            start_list.append(s)
+            end_list.append(s + delta)
+
+        total_data = []
+
+        for s, e in zip(start_list, end_list):
+            # print(s, e)
+            tmp_data = []
+            pose_count = [0 for i in pose_list]
+            action_count = [0 for i in action_list]
+
+            tmp_df = df_time_converted.iloc[s:e]
+            for row, column in tmp_df.iterrows():
+                for i in range(len(pose_list)):
+                    if column["Pose"] == pose_list[i]:
+                        pose_count[i] += i + 1
+                for i in range(len(action_list)):
+                    if column["Action"] == action_list[i]:
+                        action_count[i] += i + 2
+            time_tmp = datetime.strptime(tmp_df["Time"][e - 1], "%Y-%m-%d %H:%M:%S")
+            time_tmp = datetime.strftime(time_tmp, "%Y-%m-%dT%H:%M:%S")
+            # time_tmp = (time_tmp-datetime(1970,1,1)).total_seconds()
+            tmp_data.append(time_tmp)
+            # tmp_data.append(tmp_df["Time"][e - 1])
+            # print(type(tmp_df["Time"][e - 1]))
+            for i in pose_count:
+                tmp_data.append(i)
+            for i in action_count:
+                tmp_data.append(i)
+
+            total_data.append(tmp_data)
+
+        total_result = pd.DataFrame(total_data).to_json(orient="index")
+        # print(total_result)
+        return HttpResponse(total_result, content_type="application/json")
+
+# (t-datetime.datetime(1970,1,1)).total_seconds()
 
 
 
@@ -330,10 +415,3 @@ def time(request):  #################### time 배속 구해주기
 
 
 
-
-
-
-
-
-
-    

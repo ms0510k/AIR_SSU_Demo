@@ -47,7 +47,7 @@
 
 <body style="background-image: url({% static 'images/back-home.jpg' %});background-size: cover;background-repeat: no-repeat;z-index: -1;"></body>
 
-<div class="container">
+<div class="container">{% comment %}{% endcomment %}
 
     <div class="row" ,
          style="margin-top: 15px; border: hidden; padding-left: 16px; padding-right:16px; max-height: 77px">
@@ -60,139 +60,146 @@
             <h4> Sub-subheading </h4>-->
             <h2 style="color: aliceblue; font-size: 35px; font-weight: bold;" align="center">고령자 의도 학습 및 복합 상황 추론</h2>
             <!-- <p> 요소는 문자의 문단을 포함하기 위한 것; 일반적인 문자 내용을 나타낼 때 많이 사용됨 -->
-
         </div>
     </div>
-
-
-    <div class="row" , style="margin-top: 10px; border: hidden; min-height: 600px;">
-
-
-        <!-- @jaeseung : 0. Start from here! -->
-        <div class="col-md-6" , style="border: hidden; min-height: 370px;">
-            <!-- @jaeseung : 1. selectbox -->
+    <div>
+        <div class="row" , style="margin-top: 10px; border: hidden; min-height: 600px;">
             <div class="row" , style="border: hidden; min-height: 50px">
-                <div class="col-md-12">
+                <div class="container">
                     <div class="panel panel-success" style="border: none;  opacity: 1;">
-                        <div class="panel-heading"
-                             style="background-color: #5590BE; padding-bottom: 4px; border: none;">
-                            <p style="color: aliceblue; font-size: 20px; font-weight: bold;">
-                                <span class="glyphicon glyphicon-save-file"></span>
-                                고령자 데이터
-                                <select class="form-control" name="userid" id="select"
-                                        style="background-color: #0284A8; width: 40%; float: right; font-size: 15px; color: #fffcfc"
-                                        oninput="select(this)">
-                                    <option value="select" selected disabled hidden style="text-align: center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;고령자 선택
-                                    </option>
-                                    <option value="김차순 고령자 데이터">김차순 고령자 데이터</option>
-                                    <option value="도경자 고령자 데이터">도경자 고령자 데이터</option>
-                                    <option value="이숙재 고령자 데이터">이숙재 고령자 데이터</option>
-                                </select>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- @jaeseung : 2. play -->
-            <div class="row" , style="border: hidden; min-height: 50px">
-                <div class="col-md-12">
-                    <div class="panel panel-success" style="border: none;  opacity: 1;">
-                        <div class="panel-heading"
-                             style="background-color: #5590BE; padding-bottom: 4px; border: none; font-weight: bold;">
-                            <p style="color: aliceblue; font-size: 20px" id="playp">
-                                <span class="glyphicon glyphicon-facetime-video"></span>
-                                고령자 생활 영상
-                            </p>
-                        </div>
                         <div class="panel-body"
-                             style="background-color: #FEFEFF; max-height: 300px; min-height: 373px;  position:relative;height:0;padding-bottom:56.25%;"
-                             id="playd">
-                            <video id="video-active" src="" width="100%" height="330px" controls></video>
-
-                            <div style="width: 90px; float: left; font-weight:bold; font-size: 15px;">현재시간(s) : </div>
-                            <div id="current" style="float: left; width: 100px;">0:00</div>
-                            <div style="width: 105px; float: left; font-weight:bold; font-size: 15px;">총재생시간(s) : </div>
-                            <div id="duration" style="float: left; width: 100px;">0:00</div>
-
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-6" , style="border: hidden; min-height: 300px;">
-            {% csrf_token %}
-            <div class="row" , style="margin-top: 0px; border: hidden; min-height: 450px;">
-                <div class="col-md-12">
-
-
-                    <!-- @jaeseung : 3. result -->
-                    <div class="row" , style="border: hidden;">
-                        <div class="col-md-12">
-                            <div class="panel panel-success" style="border: none;  opacity: 1;">
-                                <div class="panel-heading"
-                                     style="background-color: #5590BE; padding-bottom: 4px; border: none; font-weight: bold;">
-                                    <p style="color: aliceblue; font-size: 20px">
-                                        <span class="glyphicon glyphicon-align-left"></span>
-                                        고령자 생활 패턴
-                                    </p>
-                                </div>
-                                <div class="panel-body"
-                                     style="background-color: #d9e8f5; max-height: 300px; height: 175px; padding: 5px;"
-                                     id="bargraph">
-
-                                </div>
+                             style="max-height: 2000px; height: 855px; padding: 5px;">
+                            <div class="w3-bar w3-black">
+                                <button class="w3-bar-item w3-button tablink2 w3-blue"
+                                        style="width: 50%;">고령자 의도 추론
+                                </button>
+                                <button id="cltab" class="w3-bar-item w3-button tablink2"
+                                        style="width: 50%; background-color: #c6dbef;"
+                                        onclick="window.location.href='/demo_2'">고령자 생활 패턴 학습
+                                </button>
                             </div>
-                        </div>
-                    </div>
 
-                    <!-- @jaeseung : 4. percept -->
-                    <div class="row" , style="border: hidden;">
-                        <div class="col-md-12">
-                            <div class="panel panel-success" style="border: none;  opacity: 1;">
-                                <div class="panel-heading"
-                                     style="background-color: #5590BE; padding-bottom: 4px; border: none; font-weight: bold;">
-                                    <p style="color: aliceblue; font-size: 20px" id="perceptp">
-                                        <span class="glyphicon glyphicon-list"></span>
-                                        고령자 지각 정보
-                                    </p>
-                                </div>
-                                <div class="panel-body"
-                                     style="background-color: #d9e8f5; height: 198px; padding: 0px;"
-                                     id="perceptd">
-                                    <div class="w3-bar w3-black">
-                                        <button class="w3-bar-item w3-button tablink1 w3-blue" onclick="openTab1(event,'atab')" style="width: 50%; padding: 0px;">A</button>
-                                        <button class="w3-bar-item w3-button tablink1" onclick="openTab1(event,'btab')" style="width: 50%; padding: 0px;">B</button>
-                                    </div>
-                                    <div id="atab" class="tab1" style="border: none; height: 178px;">
-                                        <div  id="achart" class="epoch" style="width: 100%; height: 100%;">
 
+                            {% comment %} 고령자 생활 영상 {% endcomment %}
+                            <div class="col-md-6" , style="border: hidden; min-height: 370px;">
+                                <div class="row" , style="border: hidden; min-height: 50px">
+                                    <div class="col-md-12" style="padding-top: 10px;">
+                                        <div class="panel panel-success" style="border: none;  opacity: 1;">
+                                            <div class="panel-heading"
+                                                 style="background-color: #5590BE; padding-bottom: 4px; border: none; font-weight: bold;">
+                                                <p style="color: aliceblue; font-size: 20px" id="playp">
+                                                    <span class="glyphicon glyphicon-facetime-video"></span>
+                                                    고령자 생활 영상
+                                                </p>
+                                            </div>
+                                            <div class="panel-body"
+                                                 style="background-color: #d9e8f5;  position:relative;height:412px;padding-bottom:56.25%;"
+                                                 id="playd">
+                                                <video id="video-active" src="{% static 'play/SSU_Final_demo.mp4' %}"
+                                                       width="100%" height="360px" style="margin-top: -3%;"
+                                                       controls></video>
+                                                <div style="width: 90px; float: left; font-weight:bold; font-size: 15px; margin-top: 2%;">
+                                                    현재시간(s) :
+                                                </div>
+                                                <div id="current"
+                                                     style="float: left; width: 100px; margin-top: 2%;">0:00
+                                                </div>
+                                                <div style="width: 105px; float: left; font-weight:bold; font-size: 15px; margin-top: 2%;">
+                                                    총재생시간(s) :
+                                                </div>
+                                                <div id="duration"
+                                                     style="float: left; width: 100px; margin-top: 2%;">0:00
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div id="btab" class="tab1" style="display:none; overflow:auto; height: 178px;"></div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- @jaeseung : 5. graph -->
-        <div class="col-md-12">
-            <div class="row" , style="border: hidden; min-height: 50px">
-                <div class="col-md-12">
-                    <div class="panel panel-success" style="border: none;  opacity: 1;">
-                        <div class="panel-heading"
-                             style="background-color: #5590BE; padding-bottom: 4px; border: none; font-weight: bold;">
-                            <p style="color: aliceblue; font-size: 20px">
-                                <span class="glyphicon glyphicon-stats"></span>
-                                고령자 의도 추론 그래프
-                            </p>
-                        </div>
-                        <div class="panel-body"
-                             style="background-color: #d9e8f5; max-height: 300px; min-height: 260px; overflow:auto; padding: 10px;"
-                             id="chart_div">
+
+                            <div class="col-md-6" , style="border: hidden; min-height: 300px;">
+                                {% csrf_token %}
+                                <div class="row" , style="margin-top: 0px; border: hidden; min-height: 450px;">
+                                    <div class="col-md-12">
+
+                                        {% comment %} 고령자 생활 패턴 {% endcomment %}
+                                        <div class="row" , style="border: hidden;">
+                                            <div class="col-md-12" style="padding-top: 10px;">
+                                                <div class="panel panel-success" style="border: none;  opacity: 1;">
+                                                    <div class="panel-heading"
+                                                         style="background-color: #5590BE; padding-bottom: 4px; border: none; font-weight: bold;">
+                                                        <p style="color: aliceblue; font-size: 20px">
+                                                            <span class="glyphicon glyphicon-align-left"></span>
+                                                            고령자 생활 패턴
+                                                        </p>
+                                                    </div>
+                                                    <div class="panel-body"
+                                                         style="background-color: #d9e8f5; max-height: 300px; height: 165px; padding: 5px;"
+                                                         id="bargraph">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        {% comment %} 고령자 지각 정보 {% endcomment %}
+                                        <div class="row" , style="border: hidden;">
+                                            <div class="col-md-12">
+                                                <div class="panel panel-success" style="border: none;  opacity: 1;">
+                                                    <div class="panel-heading"
+                                                         style="background-color: #5590BE; padding-bottom: 4px; border: none; font-weight: bold;">
+                                                        <p style="color: aliceblue; font-size: 20px" id="perceptp">
+                                                            <span class="glyphicon glyphicon-list"></span>
+                                                            고령자 지각 정보
+                                                        </p>
+                                                    </div>
+                                                    <div class="panel-body"
+                                                         style="background-color: #d9e8f5; height: 175px; padding: 0px;"
+                                                         id="perceptd">
+                                                        <div class="w3-bar w3-black">
+                                                            <button class="w3-bar-item w3-button tablink1 w3-blue"
+                                                                    onclick="openTab1(event,'atab')"
+                                                                    style="width: 50%; padding: 0px; background-color: #c6dbef;">
+                                                                지각 정보 그래프
+                                                            </button>
+                                                            <button class="w3-bar-item w3-button tablink1"
+                                                                    onclick="openTab1(event,'btab')"
+                                                                    style="width: 50%; padding: 0px; background-color: #c6dbef;">
+                                                                지각 정보 테이블
+                                                            </button>
+                                                        </div>
+                                                        <div id="atab" class="tab0"
+                                                             style="border: none; width: 535px; height: 155px; position: absolute; padding: 5px;"></div>
+                                                        <div id="btab" class="tab0"
+                                                             style="visibility:hidden; border: none; overflow:auto; height: 178px;"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {% comment %} 고령자 의도 추론 그래프 {% endcomment %}
+                            <div class="col-md-12">
+                                <div class="row" , style="border: hidden; min-height: 50px">
+                                    <div class="col-md-12">
+                                        <div class="panel panel-success" style="border: none;  opacity: 1;">
+                                            <div class="panel-heading"
+                                                 style="background-color: #5590BE; padding-bottom: 4px; border: none; font-weight: bold;">
+                                                <p style="color: aliceblue; font-size: 20px">
+                                                    <span class="glyphicon glyphicon-stats"></span>
+                                                    고령자 의도 추론 그래프
+                                                </p>
+                                            </div>
+                                            <div class="panel-body"
+                                                 style="background-color: #d9e8f5; max-height: 300px; min-height: 260px; overflow:auto; padding: 10px;"
+                                                 id="chart_div">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -206,174 +213,106 @@
 <script src={% static "js/epoch.js" %}></script>
 <link rel="stylesheet" type="text/css" href={% static "css/epoch.css" %}>
 <script>
-    var nextTime = (function() {
-        var currentTime = parseInt(new Date().getTime() / 1000);
-        return function() { return currentTime++; }
-    })();
-</script>
-<script>
-    var barChartData = [
-        // First series
-        {
-            label: "Series 1",
-            values: [ {time: 1370044800, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10},
-            {time: 1370044800, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10},
-            {time: 1370044800, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10},
-            {time: 1370044800, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10},
-            {time: 1370044800, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10},
-            {time: 1370044800, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10},
-            {time: 1370044800, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10},
-            {time: 1370044800, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10},
-            {time: 1370044800, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10},
-            {time: 1370044800, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10},
-            {time: 1370044800, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10}]
-        },
-        {
-            label: "Series 2",
-            values: [ {time: 1370044800, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10},
-            {time: 1370044800, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10},
-            {time: 1370044800, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10},
-            {time: 1370044800, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10},
-            {time: 1370044800, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10},
-            {time: 1370044800, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10},
-            {time: 1370044800, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10},
-            {time: 1370044800, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10},
-            {time: 1370044800, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10},
-            {time: 1370044800, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10},
-            {time: 1370044800, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10}, {time: 1370044801, y: 10}]
-        }
-    ];
-
-    $('#achart').epoch({
-        type: 'time.bar',
-        data: barChartData
-    });
-</script>
-{% comment %}<script type="text/javascript">
-  google.charts.load("current", {packages:["timeline"]});
-  google.charts.setOnLoadCallback(drawChart);
-  function drawChart() {
-
-    var container = document.getElementById('achart');
-    var chart = new google.visualization.Timeline(container);
-    var dataTable = new google.visualization.DataTable();
-    dataTable.addColumn({ type: 'string', id: 'Room' });
-    dataTable.addColumn({ type: 'string', id: 'Name' });
-    dataTable.addColumn({ type: 'date', id: 'Start' });
-    dataTable.addColumn({ type: 'date', id: 'End' });
-    dataTable.addRows([
-      [ 'Pose', '앉다',       new Date(0,0,0,12,0,0),  new Date(0,0,0,13,30,0) ],
-      [ 'Pose', '쪼그려앉아있다',    new Date(0,0,0,14,0,0),  new Date(0,0,0,15,30,0) ],
-      [ 'Pose', '서있다',        new Date(0,0,0,16,0,0),  new Date(0,0,0,17,30,0) ],
-      [ 'Activity',   '신문 보기',    new Date(0,0,0,12,30,0), new Date(0,0,0,14,0,0) ],
-      [ 'Activity',   'TV 보기', new Date(0,0,0,14,30,0), new Date(0,0,0,16,0,0) ],
-      [ 'Activity',   '음료수 마시기',     new Date(0,0,0,16,30,0), new Date(0,0,0,18,0,0) ]]);
-
-    var options = {
-      timeline: { colorByRowLabel: true }
-    };
-
-    chart.draw(dataTable, options);
-  }
-
-</script>{% endcomment %}
-<script>
-    // @jaeseung : Tab activate function
     function openTab1(evt, tabName) {
         var i, x, tablinks;
-        x = document.getElementsByClassName("tab1");
+        x = document.getElementsByClassName("tab0");
         for (i = 0; i < x.length; i++) {
-            x[i].style.display = "none";
+            x[i].style.visibility = "hidden";
         }
         tablinks = document.getElementsByClassName("tablink1");
         for (i = 0; i < x.length; i++) {
             tablinks[i].className = tablinks[i].className.replace(" w3-blue", "");
         }
-        document.getElementById(tabName).style.display = "block";
+        document.getElementById(tabName).style.visibility = "visible";
         evt.currentTarget.className += " w3-blue";
     }
 </script>
-<script>
-    google.charts.load('current', {packages: ['corechart', 'bar']});
+{% comment %}<script>
+    google.charts.load("current", {packages: ["timeline"]});
     google.charts.setOnLoadCallback(drawChart);
+
     function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-            ['성향', '수치', {role: 'style'}],
-            ['사교적성향', 0, 'color: #0072BD; opacity: 0.8;'],
-            ['TV 애청자', 0, 'color: #D95319; opacity: 0.8;'],
-            ['소통적성향', 0, 'color: #EDB120; opacity: 0.8']
-        ]);
+        var container = document.getElementById('bargraph');
+        var chart = new google.visualization.Timeline(container);
+        var dataTable = new google.visualization.DataTable();
+
+        dataTable.addColumn({type: 'string', id: 'Room'});
+        dataTable.addColumn({type: 'date', id: 'Start'});
+        dataTable.addColumn({type: 'date', id: 'End'});
+
         var options = {
-            width: "80%",
-            height: "80%",
-            bar: {groupWidth: "100%"},
-            legend: {position: "none"},
+            timeline: {rowLabelStyle: {fontSize: 13}, barLabelStyle: {fontSize: 0}},
+            height: 300,
             hAxis: {
-                viewWindowMode: 'explicit',
-                viewWindow: {
-                    min: 0,
-                    max: 10
-                },
-                gridlines: {count: 5},
-                textStyle:{
-                    fontSize:12
-                }
-            },
-            vAxis:{
-                textStyle:{
-                    bold:true,
-                    fontSize:13
-                }
+                minValue: new Date(0, 0, 0, 0, 0, 0),
+                maxValue: new Date(0, 0, 0, 1, 10, 0)
             }
         };
-        var chart = new google.visualization.BarChart(document.getElementById('bargraph'));
-        chart.draw(data, options);
+
+        dataTable.addRows([
+            ['사교적성향', new Date(0, 0, 0, 0, 0, 0), new Date(0, 0, 0, 0, 0, 0)],
+            ['TV애청자', new Date(0, 0, 0, 0, 0, 0), new Date(0, 0, 0, 0, 0, 0)],
+            ['소통적성향', new Date(0, 0, 0, 0, 0, 0), new Date(0, 0, 0, 0, 0, 0)]
+        ]);
+        chart.draw(dataTable, options);
     }
+</script>{% endcomment %}
+<script>
+    var nextTime = (function () {
+        var currentTime = parseInt(new Date().getTime() / 1000);
+        return function () {
+            return currentTime++;
+        }
+    })();
+</script>
+<script>{% comment %} 고령자 생활 패턴 폼 {% endcomment %}
+
 </script>
 
-<script type="text/javascript">
-    google.charts.load("current", {packages: ['corechart']});
-    google.charts.setOnLoadCallback(drawChart);
-    function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-            ['action', '수치', {role: 'style'}],
-            ['다과', 0, 'color: #1F77B4; opacity: 0.8;'],
-            ['독서하기', 0, 'color: #FF7F0E; opacity: 0.8;'],
-            ['정리정돈', 0, 'color: #2CA02C; opacity: 0.8;'],
-            ['음료마시기', 0, 'color: #D62728; opacity: 0.8;'],
-            ['식사하기', 0, 'color: #9467BD; opacity: 0.8;'],
-            ['청소하기', 0, 'color: #8C564B; opacity: 0.8;'],
-            ['담소나누기', 0, 'color: #E377C2; opacity: 0.8;'],
-            ['식사준비', 0, 'color: #7F7F7F; opacity: 0.8;'],
-            ['전화통화', 0, 'color: #BCBD22; opacity: 0.8;'],
-            ['TV시청', 0, 'color: #17BECF; opacity: 0.8;']
-        ]);
-        var view = new google.visualization.DataView(data);
-        var options = {
-            width: "100%",
-            height: "100%",
-            bar: {groupWidth: "95%"},
-            legend: {position: "none"},
-            hAxis: {
-                textStyle:{
-                    bold:true,
-                    fontSize:15
-                }
+{% comment %}<script type="text/javascript"> 고령자 의도 추론 그래프 폼
+google.charts.load("current", {packages: ['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+function drawChart() {
+    var data = google.visualization.arrayToDataTable([
+        ['action', '수치', {role: 'style'}],
+        ['다과', 0, 'color: #1F77B4; opacity: 0.8;'],
+        ['독서하기', 0, 'color: #FF7F0E; opacity: 0.8;'],
+        //['정리정돈', 0, 'color: #2CA02C; opacity: 0.8;'],
+        //['음료마시기', 0, 'color: #D62728; opacity: 0.8;'],
+        ['식사하기', 0, 'color: #9467BD; opacity: 0.8;'],
+        //['청소하기', 0, 'color: #8C564B; opacity: 0.8;'],
+        ['사교활동', 0, 'color: #E377C2; opacity: 0.8;'],
+        ['식사준비', 0, 'color: #7F7F7F; opacity: 0.8;'],
+        ['소통활동', 0, 'color: #BCBD22; opacity: 0.8;'],
+        ['미디어시청', 0, 'color: #17BECF; opacity: 0.8;']
+    ]);
+    var view = new google.visualization.DataView(data);
+    var options = {
+        width: "100%",
+        height: "100%",
+        bar: {groupWidth: "95%"},
+        legend: {position: "none"},
+        hAxis: {
+            textStyle: {
+                bold: true,
+                fontSize: 15
+            }
+        },
+        vAxis: {
+            viewWindowMode: 'explicit',
+            viewWindow: {
+                min: 0,
+                max: 100
             },
-            vAxis: {
-                viewWindowMode: 'explicit',
-                viewWindow: {
-                    min: 0,
-                    max: 100
-                },
-                gridlines: {count: 5}
-            },
-            bar: {groupWidth: "50%"},
-        };
-        var chart = new google.visualization.ColumnChart(document.getElementById("chart_div"));
-        chart.draw(view, options);
-    }
-</script>
+            gridlines: {count: 5}
+        },
+        bar: {groupWidth: "50%"},
+    };
+    var chart = new google.visualization.ColumnChart(document.getElementById("chart_div"));
+    chart.draw(view, options);
+}
+</script>{% endcomment %}
 <script>
     /**
      * django의 view 파일과 통신하기 위해 필요한 함수.
@@ -406,7 +345,8 @@
             async: false
         });
     }
-    var check_file = null;
+
+    var check_file = "final_demo_sec1.txt";
     $(window).load(function () {
 // CPU TIME 읽어서 현재 시간 정보와 관련된 정보들을 JESS에 Fact들로 집어넣음
         var dt = new Date($.now());
@@ -416,10 +356,12 @@
         // @jaeseung : run_engine
         //setTimeout(check_run, 1000);
     });
+
     function csrfSafeMethod(method) {
         // these HTTP methods do not require CSRF protection
         return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
     }
+
     $(document).ready(function () {
         var csrftoken = getCookie('csrftoken');
         $.ajaxSetup({
@@ -436,294 +378,14 @@
     var current_time = 0;
 
     function check_run() {
-        if(flag){
+        if (flag) {
             if (check_file) {
                 getEngineOutputEachtime();
             }
             setTimeout(check_run, 500);
-            {% comment %}$.ajax({    //  time 배속 구해주기
-                url: "/time/",
-                dataType: 'json',
-                type: 'POST',
-                data: {dur: dur, file_name: check_file },
-                success: function (result) {
-                    setTimeout(check_run, result);
-                }
-            });{% endcomment %}
         }
-    }
-    var selValue = null
-    function select(obj) {  ////////////////////// perceptajax
-        //$("#percept").empty();
-        selValue = obj.value
-        if (obj.value == "김차순 고령자 데이터") {
-            flag=false;
-            $('#playp').empty();
-            $('#playp').append("<span class='glyphicon glyphicon-facetime-video'></span> 김차순 고령자 영상");
-            $('#perceptp').empty();
-            $('#perceptp').append("<span class='glyphicon glyphicon-list'></span> 김차순 고령자 지각 정보");
-            $("#bargraph").empty();
-            $("#atab").empty();
-            $("#btab").empty();
-            $("#chart_div").empty();
-            $("#video-active").attr("src", "{% static 'play/kim_demo.mp4' %}")
-            google.charts.load('current', {packages: ['corechart', 'bar']});
-            google.charts.setOnLoadCallback(drawChart1);
-            function drawChart1() {
-                var data = google.visualization.arrayToDataTable([
-                    ['성향', '수치', {role: 'style'}],
-                    ['사교적성향', 0, 'color: #637498; opacity: 0.8;'],
-                    ['TV 애청자', 0, 'color: #62A0A7; opacity: 0.8;'],
-                    ['소통적성향', 0, 'color: #99CEDC; opacity: 0.8']
-                ]);
-                var options = {
-                    width: "100%",
-                    height: "100%",
-                    bar: {groupWidth: "100%"},
-                    legend: {position: "none"},
-                    hAxis: {
-                        viewWindowMode: 'explicit',
-                        viewWindow: {
-                            min: 0,
-                            max: 10
-                        },
-                        gridlines: {count: 5},
-                        textStyle:{
-                            fontSize:12
-                        }
-                    },
-                    vAxis:{
-                        textStyle:{
-                            bold:true,
-                            fontSize:13
-                        }
-                    }
-                };
-                var chart = new google.visualization.BarChart(document.getElementById('bargraph'));
-                chart.draw(data, options);
-            }
-            google.charts.load("current", {packages: ['corechart']});
-            google.charts.setOnLoadCallback(drawChart);
-            function drawChart() {
-                var data = google.visualization.arrayToDataTable([
-                    ['action', '수치', {role: 'style'}],
-                    ['다과', 0, 'color: #1F77B4; opacity: 0.8;'],
-                    ['독서하기', 0, 'color: #FF7F0E; opacity: 0.8;'],
-                    ['정리정돈', 0, 'color: #2CA02C; opacity: 0.8;'],
-                    ['음료마시기', 0, 'color: #D62728; opacity: 0.8;'],
-                    ['식사하기', 0, 'color: #9467BD; opacity: 0.8;'],
-                    ['청소하기', 0, 'color: #8C564B; opacity: 0.8;'],
-                    ['담소나누기', 0, 'color: #E377C2; opacity: 0.8;'],
-                    ['식사준비', 0, 'color: #7F7F7F; opacity: 0.8;'],
-                    ['전화통화', 0, 'color: #BCBD22; opacity: 0.8;'],
-                    ['TV시청', 0, 'color: #17BECF; opacity: 0.8;']
-                ]);
-                var view = new google.visualization.DataView(data);
-                var options = {
-                    width: "100%",
-                    height: "100%",
-                    bar: {groupWidth: "95%"},
-                    legend: {position: "none"},
-                    hAxis: {
-                        textStyle:{
-                            bold:true,
-                            fontSize:15
-                        }
-                    },
-                    vAxis: {
-                        viewWindowMode: 'explicit',
-                        viewWindow: {
-                            min: 0,
-                            max: 100
-                        },
-                        gridlines: {count: 5}
-                    },
-                    bar: {groupWidth: "50%"},
-                };
-                var chart = new google.visualization.ColumnChart(document.getElementById("chart_div"));
-                chart.draw(view, options);
-            }
-            //$("#playd").append("<video id=\"video-active\" src=\"{% static 'play/play.mp4' %}\" width=\"100%\" height=\"340px\" controls></video>");
-        } else if (obj.value == "도경자 고령자 데이터") {
-            flag=false;
-            $('#playp').empty();
-            $('#playp').append("<span class='glyphicon glyphicon-facetime-video'></span> 도경자 고령자 영상");
-            $('#perceptp').empty();
-            $('#perceptp').append("<span class='glyphicon glyphicon-list'></span> 도경자 고령자 지각 정보");
-            $("#bargraph").empty();
-            $("#atab").empty();
-            $("#btab").empty();
-            $("#chart_div").empty();
-            $("#video-active").attr("src", "{% static 'play/do_demo.mp4' %}")
-            google.charts.load('current', {packages: ['corechart', 'bar']});
-            google.charts.setOnLoadCallback(drawChart1);
-            function drawChart1() {
-                var data = google.visualization.arrayToDataTable([
-                    ['성향', '수치', {role: 'style'}],
-                    ['사교적성향', 0, 'color: #637498; opacity: 0.8;'],
-                    ['TV 애청자', 0, 'color: #62A0A7; opacity: 0.8;'],
-                    ['소통적성향', 0, 'color: #99CEDC; opacity: 0.8']
-                ]);
-                var options = {
-                    width: "100%",
-                    height: "100%",
-                    bar: {groupWidth: "100%"},
-                    legend: {position: "none"},
-                    hAxis: {
-                        viewWindowMode: 'explicit',
-                        viewWindow: {
-                            min: 0,
-                            max: 10
-                        },
-                        gridlines: {count: 5},
-                        textStyle:{
-                            fontSize:12
-                        }
-                    },
-                    vAxis:{
-                        textStyle:{
-                            bold:true,
-                            fontSize:13
-                        }
-                    }
-                };
-                var chart = new google.visualization.BarChart(document.getElementById('bargraph'));
-                chart.draw(data, options);
-            }
-            google.charts.load("current", {packages: ['corechart']});
-            google.charts.setOnLoadCallback(drawChart);
-            function drawChart() {
-                var data = google.visualization.arrayToDataTable([
-                    ['action', '수치', {role: 'style'}],
-                    ['다과', 0, 'color: #1F77B4; opacity: 0.8;'],
-                    ['독서하기', 0, 'color: #FF7F0E; opacity: 0.8;'],
-                    ['정리정돈', 0, 'color: #2CA02C; opacity: 0.8;'],
-                    ['음료마시기', 0, 'color: #D62728; opacity: 0.8;'],
-                    ['식사하기', 0, 'color: #9467BD; opacity: 0.8;'],
-                    ['청소하기', 0, 'color: #8C564B; opacity: 0.8;'],
-                    ['담소나누기', 0, 'color: #E377C2; opacity: 0.8;'],
-                    ['식사준비', 0, 'color: #7F7F7F; opacity: 0.8;'],
-                    ['전화통화', 0, 'color: #BCBD22; opacity: 0.8;'],
-                    ['TV시청', 0, 'color: #17BECF; opacity: 0.8;']
-                ]);
-                var view = new google.visualization.DataView(data);
-                var options = {
-                    width: "100%",
-                    height: "100%",
-                    bar: {groupWidth: "95%"},
-                    legend: {position: "none"},
-                    hAxis: {
-                        textStyle:{
-                            bold:true,
-                            fontSize:15
-                        }
-                    },
-                    vAxis: {
-                        viewWindowMode: 'explicit',
-                        viewWindow: {
-                            min: 0,
-                            max: 100
-                        },
-                        gridlines: {count: 5}
-                    },
-                    bar: {groupWidth: "50%"},
-                };
-                var chart = new google.visualization.ColumnChart(document.getElementById("chart_div"));
-                chart.draw(view, options);
-            }
-        } else if (obj.value == "이숙재 고령자 데이터") {
-            flag=false;
-            $('#playp').empty();
-            $('#playp').append("<span class='glyphicon glyphicon-facetime-video'></span> 이숙재 고령자 영상");
-            $('#perceptp').empty();
-            $('#perceptp').append("<span class='glyphicon glyphicon-list'></span> 이숙재 고령자 지각 정보");
-            $("#bargraph").empty();
-            $("#atab").empty();
-            $("#btab").empty();
-            $("#chart_div").empty();
-            $("#video-active").attr("src", "")
-            google.charts.load('current', {packages: ['corechart', 'bar']});
-            google.charts.setOnLoadCallback(drawChart1);
-            function drawChart1() {
-                var data = google.visualization.arrayToDataTable([
-                    ['성향', '수치', {role: 'style'}],
-                    ['사교적성향', 0, 'color: #637498; opacity: 0.8;'],
-                    ['TV 애청자', 0, 'color: #62A0A7; opacity: 0.8;'],
-                    ['소통적성향', 0, 'color: #99CEDC; opacity: 0.8']
-                ]);
-                var options = {
-                    width: "100%",
-                    height: "100%",
-                    bar: {groupWidth: "100%"},
-                    legend: {position: "none"},
-                    hAxis: {
-                        viewWindowMode: 'explicit',
-                        viewWindow: {
-                            min: 0,
-                            max: 10
-                        },
-                        gridlines: {count: 5},
-                        textStyle:{
-                            fontSize:12
-                        }
-                    },
-                    vAxis:{
-                        textStyle:{
-                            bold:true,
-                            fontSize:13
-                        }
-                    }
-                };
-                var chart = new google.visualization.BarChart(document.getElementById('bargraph'));
-                chart.draw(data, options);
-            }
-            google.charts.load("current", {packages: ['corechart']});
-            google.charts.setOnLoadCallback(drawChart);
-            function drawChart() {
-                var data = google.visualization.arrayToDataTable([
-                    ['action', '수치', {role: 'style'}],
-                    ['다과', 0, 'color: #1F77B4; opacity: 0.8;'],
-                    ['독서하기', 0, 'color: #FF7F0E; opacity: 0.8;'],
-                    ['정리정돈', 0, 'color: #2CA02C; opacity: 0.8;'],
-                    ['음료마시기', 0, 'color: #D62728; opacity: 0.8;'],
-                    ['식사하기', 0, 'color: #9467BD; opacity: 0.8;'],
-                    ['청소하기', 0, 'color: #8C564B; opacity: 0.8;'],
-                    ['담소나누기', 0, 'color: #E377C2; opacity: 0.8;'],
-                    ['식사준비', 0, 'color: #7F7F7F; opacity: 0.8;'],
-                    ['전화통화', 0, 'color: #BCBD22; opacity: 0.8;'],
-                    ['TV시청', 0, 'color: #17BECF; opacity: 0.8;']
-                ]);
-                var view = new google.visualization.DataView(data);
-                var options = {
-                    width: "100%",
-                    height: "100%",
-                    bar: {groupWidth: "95%"},
-                    legend: {position: "none"},
-                    hAxis: {
-                        textStyle:{
-                            bold:true,
-                            fontSize:15
-                        }
-                    },
-                    vAxis: {
-                        viewWindowMode: 'explicit',
-                        viewWindow: {
-                            min: 0,
-                            max: 100
-                        },
-                        gridlines: {count: 5}
-                    },
-                    bar: {groupWidth: "50%"},
-                };
-                var chart = new google.visualization.ColumnChart(document.getElementById("chart_div"));
-                chart.draw(view, options);
-            }
-        }
-        check_file = obj.value;
-        //var ajax_communication = communicateAjaxWithCase(url = "/smartButler/fire_rule/");
     }
 
-    // using jQuery
     function getCookie(name) {
         var cookieValue = null;
         if (document.cookie && document.cookie != '') {
@@ -751,7 +413,18 @@
                 $('#btab').append(result).scrollTop($("#btab")[0].scrollHeight);
             }
         });
+
+        $.ajax({
+            url: "/demo/epoch/",
+            dataType: 'json',
+            type: 'POST',
+            data: {file_name: check_file, cur: current_time, dur: dur},
+            success: function (result) {
+            }
+        });
+
     }
+
     function getEngineOutputEachtime() {
         percept();
         {#console.log("run engine timeout");#}
@@ -760,29 +433,30 @@
             url: "/smartButler/fire_rule/",
             dataType: 'json',
             type: 'POST',
-            data: { file_name: check_file},
+            data: {file_name: check_file},
             success: function (result) {
                 //            console.log("result : [" + result + "]")
                 {#console.log(typeof result)#}
                 var tmp = "" + result;
-                console.log(result)
+                //console.log(result)
                 $("#chart_div").empty();
                 google.charts.load("current", {packages: ['corechart']});
                 google.charts.setOnLoadCallback(drawChart);
-                var updateRate=2;
+                var updateRate = 2;
+
                 function drawChart() {
                     var data = google.visualization.arrayToDataTable([
                         ['action', '수치', {role: 'style'}],
-                        ['다과', result[0]*100/updateRate, 'color: #1F77B4; opacity: 0.8;'],
-                        ['독서하기', result[1]*100/updateRate, 'color: #FF7F0E; opacity: 0.8;'],
-                        ['정리정돈', result[2]*100/updateRate, 'color: #2CA02C; opacity: 0.8;'],
-                        ['음료마시기', result[3]*100/updateRate, 'color: #D62728; opacity: 0.8;'],
-                        ['식사하기', result[4]*100/updateRate, 'color: #9467BD; opacity: 0.8;'],
-                        ['청소하기', result[5]*100/updateRate, 'color: #8C564B; opacity: 0.8;'],
-                        ['담소나누기', result[6]*100/updateRate, 'color: #E377C2; opacity: 0.8;'],
-                        ['식사준비', result[7]*100/updateRate, 'color: #7F7F7F; opacity: 0.8;'],
-                        ['전화통화', result[8]*100/updateRate, 'color: #BCBD22; opacity: 0.8;'],
-                        ['TV시청', result[9]*100/updateRate, 'color: #17BECF; opacity: 0.8;']
+                        ['다과', result[0] * 100 / updateRate, 'color: #1F77B4; opacity: 0.8;'],
+                        ['독서하기', result[1] * 100 / updateRate, 'color: #FF7F0E; opacity: 0.8;'],
+                        //['정리정돈', result[2] * 100 / updateRate, 'color: #2CA02C; opacity: 0.8;'],
+                        //['음료마시기', result[2] * 100 / updateRate, 'color: #D62728; opacity: 0.8;'],
+                        ['식사하기', result[2] * 100 / updateRate, 'color: #9467BD; opacity: 0.8;'],
+                        //['청소하기', result[5] * 100 / updateRate, 'color: #8C564B; opacity: 0.8;'],
+                        ['사교활동', result[3] * 100 / updateRate, 'color: #E377C2; opacity: 0.8;'],
+                        ['식사준비', result[4] * 100 / updateRate, 'color: #7F7F7F; opacity: 0.8;'],
+                        ['소통활동', result[5] * 100 / updateRate, 'color: #BCBD22; opacity: 0.8;'],
+                        ['미디어시청', result[6] * 100 / updateRate, 'color: #17BECF; opacity: 0.8;']
                     ]);
 
                     var view = new google.visualization.DataView(data);
@@ -792,9 +466,9 @@
                         bar: {groupWidth: "95%"},
                         legend: {position: "none"},
                         hAxis: {
-                            textStyle:{
-                                bold:true,
-                                fontSize:15
+                            textStyle: {
+                                bold: true,
+                                fontSize: 15
                             }
                         },
                         vAxis: {
@@ -812,149 +486,195 @@
                 }
             }
         });
-        // Git Test : Timeout
-        {#setTimeout(getEngineOutputEachtime, 1000);#}
     }
+
     function onTrackedVideoFrame(currentTime, duration) {
         $("#current").text(currentTime); //Change #current to currentTime
         $("#duration").text(duration);
         current_time = currentTime;
     }
+
+    function getPerceptFromCSV(csv) {
+        var dataPoints = csvLines = points = [];
+        csvLines = csv.split(/[\r?\n|\r|\n]+/);
+        dataPoints.push([
+            "Time", "Pose", "Action"
+        ])
+        for (var i = 0; i < csvLines.length; i++)
+            if (csvLines[i].length > 0) {
+                points = csvLines[i].split("\t");
+                // console.log("0 : " + points[0], "1 : " + points[1]);
+                dataPoints.push([
+                        // new Date(0, 0, 0, parseInt(points[0].slice(0, 2)), parseInt(points[0].slice(2, 4)), 0),
+                        new Date(points[0]),
+                        parseInt(points[1]),
+                        parseInt(points[2])
+                    ]
+                )
+            }
+        return dataPoints;
+    }
+
     $(document).ready(function () {
+        var epoch_data = [
+            {label: 'Pose1', values: []},
+            {label: 'Pose2', values: []},
+            {label: 'Pose3', values: []},
+            {label: 'Pose4', values: []},
+            {label: 'Pose5', values: []},
+            {label: 'Pose6', values: []},
+            {label: 'Activity1', values: []},
+            {label: 'Activity2', values: []},
+            {label: 'Activity3', values: []},
+            {label: 'Activity4', values: []},
+            {label: 'Activity5', values: []},
+            {label: 'Activity6', values: []},
+            {label: 'Activity7', values: []},
+            {label: 'Activity8', values: []},
+            {label: 'Activity9', values: []},
+            {label: 'Activity10', values: []},
+            {label: 'Activity11', values: []}
+        ];
+        $.ajax({
+            url: "/demo/epoch/",
+            dataType: 'json',
+            type: 'POST',
+            data: {file_name: check_file},
+            success: function (result) {
+                {% comment %}console.log("test"+toString(result)){% endcomment %}
+                {#console.log(typeof(result[0]))#}
+
+                {#console.log("length : " + result.length)#}
+                console.log("length : " + epoch_data.length)
+                for (var i = 0; i < 65; i++) {
+                    for (var j = 0; j < epoch_data.length; j++) {
+                        {#console.log(result[0][1])#}
+                        {#console.log(data[i])#}
+                        {#console.log(result[i][0])#}
+                        epoch_data[j].values.push({time: result[i][0], y: result[i][j + 1]});
+                    }
+                }
+                console.log("data : " + epoch_data)
+            }
+        });
+
         $("#video-active").on(
             "timeupdate",
             function (event) {
                 onTrackedVideoFrame(this.currentTime, this.duration);
+
             });
-        $('#video-active').on('play', function() {
-            if (selValue == "김차순 고령자 데이터") {
-                //document.getElementById("perceptdd").innerHTML="<img src=\"{% static 'images/progress.gif' %}\" style=\"width: 100%; height: 100%;\">";
-                $("#bargraph").empty();
-                google.charts.load('current', {packages: ['corechart', 'bar']});
-                google.charts.setOnLoadCallback(drawChart);
-                function drawChart() {
-                    var data = google.visualization.arrayToDataTable([
-                        ['성향', '수치', {role: 'style'}],
-                        ['사교적성향', 9, 'color: #0072BD; opacity: 0.8;'],
-                        ['TV 애청자', 3, 'color: #D95319; opacity: 0.8;'],
-                        ['소통적성향', 5, 'color: #EDB120; opacity: 0.8']
-                    ]);
+        $('#video-active').on('play', function () {
+            flag = true;
+            //////////////////////////////////////////////////////////////////////////////
+            google.charts.load('current', {'packages': ['corechart']});
+            google.charts.setOnLoadCallback(drawChart0);
+
+            function drawChart0() {
+                $.get("{% static "percept/percept_epoch_1500_new" %}", function (data) {
+                    var dataPoints = getPerceptFromCSV(data);
+                    {#console.log(current_time + '/' + dur)#}
+                    var start_point = 1
+                    var total_len = 1525
+                    var slice_len = Math.floor((total_len / Number(dur)) * (Number(current_time)+1))
+
+                    {#console.log(dataPoints.slice(0,slice_len))#}
+                    if(Math.floor(current_time) == 25){
+                        slice_len = 615
+                    }
+                    if(Math.floor(current_time) > 25){
+                        {#start_point = Math.floor((total_len / Number(dur)) * (26))#}
+                        start_point = 617
+                    }
+                    if(Math.floor(current_time) > 50){
+                        {#start_point = Math.floor((total_len / Number(dur)) * (51))#}
+                        start_point = 1223
+                    }
+                    {#console.log(current_time + '/' + dur + '=>' + slice_len)#}
+                    {#console.log(start_point)#}
+                    {#console.log(dataPoints.slice(start_point,slice_len))#}
+
+                    var new_data_points = []
+                    new_data_points.push([
+                        "Time", "Pose", "Action"
+                    ])
+                    new_data_points.push.apply(new_data_points, (dataPoints.slice(start_point,slice_len)))
+                    var data = google.visualization.arrayToDataTable(new_data_points);
+
                     var options = {
-                        width: "100%",
-                        height: "100%",
-                        bar: {groupWidth: "100%"},
-                        legend: {position: "none"},
-                        hAxis: {
-                            viewWindowMode: 'explicit',
-                            viewWindow: {
-                                min: 0,
-                                max: 10
-                            },
-                            gridlines: {count: 5},
-                            textStyle:{
-                                fontSize:12
-                            }
-                        },
-                        vAxis:{
-                            textStyle:{
-                                bold:true,
-                                fontSize:13
-                            }
-                        }
+                        isStacked: 'absolute',
+                        vAxis: {minValue: 0},
+                        legend: {position: "top"},
+                        hAxis: {format:'H:m:s'},
+                        chartArea:{left:20,width:'95%',height:'75%'}
                     };
-                    var chart = new google.visualization.BarChart(document.getElementById('bargraph'));
+
+                    var chart = new google.visualization.AreaChart(document.getElementById('atab'));
                     chart.draw(data, options);
-                }
-                dur = this.duration;
-                flag=true;
-                check_run()
-            } else if (selValue == "도경자 고령자 데이터") {
-                $("#bargraph").empty();
-                google.charts.load('current', {packages: ['corechart', 'bar']});
-                google.charts.setOnLoadCallback(drawChart);
-                function drawChart() {
-                    var data = google.visualization.arrayToDataTable([
-                        ['성향', '수치', {role: 'style'}],
-                        ['사교적성향', 2, 'color: #0072BD; opacity: 0.8;'],
-                        ['TV 애청자', 10, 'color: #D95319; opacity: 0.8;'],
-                        ['소통적성향', 3.5, 'color: #EDB120; opacity: 0.8']
-                    ]);
-                    var options = {
-                        width: "100%",
-                        height: "100%",
-                        bar: {groupWidth: "100%"},
-                        legend: {position: "none"},
-                        hAxis: {
-                            viewWindowMode: 'explicit',
-                            viewWindow: {
-                                min: 0,
-                                max: 10
-                            },
-                            gridlines: {count: 5},
-                            textStyle:{
-                                fontSize:12
-                            }
-                        },
-                        vAxis:{
-                            textStyle:{
-                                bold:true,
-                                fontSize:13
-                            }
-                        }
-                    };
-                    var chart = new google.visualization.BarChart(document.getElementById('bargraph'));
-                    chart.draw(data, options);
-                }
-                dur = this.duration;
-                flag=true;
-                check_run()
-            } else if (selValue == "이숙재 고령자 데이터") {
-                $("#bargraph").empty();
-                google.charts.load('current', {packages: ['corechart', 'bar']});
-                google.charts.setOnLoadCallback(drawChart);
-                function drawChart() {
-                    var data = google.visualization.arrayToDataTable([
-                        ['성향', '수치', {role: 'style'}],
-                        ['사교적성향', 4.5, 'color: #0072BD; opacity: 0.8;'],
-                        ['TV 애청자', 2, 'color: #D95319; opacity: 0.8;'],
-                        ['소통적성향', 8, 'color: #EDB120; opacity: 0.8']
-                    ]);
-                    var options = {
-                        width: "100%",
-                        height: "100%",
-                        bar: {groupWidth: "100%"},
-                        legend: {position: "none"},
-                        hAxis: {
-                            viewWindowMode: 'explicit',
-                            viewWindow: {
-                                min: 0,
-                                max: 10
-                            },
-                            gridlines: {count: 5},
-                            textStyle:{
-                                fontSize:12
-                            }
-                        },
-                        vAxis:{
-                            textStyle:{
-                                bold:true,
-                                fontSize:13
-                            }
-                        }
-                    };
-                    var chart = new google.visualization.BarChart(document.getElementById('bargraph'));
-                    chart.draw(data, options);
-                }
-                dur = this.duration;
-                flag=true;
-                check_run()
+                });
+                setTimeout(drawChart0, 1000);
             }
+
+///////////////////////////////////////////////////////////
+
+            $("#bargraph").empty();
+            google.charts.load("current", {packages: ["timeline"]});
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart() {
+                var container = document.getElementById('bargraph');
+                var chart = new google.visualization.Timeline(container);
+                var dataTable = new google.visualization.DataTable();
+
+                dataTable.addColumn({type: 'string', id: 'Room'});
+                dataTable.addColumn({type: 'date', id: 'Start'});
+                dataTable.addColumn({type: 'date', id: 'End'});
+
+                var options = {
+                    timeline: {rowLabelStyle: {fontSize: 13}, barLabelStyle: {fontSize: 0}},
+                    height: 300,
+                    hAxis: {
+                        minValue: new Date(0, 0, 0, 0, 0, 0),
+                        maxValue: new Date(0, 0, 0, 1, 10, 0)
+                    }
+                };
+                var e1 = 2, s2 = 0, e2 = 0, s3 = 0, e3 = 0;
+                if (parseInt(current_time) <= 25) {
+                    e1 = parseInt(current_time);
+                }
+                else if (parseInt(current_time) > 25 && parseInt(current_time) <= 50) {
+                    e1 = 25
+                    s2 = 26
+                    e2 = parseInt(current_time);
+                }
+                else if (parseInt(current_time) > 50) {
+                    e1 = 25
+                    s2 = 26
+                    e2 = 50
+                    s3 = 51
+                    e3 = parseInt(current_time);
+                }
+
+                dataTable.addRows([
+                    ['사교적성향', new Date(0, 0, 0, 0, 0, 0), new Date(0, 0, 0, 0, e1, 0)],
+                    ['TV애청자', new Date(0, 0, 0, 0, s2, 0), new Date(0, 0, 0, 0, e2, 0)],
+                    ['소통적성향', new Date(0, 0, 0, 0, s3, 0), new Date(0, 0, 0, 0, e3, 0)]
+                ]);
+                chart.draw(dataTable, options);
+                setTimeout(drawChart, 1000);
+            }
+
+            dur = this.duration;
+
+            check_run()
         });
-        $('#video-active').on('pause', function() {
-            flag=false;
-            //$("#perceptdd").empty();
+        $('#video-active').on('pause', function () {
+            flag = false;
         });
     });
+</script>
+<script>
+
 </script>
 </body>
 </html>

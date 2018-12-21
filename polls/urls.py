@@ -22,9 +22,10 @@ app_name = "polls"
 
 urlpatterns = [
     url(r'^$', views.demo, name="demo"),
-
+    url(r'^demo_2/$', views.demo_2, name='demo_2'),
     url(r'^smartButler/fire_rule/$', views.fire_rule, name='fire_rule'),
     url(r'^demo/percept/$', views.percept, name='percept'),
+    url(r'^demo/epoch/$', views.epoch, name='epoch'),
     url(r'^time/$', views.time, name='time'),
 
 ]
