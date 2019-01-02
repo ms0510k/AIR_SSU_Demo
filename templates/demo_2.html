@@ -23,6 +23,47 @@
             background-color: white
         }
     </style>
+    <style>
+        .slidecontainer {
+            width: 50%;
+            float: right;
+        }
+
+        .slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 15px;
+            border-radius: 5px;
+            background: #d3d3d3;
+            outline: none;
+            opacity: 0.7;
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+            margin-top: -33px;
+        }
+
+        .slider:hover {
+            opacity: 1;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #d05642;
+            cursor: pointer;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #4CAF50;
+            cursor: pointer;
+        }
+    </style>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
@@ -169,111 +210,118 @@
                                                 <p style="color: aliceblue; font-size: 20px">
                                                     <span class="glyphicon glyphicon-align-left"></span>
                                                     고령자 생활 패턴
-                                                </p>
-                                            </div>
-                                            <div class="panel-body"
-                                                 style="background-color: #d9e8f5; height: 170px; padding: 5px;"
-                                                 id="b_pattern">
+                                                    <div class="slidecontainer">
+                                                        <p style="float: left; margin-left: -20%; margin-top: -13%; color: aliceblue;">수집일</p> <input type="range" min="0" max="6" value="0" class="slider"
+                                                               id="myRange">
+                                                <p id="slideValue1"
+                                                         style="visibility:hidden; position: absolute; color: aliceblue">&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;15&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;20&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;25&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;28</p>
+                                                <p id="slideValue2"
+                                                         style="visibility:hidden; position: absolute; color: aliceblue">&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;10&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;11</p>
+                                                <p id="slideValue3"
+                                                         style="visibility:hidden; position: absolute; color: aliceblue">&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;12&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;15&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;16</p>
 
                                             </div>
+                                            </p>
+                                        </div>
+                                        <div class="panel-body"
+                                             style="background-color: #d9e8f5; height: 170px; padding: 5px;"
+                                             id="b_pattern">
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
 
-                            <div class="col-md-6" , style="border: hidden; min-height: 300px;">
-                                {% csrf_token %}
-                                <div class="row" , style="margin-top: 0px; border: hidden; min-height: 450px;">
-                                    <div class="col-md-12">
+                        <div class="col-md-6" , style="border: hidden; min-height: 300px;">
+                            {% csrf_token %}
+                            <div class="row" , style="margin-top: 0px; border: hidden; min-height: 450px;">
+                                <div class="col-md-12">
 
-                                        {% comment %} 시간별 고령자 의도 그래프 {% endcomment %}
-                                        <div class="row" , style="border: hidden; padding-top: 10px;">
-                                            <div class="col-md-12">
-                                                <div class="panel panel-success" style="border: none;  opacity: 1;">
-                                                    <div class="panel-heading"
-                                                         style="background-color: #5590BE; padding-bottom: 4px; border: none; font-weight: bold;">
-                                                        <p style="color: aliceblue; font-size: 20px">
-                                                            <span class="glyphicon glyphicon-align-left"></span>
-                                                            시간별 고령자 의도 그래프
-                                                        </p>
+                                    {% comment %} 시간별 고령자 의도 그래프 {% endcomment %}
+                                    <div class="row" , style="border: hidden; padding-top: 10px;">
+                                        <div class="col-md-12">
+                                            <div class="panel panel-success" style="border: none;  opacity: 1;">
+                                                <div class="panel-heading"
+                                                     style="background-color: #5590BE; padding-bottom: 4px; border: none; font-weight: bold;">
+                                                    <p style="color: aliceblue; font-size: 20px">
+                                                        <span class="glyphicon glyphicon-align-left"></span>
+                                                        시간별 고령자 의도 그래프
+                                                    </p>
+                                                </div>
+                                                <div class="panel-body"
+                                                     style="background-color: #d9e8f5; height: 402px; padding: 0px;"
+                                                     id="b_timeIntent">
+                                                    <div class="w3-bar w3-black">
+                                                        <button class="w3-bar-item w3-button tablink2 w3-blue"
+                                                                onclick="openTab2(event,'timeIntent_a')"
+                                                                style="width: 25%; padding: 0px; background-color: #c6dbef;"
+                                                                id="timeIntent_1">
+                                                            의도1
+                                                        </button>
+                                                        <button class="w3-bar-item w3-button tablink2"
+                                                                onclick="openTab2(event,'timeIntent_b')"
+                                                                style="width: 25%; padding: 0px; background-color: #c6dbef;"
+                                                                id="timeIntent_2">
+                                                            의도2
+                                                        </button>
+                                                        <button class="w3-bar-item w3-button tablink2"
+                                                                onclick="openTab2(event,'timeIntent_c')"
+                                                                style="width: 25%; padding: 0px; background-color: #c6dbef;"
+                                                                id="timeIntent_3">
+                                                            의도3
+                                                        </button>
+                                                        <button class="w3-bar-item w3-button tablink2"
+                                                                onclick="openTab2(event,'timeIntent_d')"
+                                                                style="width: 25%; padding: 0px; background-color: #c6dbef;"
+                                                                id="timeIntent_4">
+                                                            의도4
+                                                        </button>
                                                     </div>
-                                                    <div class="panel-body"
-                                                         style="background-color: #d9e8f5; height: 402px; padding: 0px;"
-                                                         id="b_timeIntent">
-                                                        <div class="w3-bar w3-black">
-                                                            <button class="w3-bar-item w3-button tablink2 w3-blue"
-                                                                    onclick="openTab2(event,'timeIntent_a')"
-                                                                    style="width: 25%; padding: 0px; background-color: #c6dbef;"
-                                                                    id="timeIntent_1">
-                                                                의도1
-                                                            </button>
-                                                            <button class="w3-bar-item w3-button tablink2"
-                                                                    onclick="openTab2(event,'timeIntent_b')"
-                                                                    style="width: 25%; padding: 0px; background-color: #c6dbef;"
-                                                                    id="timeIntent_2">
-                                                                의도2
-                                                            </button>
-                                                            <button class="w3-bar-item w3-button tablink2"
-                                                                    onclick="openTab2(event,'timeIntent_c')"
-                                                                    style="width: 25%; padding: 0px; background-color: #c6dbef;"
-                                                                    id="timeIntent_3">
-                                                                의도3
-                                                            </button>
-                                                            <button class="w3-bar-item w3-button tablink2"
-                                                                    onclick="openTab2(event,'timeIntent_d')"
-                                                                    style="width: 25%; padding: 0px; background-color: #c6dbef;"
-                                                                    id="timeIntent_4">
-                                                                의도4
-                                                            </button>
-                                                        </div>
-                                                        <div id="timeIntent_a" class="tab2"
-                                                             style="border: none; width: 95%; height: 82%; position: absolute; padding: 5px;"></div>
-                                                        <div id="timeIntent_b" class="tab2"
-                                                             style="visibility:hidden; border: none; width: 95%; height: 82%; position: absolute; padding: 5px;"></div>
-                                                        <div id="timeIntent_c" class="tab2"
-                                                             style="visibility:hidden; border: none; width: 95%; height: 82%; position: absolute; padding: 5px;"></div>
-                                                        <div id="timeIntent_d" class="tab2"
-                                                             style="visibility:hidden; border: none; width: 95%; height: 82%; position: absolute; padding: 5px;"></div>
-                                                    </div>
+                                                    <div id="timeIntent_a" class="tab2"
+                                                         style="border: none; width: 95%; height: 82%; position: absolute; padding: 5px;"></div>
+                                                    <div id="timeIntent_b" class="tab2"
+                                                         style="visibility:hidden; border: none; width: 95%; height: 82%; position: absolute; padding: 5px;"></div>
+                                                    <div id="timeIntent_c" class="tab2"
+                                                         style="visibility:hidden; border: none; width: 95%; height: 82%; position: absolute; padding: 5px;"></div>
+                                                    <div id="timeIntent_d" class="tab2"
+                                                         style="visibility:hidden; border: none; width: 95%; height: 82%; position: absolute; padding: 5px;"></div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            {% comment %} 빈도 기반 고령자 의도 그래프{% endcomment %}
-                            <div class="col-md-12">
-                                <div class="row" , style="border: hidden; min-height: 50px">
-                                    <div class="col-md-12">
-                                        <div class="panel panel-success" style="border: none;  opacity: 1;">
-                                            <div class="panel-heading"
-                                                 style="background-color: #5590BE; padding-bottom: 4px; border: none; font-weight: bold;">
-                                                <p style="color: aliceblue; font-size: 20px">
-                                                    <span class="glyphicon glyphicon-stats"></span>
-                                                    빈도 기반 고령자 의도 그래프
-                                                </p>
-                                            </div>
-                                            <div class="panel-body"
-                                                 style="background-color: #d9e8f5; max-height: 300px; min-height: 260px; overflow:auto; padding: 10px;"
-                                                 id="intentGraph">
-                                            </div>
+                        </div>
+                        {% comment %} 빈도 기반 고령자 의도 그래프{% endcomment %}
+                        <div class="col-md-12">
+                            <div class="row" , style="border: hidden; min-height: 50px">
+                                <div class="col-md-12">
+                                    <div class="panel panel-success" style="border: none;  opacity: 1;">
+                                        <div class="panel-heading"
+                                             style="background-color: #5590BE; padding-bottom: 4px; border: none; font-weight: bold;">
+                                            <p style="color: aliceblue; font-size: 20px">
+                                                <span class="glyphicon glyphicon-stats"></span>
+                                                빈도 기반 고령자 의도 그래프
+                                            </p>
+                                        </div>
+                                        <div class="panel-body"
+                                             style="background-color: #d9e8f5; max-height: 300px; min-height: 260px; overflow:auto; padding: 10px;"
+                                             id="intentGraph">
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<link rel="stylesheet" type="text/css" href={% static "css/tests.css" %}>
+</div>
 <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-<script src={% static "js/epoch.js" %}></script>
-<link rel="stylesheet" type="text/css" href={% static "css/epoch.css" %}>
 <script>
     function openTab2(evt, tabName) {
         var i, x, tablinks;
@@ -290,6 +338,641 @@
     }
 </script>
 <script>
+    var sel = null
+    var slider = document.getElementById("myRange");
+    var dataP_1 = 0;
+    var dataP_2 = 0;
+    var dataP_3 = 0;
+    var intentData = null;
+    {#var output = document.getElementById("demo");#}
+    {#output.innerHTML = slider.value;#}
+
+    slider.oninput = function () {
+        {#output.innerHTML = this.value;#}
+        if (sel == "김차순 고령자 데이터") {
+            if (this.value == "1") {
+                dataP_1 = 8;
+                dataP_2 = 6;
+                dataP_3 = 1;
+                intentData = "{% static 'percept/slideBarDataIntent/kim_5day.csv' %}"
+            } else if (this.value == "2") {
+                dataP_1 = 8;
+                dataP_2 = 5.5;
+                dataP_3 = 2;
+                intentData = "{% static 'percept/slideBarDataIntent/kim_10day.csv' %}"
+            } else if (this.value == "3") {
+                dataP_1 = 7.5;
+                dataP_2 = 5;
+                dataP_3 = 3;
+                intentData = "{% static 'percept/slideBarDataIntent/kim_15day.csv' %}"
+            } else if (this.value == "4") {
+                dataP_1 = 8;
+                dataP_2 = 6;
+                dataP_3 = 4;
+                intentData = "{% static 'percept/slideBarDataIntent/kim_20day.csv' %}"
+            } else if (this.value == "5") {
+                dataP_1 = 8;
+                dataP_2 = 6;
+                dataP_3 = 4;
+                intentData = "{% static 'percept/slideBarDataIntent/kim_25day.csv' %}"
+            } else if (this.value == "6") {
+                dataP_1 = 9;
+                dataP_2 = 6.5;
+                dataP_3 = 3.5;
+                intentData = "{% static 'percept/slideBarDataIntent/kim_27day.csv' %}"
+            } else if (this.value == "0") {
+                console.log(this.value)
+                dataP_1 = 0;
+                dataP_2 = 0;
+                dataP_3 = 0;
+                intentData = "{% static 'percept/slideBarDataIntent/null.csv' %}"
+            }
+            google.charts.setOnLoadCallback(drawChart_pattern);
+            google.charts.setOnLoadCallback(drawChart_intentGraph());
+
+            function drawChart_pattern() {
+                var data = google.visualization.arrayToDataTable([
+                    ['성향', '수치', {role: 'style'}],
+                    ['사교적성향', dataP_1, 'color: #0072BD; opacity: 0.8;'],
+                    ['TV 애청자', dataP_2, 'color: #D95319; opacity: 0.8;'],
+                    ['소통적성향', dataP_3, 'color: #EDB120; opacity: 0.8;']
+                ]);
+                var options = {
+                    width: "100%",
+                    height: "100%",
+                    bar: {groupWidth: "50%"},
+                    legend: {position: "none"},
+                    hAxis: {
+                        viewWindowMode: 'explicit',
+                        viewWindow: {
+                            min: 0,
+                            max: 10
+                        },
+                        gridlines: {count: 5},
+                        textStyle: {
+                            fontSize: 12
+                        }
+                    },
+                    vAxis: {
+                        textStyle: {
+                            bold: true,
+                            fontSize: 12
+                        }
+                    }
+                };
+                var chart = new google.visualization.BarChart(document.getElementById('b_pattern'));
+                chart.draw(data, options);
+            }
+
+            function drawChart_intentGraph() {
+                $.get(intentData, function (data) {
+                    var dataPoints = getOneIntentFromCSV(data, sel)
+                    {#console.log(dataPoints)#}
+                    var data = google.visualization.arrayToDataTable(dataPoints);
+                    console.log(data)
+
+                    // Instantiate and draw our chart, passing in some options.
+                    var chart = new google.visualization.ChartWrapper({
+                        chartType: 'AreaChart',
+                        containerId: 'intentGraph',
+                        dataTable: data,
+                        options: {
+                            width: "100%",
+                            height: "100%",
+                            curveType: 'function',
+                            legend: {position: "top"},
+                            hAxis: {
+                                textStyle: {
+                                    fontSize: 10
+                                },
+                            },
+                            vAxis: {
+                                viewWindowMode: 'explicit',
+                                viewWindow: {
+                                    min: 0,
+                                    max: 700
+                                }
+                            }
+                        }
+                    });
+                    // create columns array
+                    var columns = [0];
+                    /* the series map is an array of data series
+                     * "column" is the index of the data column to use for the series
+                     * "roleColumns" is an array of column indices corresponding to columns with roles that are associated with this data series
+                     * "display" is a boolean, set to true to make the series visible on the initial draw
+                     */
+                    var seriesMap = [{
+                        column: 1,
+                        {#roleColumns: [2],#}
+                        display: false
+                    }, {
+                        column: 2,
+                        {#roleColumns: [4],#}
+                        display: false
+                    }, {
+                        column: 3,
+                        {#roleColumns: [6],#}
+                        display: true
+                    }, {
+                        column: 4,
+                        {#roleColumns: [8],#}
+                        display: false
+                    }];
+                    var columnsMap = {};
+                    var series = [];
+                    for (var i = 0; i < seriesMap.length; i++) {
+                        var col = seriesMap[i].column;
+                        columnsMap[col] = i;
+                        // set the default series option
+                        series[i] = {};
+                        if (seriesMap[i].display) {
+                            // if the column is the domain column or in the default list, display the series
+                            columns.push(col);
+                        } else {
+                            // otherwise, hide it
+                            columns.push({
+                                label: data.getColumnLabel(col),
+                                type: data.getColumnType(col),
+                                sourceColumn: col,
+                                calc: function () {
+                                    return null;
+                                }
+                            });
+                            // backup the default color (if set)
+                            if (typeof (series[i].color) !== 'undefined') {
+                                series[i].backupColor = series[i].color;
+                            }
+                            series[i].color = '#CCCCCC';
+                        }
+                    }
+
+                    chart.setOption('series', series);
+
+                    function showHideSeries() {
+                        var sel = chart.getChart().getSelection();
+                        // if selection length is 0, we deselected an element
+                        if (sel.length > 0) {
+                            // if row is undefined, we clicked on the legend
+                            if (sel[0].row == null) {
+                                var col = sel[0].column;
+                                if (typeof (columns[col]) == 'number') {
+                                    var src = columns[col];
+
+                                    // hide the data series
+                                    columns[col] = {
+                                        label: data.getColumnLabel(src),
+                                        type: data.getColumnType(src),
+                                        sourceColumn: src,
+                                        calc: function () {
+                                            return null;
+                                        }
+                                    };
+
+                                    // grey out the legend entry
+                                    series[columnsMap[src]].color = '#CCCCCC';
+                                } else {
+                                    var src = columns[col].sourceColumn;
+
+                                    // show the data series
+                                    columns[col] = src;
+                                    series[columnsMap[src]].color = null;
+                                }
+                                var view = chart.getView() || {};
+                                view.columns = columns;
+                                chart.setView(view);
+                                chart.draw();
+                            }
+                        }
+                    }
+
+                    google.visualization.events.addListener(chart, 'select', showHideSeries);
+
+                    // create a view with the default columns
+                    var view = {
+                        columns: columns
+                    };
+                    chart.draw();
+
+                });
+            }
+        } else if (sel == "도경자 고령자 데이터") {
+            if (this.value == "1") {
+                dataP_1 = 1;
+                dataP_2 = 8;
+                dataP_3 = 3;
+                intentData = "{% static 'percept/slideBarDataIntent/do_2day.csv' %}"
+            } else if (this.value == "2") {
+                dataP_1 = 1;
+                dataP_2 = 8.5;
+                dataP_3 = 4;
+                intentData = "{% static 'percept/slideBarDataIntent/do_4day.csv' %}"
+            } else if (this.value == "3") {
+                dataP_1 = 2;
+                dataP_2 = 9;
+                dataP_3 = 3;
+                intentData = "{% static 'percept/slideBarDataIntent/do_6day.csv' %}"
+            } else if (this.value == "4") {
+                dataP_1 = 1;
+                dataP_2 = 9;
+                dataP_3 = 2;
+                intentData = "{% static 'percept/slideBarDataIntent/do_8day.csv' %}"
+            } else if (this.value == "5") {
+                dataP_1 = 2;
+                dataP_2 = 8.5;
+                dataP_3 = 3;
+                intentData = "{% static 'percept/slideBarDataIntent/do_10day.csv' %}"
+            } else if (this.value == "6") {
+                dataP_1 = 1.5;
+                dataP_2 = 9.5;
+                dataP_3 = 2.5;
+                intentData = "{% static 'percept/slideBarDataIntent/do_11day.csv' %}"
+            } else if (this.value == "0") {
+                console.log(this.value)
+                dataP_1 = 0;
+                dataP_2 = 0;
+                dataP_3 = 0;
+                intentData = "{% static 'percept/slideBarDataIntent/null.csv' %}"
+            }
+            google.charts.setOnLoadCallback(drawChart_pattern);
+            google.charts.setOnLoadCallback(drawChart_intentGraph());
+
+            function drawChart_pattern() {
+                var data = google.visualization.arrayToDataTable([
+                    ['성향', '수치', {role: 'style'}],
+                    ['사교적성향', dataP_1, 'color: #0072BD; opacity: 0.8;'],
+                    ['TV 애청자', dataP_2, 'color: #D95319; opacity: 0.8;'],
+                    ['소통적성향', dataP_3, 'color: #EDB120; opacity: 0.8;']
+                ]);
+                var options = {
+                    width: "100%",
+                    height: "100%",
+                    bar: {groupWidth: "50%"},
+                    legend: {position: "none"},
+                    hAxis: {
+                        viewWindowMode: 'explicit',
+                        viewWindow: {
+                            min: 0,
+                            max: 10
+                        },
+                        gridlines: {count: 5},
+                        textStyle: {
+                            fontSize: 12
+                        }
+                    },
+                    vAxis: {
+                        textStyle: {
+                            bold: true,
+                            fontSize: 12
+                        }
+                    }
+                };
+                var chart = new google.visualization.BarChart(document.getElementById('b_pattern'));
+                chart.draw(data, options);
+            }
+
+            function drawChart_intentGraph() {
+                $.get(intentData, function (data) {
+                    var dataPoints = getOneIntentFromCSV(data, sel)
+                    {#console.log(dataPoints)#}
+                    var data = google.visualization.arrayToDataTable(dataPoints);
+                    console.log(data)
+
+                    // Instantiate and draw our chart, passing in some options.
+                    var chart = new google.visualization.ChartWrapper({
+                        chartType: 'AreaChart',
+                        containerId: 'intentGraph',
+                        dataTable: data,
+                        options: {
+                            width: "100%",
+                            height: "100%",
+                            curveType: 'function',
+                            legend: {position: "top"},
+                            hAxis: {
+                                textStyle: {
+                                    fontSize: 10
+                                }
+                            },
+                            vAxis: {
+                                viewWindowMode: 'explicit',
+                                viewWindow: {
+                                    min: 0,
+                                    max: 700
+                                }
+                            }
+                        }
+                    });
+                    // create columns array
+                    var columns = [0];
+                    /* the series map is an array of data series
+                     * "column" is the index of the data column to use for the series
+                     * "roleColumns" is an array of column indices corresponding to columns with roles that are associated with this data series
+                     * "display" is a boolean, set to true to make the series visible on the initial draw
+                     */
+                    var seriesMap = [{
+                        column: 1,
+                        {#roleColumns: [2],#}
+                        display: true
+                    }, {
+                        column: 2,
+                        {#roleColumns: [4],#}
+                        display: false
+                    }, {
+                        column: 3,
+                        {#roleColumns: [6],#}
+                        display: false
+                    }, {
+                        column: 4,
+                        {#roleColumns: [8],#}
+                        display: false
+                    }];
+                    var columnsMap = {};
+                    var series = [];
+                    for (var i = 0; i < seriesMap.length; i++) {
+                        var col = seriesMap[i].column;
+                        columnsMap[col] = i;
+                        // set the default series option
+                        series[i] = {};
+                        if (seriesMap[i].display) {
+                            // if the column is the domain column or in the default list, display the series
+                            columns.push(col);
+                        } else {
+                            // otherwise, hide it
+                            columns.push({
+                                label: data.getColumnLabel(col),
+                                type: data.getColumnType(col),
+                                sourceColumn: col,
+                                calc: function () {
+                                    return null;
+                                }
+                            });
+                            // backup the default color (if set)
+                            if (typeof (series[i].color) !== 'undefined') {
+                                series[i].backupColor = series[i].color;
+                            }
+                            series[i].color = '#CCCCCC';
+                        }
+                    }
+
+                    chart.setOption('series', series);
+
+                    function showHideSeries() {
+                        var sel = chart.getChart().getSelection();
+                        // if selection length is 0, we deselected an element
+                        if (sel.length > 0) {
+                            // if row is undefined, we clicked on the legend
+                            if (sel[0].row == null) {
+                                var col = sel[0].column;
+                                if (typeof (columns[col]) == 'number') {
+                                    var src = columns[col];
+
+                                    // hide the data series
+                                    columns[col] = {
+                                        label: data.getColumnLabel(src),
+                                        type: data.getColumnType(src),
+                                        sourceColumn: src,
+                                        calc: function () {
+                                            return null;
+                                        }
+                                    };
+
+                                    // grey out the legend entry
+                                    series[columnsMap[src]].color = '#CCCCCC';
+                                } else {
+                                    var src = columns[col].sourceColumn;
+
+                                    // show the data series
+                                    columns[col] = src;
+                                    series[columnsMap[src]].color = null;
+                                }
+                                var view = chart.getView() || {};
+                                view.columns = columns;
+                                chart.setView(view);
+                                chart.draw();
+                            }
+                        }
+                    }
+
+                    google.visualization.events.addListener(chart, 'select', showHideSeries);
+
+                    // create a view with the default columns
+                    var view = {
+                        columns: columns
+                    };
+                    chart.draw();
+
+                });
+            }
+        } else if (sel == "이숙재 고령자 데이터") {
+            if (this.value == "1") {
+                dataP_1 = 1;
+                dataP_2 = 3;
+                dataP_3 = 9;
+                intentData = "{% static 'percept/slideBarDataIntent/lee_2day.csv' %}"
+            } else if (this.value == "2") {
+                dataP_1 = 2;
+                dataP_2 = 4.5;
+                dataP_3 = 8.5;
+                intentData = "{% static 'percept/slideBarDataIntent/lee_4day.csv' %}"
+            } else if (this.value == "3") {
+                dataP_1 = 2;
+                dataP_2 = 5;
+                dataP_3 = 8;
+                intentData = "{% static 'percept/slideBarDataIntent/lee_6day.csv' %}"
+            } else if (this.value == "4") {
+                dataP_1 = 1;
+                dataP_2 = 4;
+                dataP_3 = 7.5;
+                intentData = "{% static 'percept/slideBarDataIntent/lee_8day.csv' %}"
+            } else if (this.value == "5") {
+                dataP_1 = 2;
+                dataP_2 = 4.5;
+                dataP_3 = 9;
+                intentData = "{% static 'percept/slideBarDataIntent/lee_10day.csv' %}"
+            } else if (this.value == "6") {
+                dataP_1 = 1;
+                dataP_2 = 4;
+                dataP_3 = 9.5;
+                intentData = "{% static 'percept/slideBarDataIntent/lee_11day.csv' %}"
+            } else if (this.value == "0") {
+                console.log(this.value)
+                dataP_1 = 0;
+                dataP_2 = 0;
+                dataP_3 = 0;
+                intentData = "{% static 'percept/slideBarDataIntent/null.csv' %}"
+            }
+            google.charts.setOnLoadCallback(drawChart_pattern);
+            google.charts.setOnLoadCallback(drawChart_intentGraph());
+
+            function drawChart_pattern() {
+                var data = google.visualization.arrayToDataTable([
+                    ['성향', '수치', {role: 'style'}],
+                    ['사교적성향', dataP_1, 'color: #0072BD; opacity: 0.8;'],
+                    ['TV 애청자', dataP_2, 'color: #D95319; opacity: 0.8;'],
+                    ['소통적성향', dataP_3, 'color: #EDB120; opacity: 0.8;']
+                ]);
+                var options = {
+                    width: "100%",
+                    height: "100%",
+                    bar: {groupWidth: "50%"},
+                    legend: {position: "none"},
+                    hAxis: {
+                        viewWindowMode: 'explicit',
+                        viewWindow: {
+                            min: 0,
+                            max: 10
+                        },
+                        gridlines: {count: 5},
+                        textStyle: {
+                            fontSize: 12
+                        }
+                    },
+                    vAxis: {
+                        textStyle: {
+                            bold: true,
+                            fontSize: 12
+                        }
+                    }
+                };
+                var chart = new google.visualization.BarChart(document.getElementById('b_pattern'));
+                chart.draw(data, options);
+            }
+
+            function drawChart_intentGraph() {
+                $.get(intentData, function (data) {
+                    var dataPoints = getOneIntentFromCSV(data, sel)
+                    {#console.log(dataPoints)#}
+                    var data = google.visualization.arrayToDataTable(dataPoints);
+                    console.log(data)
+
+                    // Instantiate and draw our chart, passing in some options.
+                    var chart = new google.visualization.ChartWrapper({
+                        chartType: 'AreaChart',
+                        containerId: 'intentGraph',
+                        dataTable: data,
+                        options: {
+                            width: "100%",
+                            height: "100%",
+                            curveType: 'function',
+                            legend: {position: "top"},
+                            hAxis: {
+                                textStyle: {
+                                    fontSize: 10
+                                }
+                            },
+                            vAxis: {
+                                viewWindowMode: 'explicit',
+                                viewWindow: {
+                                    min: 0,
+                                    max: 700
+                                }
+                            }
+                        }
+                    });
+                    // create columns array
+                    var columns = [0];
+                    /* the series map is an array of data series
+                     * "column" is the index of the data column to use for the series
+                     * "roleColumns" is an array of column indices corresponding to columns with roles that are associated with this data series
+                     * "display" is a boolean, set to true to make the series visible on the initial draw
+                     */
+                    var seriesMap = [{
+                        column: 1,
+                        {#roleColumns: [2],#}
+                        display: true
+                    }, {
+                        column: 2,
+                        {#roleColumns: [4],#}
+                        display: false
+                    }, {
+                        column: 3,
+                        {#roleColumns: [6],#}
+                        display: false
+                    }, {
+                        column: 4,
+                        {#roleColumns: [8],#}
+                        display: false
+                    }];
+                    var columnsMap = {};
+                    var series = [];
+                    for (var i = 0; i < seriesMap.length; i++) {
+                        var col = seriesMap[i].column;
+                        columnsMap[col] = i;
+                        // set the default series option
+                        series[i] = {};
+                        if (seriesMap[i].display) {
+                            // if the column is the domain column or in the default list, display the series
+                            columns.push(col);
+                        } else {
+                            // otherwise, hide it
+                            columns.push({
+                                label: data.getColumnLabel(col),
+                                type: data.getColumnType(col),
+                                sourceColumn: col,
+                                calc: function () {
+                                    return null;
+                                }
+                            });
+                            // backup the default color (if set)
+                            if (typeof (series[i].color) !== 'undefined') {
+                                series[i].backupColor = series[i].color;
+                            }
+                            series[i].color = '#CCCCCC';
+                        }
+                    }
+
+                    chart.setOption('series', series);
+
+                    function showHideSeries() {
+                        var sel = chart.getChart().getSelection();
+                        // if selection length is 0, we deselected an element
+                        if (sel.length > 0) {
+                            // if row is undefined, we clicked on the legend
+                            if (sel[0].row == null) {
+                                var col = sel[0].column;
+                                if (typeof (columns[col]) == 'number') {
+                                    var src = columns[col];
+
+                                    // hide the data series
+                                    columns[col] = {
+                                        label: data.getColumnLabel(src),
+                                        type: data.getColumnType(src),
+                                        sourceColumn: src,
+                                        calc: function () {
+                                            return null;
+                                        }
+                                    };
+
+                                    // grey out the legend entry
+                                    series[columnsMap[src]].color = '#CCCCCC';
+                                } else {
+                                    var src = columns[col].sourceColumn;
+
+                                    // show the data series
+                                    columns[col] = src;
+                                    series[columnsMap[src]].color = null;
+                                }
+                                var view = chart.getView() || {};
+                                view.columns = columns;
+                                chart.setView(view);
+                                chart.draw();
+                            }
+                        }
+                    }
+
+                    google.visualization.events.addListener(chart, 'select', showHideSeries);
+
+                    // create a view with the default columns
+                    var view = {
+                        columns: columns
+                    };
+                    chart.draw();
+
+                });
+            }
+        }
+    }
+
 
     function getOneIntentFromCSV(csv, selName) {
         var dataPoints = csvLines = points = [];
@@ -352,9 +1035,11 @@
 
     function select(obj) {
         if (obj.value == "김차순 고령자 데이터") {   /////////////////////////////////////////////////////////////////// 김차순선택
+            $("#myRange").val('0');
+            sel = obj.value;
             var i, x, tablinks;
             x = document.getElementsByClassName("tab2");
-            var targetIntent = document.getElementById("timeIntent_3")
+            var targetIntent = document.getElementById("timeIntent_3");
             for (i = 0; i < x.length; i++) {
                 x[i].style.visibility = "hidden";
             }
@@ -363,8 +1048,10 @@
                 tablinks[i].className = tablinks[i].className.replace(" w3-blue", "");
             }
             document.getElementById("timeIntent_c").style.visibility = "visible";
+            document.getElementById("slideValue1").style.visibility = "visible";
+            document.getElementById("slideValue2").style.visibility = "hidden";
+            document.getElementById("slideValue3").style.visibility = "hidden";
             targetIntent.classList.add("w3-blue");
-
             $("#oneIntent_1").text("미디어시청");
             $("#oneIntent_2").text("식사하기");
             $("#oneIntent_3").text("사교활동");
@@ -390,9 +1077,9 @@
             function drawChart_pattern() {
                 var data = google.visualization.arrayToDataTable([
                     ['성향', '수치', {role: 'style'}],
-                    ['사교적성향', 8.5, 'color: #0072BD; opacity: 0.8;'],
-                    ['TV 애청자', 5.5, 'color: #D95319; opacity: 0.8;'],
-                    ['소통적성향', 2, 'color: #EDB120; opacity: 0.8']
+                    ['사교적성향', 0, 'color: #0072BD; opacity: 0.8;'],
+                    ['TV 애청자', 0, 'color: #D95319; opacity: 0.8;'],
+                    ['소통적성향', 0, 'color: #EDB120; opacity: 0.8']
                 ]);
                 var options = {
                     width: "100%",
@@ -494,7 +1181,7 @@
             }
 
             function drawChart_intentGraph() {
-                $.get("{% static "percept/kim_single_intention.csv"%}", function (data) {
+                $.get("{% static "percept/slideBarDataIntent/null.csv"%}", function (data) {
                     var dataPoints = getOneIntentFromCSV(data, obj.value)
                     {#console.log(dataPoints)#}
                     var data = google.visualization.arrayToDataTable(dataPoints);
@@ -509,7 +1196,19 @@
                             width: "100%",
                             height: "100%",
                             curveType: 'function',
-                            legend: {position: "top"}
+                            legend: {position: "top"},
+                            hAxis: {
+                                textStyle: {
+                                    fontSize: 10
+                                },
+                            },
+                            vAxis: {
+                                viewWindowMode: 'explicit',
+                                viewWindow: {
+                                    min: 0,
+                                    max: 700
+                                }
+                            }
                         }
                     });
                     // create columns array
@@ -546,8 +1245,7 @@
                         if (seriesMap[i].display) {
                             // if the column is the domain column or in the default list, display the series
                             columns.push(col);
-                        }
-                        else {
+                        } else {
                             // otherwise, hide it
                             columns.push({
                                 label: data.getColumnLabel(col),
@@ -558,7 +1256,7 @@
                                 }
                             });
                             // backup the default color (if set)
-                            if (typeof(series[i].color) !== 'undefined') {
+                            if (typeof (series[i].color) !== 'undefined') {
                                 series[i].backupColor = series[i].color;
                             }
                             series[i].color = '#CCCCCC';
@@ -574,7 +1272,7 @@
                             // if row is undefined, we clicked on the legend
                             if (sel[0].row == null) {
                                 var col = sel[0].column;
-                                if (typeof(columns[col]) == 'number') {
+                                if (typeof (columns[col]) == 'number') {
                                     var src = columns[col];
 
                                     // hide the data series
@@ -589,8 +1287,7 @@
 
                                     // grey out the legend entry
                                     series[columnsMap[src]].color = '#CCCCCC';
-                                }
-                                else {
+                                } else {
                                     var src = columns[col].sourceColumn;
 
                                     // show the data series
@@ -615,8 +1312,9 @@
 
                 });
             }
-        }
-        else if (obj.value == "도경자 고령자 데이터") {   /////////////////////////////////////////////////////////////////// 도경자선택
+        } else if (obj.value == "도경자 고령자 데이터") {   /////////////////////////////////////////////////////////////////// 도경자선택
+            $("#myRange").val('0');
+            sel = obj.value;
             var i, x, tablinks;
             x = document.getElementsByClassName("tab2");
             var targetIntent = document.getElementById("timeIntent_1")
@@ -628,6 +1326,9 @@
                 tablinks[i].className = tablinks[i].className.replace(" w3-blue", "");
             }
             document.getElementById("timeIntent_a").style.visibility = "visible";
+            document.getElementById("slideValue1").style.visibility = "hidden";
+            document.getElementById("slideValue2").style.visibility = "visible";
+            document.getElementById("slideValue3").style.visibility = "hidden";
             targetIntent.classList.add("w3-blue");
             $("#oneIntent_1").text("미디어시청");
             $("#oneIntent_2").text("식사하기");
@@ -654,9 +1355,9 @@
             function drawChart_pattern() {
                 var data = google.visualization.arrayToDataTable([
                     ['성향', '수치', {role: 'style'}],
-                    ['사교적성향', 1.5, 'color: #0072BD; opacity: 0.8;'],
-                    ['TV 애청자', 10, 'color: #D95319; opacity: 0.8;'],
-                    ['소통적성향', 3, 'color: #EDB120; opacity: 0.8']
+                    ['사교적성향', 0, 'color: #0072BD; opacity: 0.8;'],
+                    ['TV 애청자', 0, 'color: #D95319; opacity: 0.8;'],
+                    ['소통적성향', 0, 'color: #EDB120; opacity: 0.8']
                 ]);
                 var options = {
                     width: "100%",
@@ -758,7 +1459,7 @@
             }
 
             function drawChart_intentGraph() {
-                $.get("{% static "percept/Do_Single_Intention.csv"%}", function (data) {
+                $.get("{% static "percept/slideBarDataIntent/null.csv"%}", function (data) {
                     var dataPoints = getOneIntentFromCSV(data, obj.value)
                     {#console.log(dataPoints)#}
                     var data = google.visualization.arrayToDataTable(dataPoints);
@@ -773,7 +1474,19 @@
                             width: "100%",
                             height: "100%",
                             curveType: 'function',
-                            legend: {position: "top"}
+                            legend: {position: "top"},
+                            hAxis: {
+                                textStyle: {
+                                    fontSize: 10
+                                }
+                            },
+                            vAxis: {
+                                viewWindowMode: 'explicit',
+                                viewWindow: {
+                                    min: 0,
+                                    max: 700
+                                }
+                            }
                         }
                     });
                     // create columns array
@@ -810,8 +1523,7 @@
                         if (seriesMap[i].display) {
                             // if the column is the domain column or in the default list, display the series
                             columns.push(col);
-                        }
-                        else {
+                        } else {
                             // otherwise, hide it
                             columns.push({
                                 label: data.getColumnLabel(col),
@@ -822,7 +1534,7 @@
                                 }
                             });
                             // backup the default color (if set)
-                            if (typeof(series[i].color) !== 'undefined') {
+                            if (typeof (series[i].color) !== 'undefined') {
                                 series[i].backupColor = series[i].color;
                             }
                             series[i].color = '#CCCCCC';
@@ -838,7 +1550,7 @@
                             // if row is undefined, we clicked on the legend
                             if (sel[0].row == null) {
                                 var col = sel[0].column;
-                                if (typeof(columns[col]) == 'number') {
+                                if (typeof (columns[col]) == 'number') {
                                     var src = columns[col];
 
                                     // hide the data series
@@ -853,8 +1565,7 @@
 
                                     // grey out the legend entry
                                     series[columnsMap[src]].color = '#CCCCCC';
-                                }
-                                else {
+                                } else {
                                     var src = columns[col].sourceColumn;
 
                                     // show the data series
@@ -879,8 +1590,9 @@
 
                 });
             }
-        }
-        else if (obj.value == "이숙재 고령자 데이터") {   /////////////////////////////////////////////////////////////////// 이숙재선택
+        } else if (obj.value == "이숙재 고령자 데이터") {   /////////////////////////////////////////////////////////////////// 이숙재선택
+            $("#myRange").val('0');
+            sel = obj.value;
             var i, x, tablinks;
             x = document.getElementsByClassName("tab2");
             var targetIntent = document.getElementById("timeIntent_1")
@@ -892,6 +1604,9 @@
                 tablinks[i].className = tablinks[i].className.replace(" w3-blue", "");
             }
             document.getElementById("timeIntent_a").style.visibility = "visible";
+            document.getElementById("slideValue1").style.visibility = "hidden";
+            document.getElementById("slideValue2").style.visibility = "hidden";
+            document.getElementById("slideValue3").style.visibility = "visible";
             targetIntent.classList.add("w3-blue");
             $("#oneIntent_1").text("소통활동");
             $("#oneIntent_2").text("식사하기");
@@ -918,9 +1633,9 @@
             function drawChart_pattern() {
                 var data = google.visualization.arrayToDataTable([
                     ['성향', '수치', {role: 'style'}],
-                    ['사교적성향', 2, 'color: #0072BD; opacity: 0.8;'],
-                    ['TV 애청자', 4.5, 'color: #D95319; opacity: 0.8;'],
-                    ['소통적성향', 8, 'color: #EDB120; opacity: 0.8']
+                    ['사교적성향', 0, 'color: #0072BD; opacity: 0.8;'],
+                    ['TV 애청자', 0, 'color: #D95319; opacity: 0.8;'],
+                    ['소통적성향', 0, 'color: #EDB120; opacity: 0.8']
                 ]);
                 var options = {
                     width: "100%",
@@ -1023,7 +1738,7 @@
             }
 
             function drawChart_intentGraph() {
-                $.get("{% static "percept/Lee_Single_Intention.csv"%}", function (data) {
+                $.get("{% static "percept/slideBarDataIntent/null.csv"%}", function (data) {
                     var dataPoints = getOneIntentFromCSV(data, obj.value)
                     {#console.log(dataPoints)#}
                     var data = google.visualization.arrayToDataTable(dataPoints);
@@ -1038,7 +1753,19 @@
                             width: "100%",
                             height: "100%",
                             curveType: 'function',
-                            legend: {position: "top"}
+                            legend: {position: "top"},
+                            hAxis: {
+                                textStyle: {
+                                    fontSize: 10
+                                }
+                            },
+                            vAxis: {
+                                viewWindowMode: 'explicit',
+                                viewWindow: {
+                                    min: 0,
+                                    max: 700
+                                }
+                            }
                         }
                     });
                     // create columns array
@@ -1075,8 +1802,7 @@
                         if (seriesMap[i].display) {
                             // if the column is the domain column or in the default list, display the series
                             columns.push(col);
-                        }
-                        else {
+                        } else {
                             // otherwise, hide it
                             columns.push({
                                 label: data.getColumnLabel(col),
@@ -1087,7 +1813,7 @@
                                 }
                             });
                             // backup the default color (if set)
-                            if (typeof(series[i].color) !== 'undefined') {
+                            if (typeof (series[i].color) !== 'undefined') {
                                 series[i].backupColor = series[i].color;
                             }
                             series[i].color = '#CCCCCC';
@@ -1103,7 +1829,7 @@
                             // if row is undefined, we clicked on the legend
                             if (sel[0].row == null) {
                                 var col = sel[0].column;
-                                if (typeof(columns[col]) == 'number') {
+                                if (typeof (columns[col]) == 'number') {
                                     var src = columns[col];
 
                                     // hide the data series
@@ -1118,8 +1844,7 @@
 
                                     // grey out the legend entry
                                     series[columnsMap[src]].color = '#CCCCCC';
-                                }
-                                else {
+                                } else {
                                     var src = columns[col].sourceColumn;
 
                                     // show the data series
